@@ -1,370 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ramesh Kelavath — Data Science Portfolio</title>
-  <meta name="description" content="Ramesh Kelavath | MSc Data Science at University of Hertfordshire. Machine Learning, Time Series, Cloud (Azure). Projects, skills, resume and contact." />
-  <meta name="author" content="Ramesh Kelavath" />
-
-  <!-- FONTS & ICONS -->
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ramesh Kelavath</title>
+  <meta name="description" content="Ramesh Kelavath — Data Science portfolio"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-9P8eV3oM8F7w7m8E7Hkq9Z1C0d2q3Eo3mZ3oYk8S3qgq5y3F8Z9mBqH6pWQ4jTg1MPm3Qe9u3oQdZ4Mtq0R1Yg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0b0f19;
-      --card: rgba(255,255,255,0.06);
-      --glass: rgba(255,255,255,0.08);
-      --text: #e6e9ef;
-      --muted: #aab1c3;
-      --brand: #7c5cff;
-      --brand-2: #00e3ae;
-      --accent: #ffce47;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius-xl: 20px;
-      --radius-2xl: 28px;
-      --radius-lg: 14px;
-      --border: 1px solid rgba(255,255,255,.12);
+    :root{
+      --bg:#0f1220; --card:#171b34; --edge:rgba(255,255,255,.08);
+      --text:#e8ecf8; --muted:#a5adcf; --accent:#7c5cff; --accent2:#00e5b0;
+      --r:16px; --shadow:0 14px 34px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background:
+         radial-gradient(900px 500px at 12% -10%, rgba(124,92,255,.22), transparent 65%),
+         radial-gradient(900px 500px at 88% 0%, rgba(0,229,176,.22), transparent 65%),
+         linear-gradient(180deg,#0c1021 0%, #12162b 100%);
+      overflow:hidden; /* 👈 no page scrolling */
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text); background: radial-gradient(1200px 800px at 80% -10%, rgba(124,92,255,.18), transparent 60%),
-                radial-gradient(1200px 800px at -10% 10%, rgba(0,227,174,.18), transparent 60%),
-                var(--bg);
-      line-height: 1.6; overflow-x: hidden;
+    /* Layout: fixed topbar + single viewport “stage” that swaps panels */
+    .topbar{
+      position:fixed; inset:0 0 auto 0; height:64px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 18px; border-bottom:1px solid var(--edge);
+      background:rgba(15,18,32,.85); backdrop-filter:blur(8px); z-index:10;
     }
-
-    /* Header */
-    .nav {
-      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(9,13,23,.8), rgba(9,13,23,.5)); border-bottom: var(--border);
+    .brand{font-weight:800; text-decoration:none; color:var(--text)}
+    .nav{display:flex; gap:14px; align-items:center}
+    .nav a{
+      color:var(--muted); text-decoration:none; font-weight:700; padding:10px 12px; border-radius:10px
     }
-    .nav .wrap { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
-    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 700; letter-spacing: .4px; }
-    .brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: var(--border); }
-    .nav ul { display: flex; list-style: none; gap: 18px; margin: 0; padding: 0; }
-    .nav a { color: var(--muted); text-decoration: none; font-weight: 600; padding: 10px 12px; border-radius: 10px; transition: .2s ease; }
-    .nav a:hover { color: var(--text); background: var(--glass); }
-    .nav .cta { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #0a0f16 !important; padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow); }
+    .nav a:hover, .nav a.active{color:var(--text); background:rgba(255,255,255,.06)}
+    .btn{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#0b0f19;
+         padding:10px 12px; border-radius:10px; font-weight:800; text-decoration:none}
 
-    /* Hero */
-    .hero { max-width: 1100px; margin: 40px auto 0; padding: 48px 20px 24px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: center; }
-    .hero-card { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: var(--border); border-radius: var(--radius-2xl); padding: 32px; box-shadow: var(--shadow); }
-    .kicker { color: var(--brand-2); font-weight: 700; font-size: .95rem; letter-spacing: .6px; text-transform: uppercase; }
-    .title { font-size: clamp(28px, 6vw, 54px); line-height: 1.1; margin: 10px 0 8px; font-weight: 800; }
-    .subtitle { font-size: clamp(16px, 2.4vw, 18px); color: var(--muted); }
-    .cta-row { display: flex; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 14px; font-weight: 700; text-decoration: none; color: var(--text); border: var(--border); background: var(--glass); border-radius: 12px; }
-    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #0a0f16; border: none; }
-    .btn i { opacity: .9; }
+    /* Stage (fills remaining viewport) */
+    .stage{position:fixed; inset:64px 0 0 0; display:grid; place-items:center}
+    .panel{
+      width:min(1080px,92vw); height:min(620px, calc(100vh - 96px));
+      background:var(--card); border:1px solid var(--edge); border-radius:18px; box-shadow:var(--shadow);
+      display:none; /* only one visible at a time */
+      padding:22px;
+      overflow:auto; /* internal scroll if content exceeds, page itself stays fixed */
+    }
+    .panel.active{display:block; animation:fade .22s ease}
+    @keyframes fade { from{opacity:.5; transform:translateY(6px)} to{opacity:1; transform:none} }
 
-    .hero-bio { display: grid; gap: 14px; }
-    .badges { display: flex; gap: 10px; flex-wrap: wrap; }
-    .badge { background: rgba(124,92,255,.18); border: 1px solid rgba(124,92,255,.35); color: #dcd5ff; padding: 8px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; }
+    /* Panels */
+    h1{margin:.2rem 0 .8rem; font-size:clamp(28px,4.8vw,42px)}
+    h2{margin:.2rem 0 1rem}
+    .muted{color:var(--muted)}
+    .row{display:grid; grid-template-columns:1.1fr .9fr; gap:22px; align-items:center}
+    .photo{display:flex; justify-content:center}
+    .photo img{
+      width:min(320px,85%); aspect-ratio:1/1; object-fit:cover; border-radius:50%;
+      border:1px solid rgba(255,255,255,.15); box-shadow:var(--shadow); background:#fff
+    }
+    .pills{display:flex; flex-wrap:wrap; gap:10px; margin:.6rem 0}
+    .pill{background:rgba(255,255,255,.06); border:1px solid var(--edge); padding:8px 10px; border-radius:12px; font-weight:700}
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+    .card{background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:14px; padding:14px}
+    .tags{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,.08); border:1px solid var(--edge); border-radius:999px; padding:6px 10px; font-weight:700; color:var(--muted)}
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
 
-    .photo { border-radius: var(--radius-2xl); border: var(--border); min-height: 380px; background: center/cover no-repeat url('Ramesh%20LinkedIn%20Photo.jpg'); box-shadow: var(--shadow); }
-
-    /* Sections */
-    section { max-width: 1100px; margin: 24px auto; padding: 28px 20px; }
-    h2.section-title { font-size: clamp(22px, 4vw, 32px); margin: 0 0 18px; }
-    .grid { display: grid; gap: 18px; }
-    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
-    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
-
-    .card { background: var(--card); border: var(--border); border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow); }
-    .card h3 { margin: 0 0 8px; }
-    .muted { color: var(--muted); }
-
-    /* Timeline */
-    .timeline { display: grid; gap: 14px; }
-    .tl-item { position: relative; padding-left: 24px; }
-    .tl-item::before { content: ""; position: absolute; left: 9px; top: 8px; width: 8px; height: 8px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); border-radius: 50%; box-shadow: 0 0 0 4px rgba(124,92,255,.15); }
-    .tl-item::after { content: ""; position: absolute; left: 12px; top: 20px; bottom: -10px; width: 2px; background: rgba(255,255,255,.1); }
-    .tl-item:last-child::after { display: none; }
-
-    /* Project cards */
-    .project { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .project .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag { padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: var(--border); font-size: 12px; font-weight: 700; color: var(--muted); }
-    .project a.btn { width: fit-content; }
-
-    /* Skills */
-    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-    .chip { border: var(--border); background: rgba(255,255,255,.06); padding: 10px 12px; border-radius: 12px; font-weight: 700; }
-
-    /* Contact */
-    .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    form input, form textarea { width: 100%; background: rgba(255,255,255,.06); border: var(--border); color: var(--text); padding: 12px 14px; border-radius: 12px; outline: none; }
-    form textarea { min-height: 140px; resize: vertical; }
-
-    /* Footer */
-    footer { margin: 10px auto 40px; max-width: 1100px; padding: 0 20px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
-
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero { grid-template-columns: 1fr; }
-      .photo { min-height: 280px; }
-      .grid.cols-3 { grid-template-columns: 1fr; }
-      .grid.cols-2 { grid-template-columns: 1fr; }
-      .contact { grid-template-columns: 1fr; }
+    /* Responsive (panels keep same behavior; no body scroll) */
+    @media (max-width:900px){
+      .row{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:560px){
+      .cards{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-  <!-- NAV -->
-  <header class="nav">
-    <div class="wrap">
-      <a class="brand" href="#top">
-        <img src="Ramesh%20LinkedIn%20Photo.jpg" alt="Ramesh Kelavath"/>
-        <span>Ramesh Kelavath</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#portfolio">Data&nbsp;Portfolio</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a class="cta" href="Ramesh%20CV.pdf" download>Download&nbsp;CV</a></li>
-        </ul>
-      </nav>
-    </div>
+  <!-- Top Navigation -->
+  <header class="topbar">
+    <a class="brand" href="#home" data-view="home">Ramesh Kelavath</a>
+    <nav class="nav" id="nav">
+      <a href="#home" data-view="home" class="active">Home</a>
+      <a href="#about" data-view="about">About</a>
+      <a href="#projects" data-view="projects">Projects</a>
+      <a href="#skills" data-view="skills">Skills</a>
+      <a href="#contact" data-view="contact">Contact</a>
+      <a class="btn" href="Ramesh CV.pdf" target="_blank" rel="noopener">Resume</a>
+    </nav>
   </header>
 
-  <!-- HERO -->
-  <main id="top" class="hero">
-    <div class="hero-card">
-      <div class="kicker">MSc Data Science @ Hertfordshire</div>
-      <h1 class="title">Hi, I'm Ramesh — Data & ML Enthusiast</h1>
-      <p class="subtitle">I build data pipelines and predictive models in Python and Azure. I enjoy transforming raw data into simple, reliable insights and products.</p>
-
-      <div class="cta-row">
-        <a class="btn primary" href="#portfolio"><i class="fa-solid fa-database"></i> View Data Portfolio</a>
-        <a class="btn" href="mailto:rameshkelavath5@gmail.com"><i class="fa-solid fa-envelope"></i> Email Me</a>
-        <a class="btn" href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        <a class="btn" href="https://github.com/RameshKelavath" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-      </div>
-
-      <div class="hero-bio">
-        <div class="badges">
-          <span class="badge">AI-900 Certified</span>
-          <span class="badge">Python · SQL</span>
-          <span class="badge">TensorFlow · Keras</span>
-          <span class="badge">Azure · Git</span>
-        </div>
-        <p class="muted">Currently exploring <strong>time series forecasting</strong> and <strong>deep learning</strong> for finance. Ex-Accenture (Custom Software Engineering Associate). Based in <strong>Hertfordshire, UK</strong>.</p>
-      </div>
-    </div>
-    <div class="photo" role="img" aria-label="Portrait of Ramesh Kelavath"></div>
-  </main>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <h2 class="section-title">About</h2>
-    <div class="grid cols-2">
-      <div class="card">
-        <h3>Personal Statement</h3>
-        <p>A motivated MSc Data Science student with a solid foundation in Python, SQL and cloud. Hands-on with ML and deep learning (LSTM, NLP), passionate about building efficient data workflows and working with both structured and unstructured data. I bring a strong learning mindset and practical problem‑solving to data engineering and ML projects.</p>
-      </div>
-      <div class="card">
-        <h3>Quick Facts</h3>
-        <ul>
-          <li><strong>Location:</strong> Hertfordshire, UK</li>
-          <li><strong>Email:</strong> <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></li>
-          <li><strong>Phone:</strong> 07440 595 986</li>
-          <li><strong>Languages:</strong> English, Hindi, Telugu</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="grid cols-2" style="margin-top: 18px;">
-      <div class="card">
-        <h3>Experience</h3>
-        <div class="timeline">
-          <div class="tl-item">
-            <h4>Custom Software Engineering Associate — Accenture</h4>
-            <div class="muted">Sep 2021 – Jul 2023</div>
-            <ul>
-              <li>Configured Duck Creek Policy Author manuscripts; built L3 forms with DCT & MS Word.</li>
-              <li>Developed XSLT transforms, SQL queries & procedures; JavaScript automation.</li>
-              <li>Completed training in .NET and supported testing & rollout planning.</li>
-            </ul>
-          </div>
-          <div class="tl-item">
-            <h4>Volunteering</h4>
-            <div class="muted">Sustainability Advocate @ University of Hertfordshire • Mar 2024 – Present</div>
-            <div class="muted">Volunteer @ Unnat Bharat Abhiyan • Mar 2018 – Apr 2018</div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Education</h3>
-        <div class="timeline">
-          <div class="tl-item">
-            <h4>MSc Data Science — University of Hertfordshire</h4>
-            <div class="muted">Jan 2024 – Jan 2026</div>
-            <p>Modules: Fundamentals of DS, Data Handling & Visualisation, Data Mining, ML & Neural Networks, Applied DS 1 & 2, DS Project.</p>
-          </div>
-          <div class="tl-item">
-            <h4>B.Tech (ECE) — NIT Agartala</h4>
-            <div class="muted">Jun 2017 – May 2021 • GPA 7.31/10</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DATA PORTFOLIO -->
-  <section id="portfolio">
-    <h2 class="section-title">Data Portfolio</h2>
-    <div class="grid cols-3">
-      <article class="card project">
+  <!-- Stage with switchable panels -->
+  <main class="stage" id="stage">
+    <!-- HOME -->
+    <section class="panel active" id="view-home" role="region" aria-label="Home">
+      <div class="row">
         <div>
-          <h3>NIFTY 50 Stock Price Prediction</h3>
-          <p class="muted">Compared ARIMA, ARIMAX (Open as exogenous), and LSTM on 20+ years of data. Evaluated MAE/MSE/RMSE; ARIMAX performed best.</p>
+          <p class="muted">MSc Data Science • Hertfordshire, UK</p>
+          <h1>Hello, I'm <span style="color:var(--accent2);font-weight:800">Ramesh</span></h1>
+          <p class="muted">
+            A motivated MSc Data Science student with a solid foundation in Python, SQL and Azure.
+            Hands-on with ML (neural nets, NLP, time series). Ex-Accenture (Custom Software Engineering Associate).
+          </p>
+          <div class="pills">
+            <span class="pill">AI-900 Certified</span>
+            <span class="pill">Python</span>
+            <span class="pill">TensorFlow / Keras</span>
+            <span class="pill">Statsmodels</span>
+            <span class="pill">Git · Azure</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn" href="#projects" data-view="projects">See Projects</a>
+            <a class="btn" style="background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--edge)"
+               href="mailto:rameshkelavath5@gmail.com">Email Me</a>
+            <a class="btn" style="background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--edge)"
+               href="https://github.com/RameshKelavath" target="_blank" rel="noopener">GitHub</a>
+          </div>
         </div>
-        <div class="tags">
-          <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Statsmodels</span><span class="tag">TensorFlow</span>
-        </div>
-        <a class="btn" href="https://github.com/RameshKelavath/StockPricePrediction" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> View Repo</a>
-      </article>
-
-      <article class="card project">
-        <div>
-          <h3>Time Series EDA Toolkit</h3>
-          <p class="muted">Reusable notebooks for stationarity checks, decomposition, ACF/PACF, hyper‑parameter search and forecasting visuals.</p>
-        </div>
-        <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
-        <a class="btn" href="#contact"><i class="fa-solid fa-file-code"></i> Request Access</a>
-      </article>
-
-      <article class="card project">
-        <div>
-          <h3>Azure Data Pipeline (Concept)</h3>
-          <p class="muted">Design for ingest → transform → model deployment on Azure (Blob, Data Factory, Functions, ML Studio).</p>
-        </div>
-        <div class="tags"><span class="tag">Azure</span><span class="tag">CI/CD</span><span class="tag">MLOps</span></div>
-        <a class="btn" href="#contact"><i class="fa-solid fa-diagram-project"></i> Let's discuss</a>
-      </article>
-    </div>
-  </section>
-
-  <!-- PROJECTS (extra) -->
-  <section id="projects">
-    <h2 class="section-title">Highlighted Projects</h2>
-    <div class="grid cols-3">
-      <div class="card project">
-        <h3>ARIMAX vs LSTM Study</h3>
-        <p class="muted">Formal experiment and write‑up comparing classical vs deep models for financial forecasting.</p>
-        <div class="tags"><span class="tag">ARIMAX</span><span class="tag">LSTM</span><span class="tag">Finance</span></div>
-        <a class="btn" href="Ramesh%20CV.pdf" target="_blank"><i class="fa-solid fa-file-lines"></i> Read Summary</a>
-      </div>
-      <div class="card project">
-        <h3>DS Utilities</h3>
-        <p class="muted">Small utility functions for feature engineering, cross‑validation and metrics.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Scikit‑learn</span></div>
-        <a class="btn" href="#"><i class="fa-solid fa-code"></i> Coming soon</a>
-      </div>
-      <div class="card project">
-        <h3>Visualization Playground</h3>
-        <p class="muted">Interactive plots for time series and ML evaluation.</p>
-        <div class="tags"><span class="tag">Plotly</span><span class="tag">Altair</span></div>
-        <a class="btn" href="#"><i class="fa-solid fa-chart-line"></i> Demo</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <h2 class="section-title">Skills</h2>
-    <div class="grid cols-2">
-      <div class="card">
-        <h3>Technical</h3>
-        <div class="chips">
-          <span class="chip">Python</span>
-          <span class="chip">Pandas</span>
-          <span class="chip">NumPy</span>
-          <span class="chip">TensorFlow</span>
-          <span class="chip">Keras</span>
-          <span class="chip">PyTorch</span>
-          <span class="chip">Statsmodels</span>
-          <span class="chip">Scikit‑learn</span>
-          <span class="chip">SQL (MySQL, SQLite)</span>
-          <span class="chip">Java</span>
-          <span class="chip">.NET</span>
-          <span class="chip">Git</span>
-          <span class="chip">Azure</span>
+        <div class="photo">
+          <img src="Ramesh Linkedln Photo.jpg"
+               alt="Ramesh Kelavath"
+               onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
         </div>
       </div>
-      <div class="card">
-        <h3>Certifications & Extras</h3>
-        <ul>
-          <li>Microsoft Certified: <strong>Azure AI Fundamentals (AI‑900)</strong></li>
-          <li>Machine Learning Specialization — Andrew Ng (Coursera)</li>
-          <li>Core Java Training — CTTC Bhubaneswar</li>
-          <li>.NET Training — Accenture</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2 class="section-title">Contact</h2>
-    <div class="contact">
-      <div class="card">
-        <h3>Get in touch</h3>
-        <p class="muted">Prefer email or LinkedIn. This form uses <a href="https://formspree.io/" target="_blank" rel="noopener">Formspree</a>; replace the action URL with your own endpoint.</p>
-        <form action="https://formspree.io/f/your-form-id" method="POST">
-          <label>Name<br/><input type="text" name="name" required></label><br/><br/>
-          <label>Email<br/><input type="email" name="email" required></label><br/><br/>
-          <label>Message<br/><textarea name="message" required></textarea></label><br/><br/>
-          <button class="btn primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Send</button>
+    <!-- ABOUT -->
+    <section class="panel" id="view-about" role="region" aria-label="About">
+      <h2>About</h2>
+      <p class="muted">
+        I enjoy building reliable data workflows and predictive models. Certified in
+        <strong>Azure AI Fundamentals (AI-900)</strong>. Passionate about time-series forecasting and deep learning for finance.
+      </p>
+      <div class="cards" style="margin-top:10px">
+        <div class="card">
+          <h3>Experience</h3>
+          <p class="muted"><strong>Accenture</strong> — Custom Software Engineering Associate<br>Sep 2021 – Jul 2023</p>
+          <ul>
+            <li>Duck Creek Policy Author manuscripts & L3 forms; XSLT transforms.</li>
+            <li>SQL procedures/queries; JavaScript automation; .NET training.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Education</h3>
+          <p class="muted"><strong>MSc Data Science</strong> — University of Hertfordshire (2024–2026)</p>
+          <p class="muted"><strong>B.Tech (ECE)</strong> — NIT Agartala (2017–2021, GPA 7.31/10)</p>
+        </div>
+        <div class="card">
+          <h3>Contact</h3>
+          <p><strong>Email:</strong> <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></p>
+          <p><strong>Phone:</strong> 07440 595 986</p>
+          <p><strong>Location:</strong> Hertfordshire, UK</p>
+          <a class="btn" href="Ramesh CV.pdf" target="_blank" rel="noopener">Download CV</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="panel" id="view-projects" role="region" aria-label="Projects">
+      <h2>Projects</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>NIFTY 50 Stock Prediction</h3>
+          <p class="muted">ARIMA / ARIMAX (Open as exog) vs LSTM on 20+ years; compared MAE/MSE/RMSE.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Statsmodels</span><span class="tag">TensorFlow</span></div>
+          <a class="btn" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">Repo</a>
+        </article>
+        <article class="card">
+          <h3>Time-Series EDA Toolkit</h3>
+          <p class="muted">Decomposition, stationarity tests, ACF/PACF, hyper-param search, forecast charts.</p>
+          <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
+          <a class="btn" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">Repo</a>
+        </article>
+        <article class="card">
+          <h3>Azure ML Pipeline (Concept)</h3>
+          <p class="muted">Ingest → transform → deploy on Azure (Blob, Data Factory, Functions, ML Studio).</p>
+          <div class="tags"><span class="tag">Azure</span><span class="tag">CI/CD</span><span class="tag">MLOps</span></div>
+          <a class="btn" href="#" aria-disabled="true">Case Study</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="panel" id="view-skills" role="region" aria-label="Skills">
+      <h2>Skills</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Languages</h3>
+          <p class="pills">
+            <span class="pill">Python</span><span class="pill">SQL</span><span class="pill">Java</span><span class="pill">.NET</span>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Libraries</h3>
+          <p class="pills">
+            <span class="pill">TensorFlow</span><span class="pill">Keras</span><span class="pill">PyTorch</span>
+            <span class="pill">Scikit-learn</span><span class="pill">Statsmodels</span><span class="pill">Pandas</span><span class="pill">NumPy</span>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Tools & Cloud</h3>
+          <p class="pills">
+            <span class="pill">Git</span><span class="pill">Azure</span><span class="pill">Jupyter</span><span class="pill">Colab</span>
+            <span class="pill">Matplotlib</span><span class="pill">Seaborn</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="panel" id="view-contact" role="region" aria-label="Contact">
+      <h2>Contact</h2>
+      <p class="muted">Open to internships and full-time roles in Data Science, ML, and Data Engineering.</p>
+      <div class="pills">
+        <a class="pill" href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a>
+        <a class="pill" href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="pill" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>Quick message</h3>
+        <form action="https://formspree.io/f/your-form-id" method="POST" style="display:grid; gap:10px">
+          <label>Name <input name="name" required style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--text)"></label>
+          <label>Email <input name="email" type="email" required style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--text)"></label>
+          <label>Message <textarea name="message" required style="min-height:120px; width:100%; padding:10px; border-radius:10px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--text)"></textarea></label>
+          <button class="btn" type="submit">Send</button>
+          <p class="muted">Replace <code>your-form-id</code> with your Formspree ID to enable the form.</p>
         </form>
       </div>
-      <div class="card">
-        <h3>Links</h3>
-        <p class="muted">I'm open to internship and full‑time roles in data science, ML and data engineering.</p>
-        <p>
-          <a class="btn" href="mailto:rameshkelavath5@gmail.com"><i class="fa-solid fa-envelope"></i> rameshkelavath5@gmail.com</a>
-        </p>
-        <p>
-          <a class="btn" href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-          <a class="btn" href="https://github.com/RameshKelavath" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-        </p>
-        <p><a class="btn" href="Ramesh%20CV.pdf" target="_blank"><i class="fa-solid fa-file"></i> View CV (PDF)</a></p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div>© <span id="year"></span> Ramesh Kelavath</div>
-    <div class="muted">Built with vanilla HTML/CSS — deployed on GitHub Pages</div>
-  </footer>
+    </section>
+  </main>
 
   <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Simple hash router: show exactly one panel, keep page non-scrollable
+    const views = ['home','about','projects','skills','contact'];
+    const panels = Object.fromEntries(views.map(v => [v, document.getElementById('view-'+v)]));
+    const navLinks = Array.from(document.querySelectorAll('[data-view]'));
 
-    // Optional: highlight active nav on scroll
-    const sections = document.querySelectorAll('section');
-    const navLinks = Array.from(document.querySelectorAll('header nav a')).filter(a=>a.hash);
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          navLinks.forEach(l=>l.classList.remove('active'));
-          const link = navLinks.find(l=> l.hash === '#' + e.target.id);
-          if(link) link.classList.add('active');
-        }
-      });
-    }, { rootMargin: '-50% 0px -40% 0px', threshold: 0 });
-    sections.forEach(s=>obs.observe(s));
+    function show(view){
+      const chosen = views.includes(view) ? view : 'home';
+      Object.entries(panels).forEach(([k,el]) => el.classList.toggle('active', k===chosen));
+      navLinks.forEach(a => a.classList.toggle('active', a.dataset.view===chosen));
+      // update hash without jumping
+      if (location.hash.replace('#','') !== chosen) history.replaceState(null,'','#'+chosen);
+    }
+
+    // handle initial load and hash changes
+    window.addEventListener('hashchange', () => show(location.hash.replace('#','')));
+    navLinks.forEach(a => a.addEventListener('click', e => { e.preventDefault(); show(a.dataset.view); }));
+
+    // initialize
+    show(location.hash.replace('#',''));
   </script>
 </body>
 </html>
