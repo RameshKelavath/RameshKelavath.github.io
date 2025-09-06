@@ -4,17 +4,24 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ramesh Kelavath</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<!-- Icons: Font Awesome (for LinkedIn, GitHub, email, phone, location) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
 <style>
   :root{
     --bg:#0f1626; --bg2:#111c2f; --panel:#121c2f; --edge:rgba(255,255,255,.09);
     --text:#e9edf7; --muted:#a8b0c8; --accent:#1fd36f; --accent2:#16b35d;
     --r:16px; --shadow:0 18px 42px rgba(0,0,0,.38);
   }
-  *{box-sizing:border-box} html,body{height:100%} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
+  *{box-sizing:border-box} html,body{height:100%} 
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
 
   /* NAV */
   .topbar{position:fixed; inset:0 0 auto 0; height:64px; display:flex; align-items:center; justify-content:space-between;
@@ -32,39 +39,58 @@
          border-radius:18px; box-shadow:var(--shadow); overflow:auto}
   .panel.active{display:block; animation:fade .2s ease} @keyframes fade{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* HOME (hero like your screenshot) */
+  /* HOME (hero) */
   .home{
     background:
       linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.7)),
       url('bg-home.jpg') center/cover no-repeat,
       var(--bg2);
   }
-  .hero{padding:40px clamp(16px,3vw,40px); display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center}
-  .hero h1{font-size:clamp(36px,7vw,72px); line-height:1.05; margin:.2rem 0 .6rem}
+  .hero{padding:40px clamp(16px,3vw,40px); display:grid; grid-template-columns:1fr; gap:18px; align-items:center}
+  .hero h1{font-size:clamp(36px,7vw,72px); line-height:1.05; margin:.2rem 0 .4rem}
   .hero p{font-size:1.1rem; color:#dfe7ff; font-weight:600}
   .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
   .cta-row .ghost{background:#ffffff14; color:#fff; border:1px solid #ffffff30; text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:800}
-  .photo{display:flex; justify-content:center}
-  .photo img{width:min(320px,86%); aspect-ratio:1/1; object-fit:cover; border-radius:50%; border:1px solid rgba(255,255,255,.2); box-shadow:var(--shadow); background:#fff}
 
   /* INSIDE PANELS */
   .wrap{padding:24px clamp(16px,3vw,26px)}
   h2{font-size:clamp(22px,3.2vw,32px); margin:2px 0 12px}
   .muted{color:var(--muted)}
+  /* About */
   .about-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:24px; align-items:center}
   .about-card{background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:var(--r); padding:16px}
+  .photo{display:flex; justify-content:center}
+  .photo img{width:min(320px,86%); aspect-ratio:1/1; object-fit:cover; border-radius:50%; border:1px solid rgba(255,255,255,.2); box-shadow:var(--shadow); background:#fff}
+
+  /* Projects */
   .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
   .card{background:#0f1a2c; border:1px solid var(--edge); border-radius:14px; padding:16px}
   .thumb{height:150px; border-radius:10px; border:1px solid var(--edge); background:#0d1728; display:grid; place-items:center; color:#8fb3ff; margin-bottom:10px}
   .tags{display:flex; gap:8px; flex-wrap:wrap}
   .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
+
+  /* Skills */
   .skill-block{margin-bottom:16px}
   .skill-title{color:var(--accent); font-weight:900; margin:0 0 8px}
   .icon-row{display:flex; gap:16px; flex-wrap:wrap; padding:12px; border:1px solid var(--edge); border-radius:12px; background:#0f1a2c}
   .icon-row i{font-size:32px}
   .pill{display:inline-block; padding:8px 12px; border:1px solid var(--edge); border-radius:12px; background:rgba(255,255,255,.06); font-weight:700}
 
-  @media (max-width:980px){ .hero{grid-template-columns:1fr} .about-grid{grid-template-columns:1fr} .cards{grid-template-columns:1fr 1fr} }
+  /* Contact */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+  .list{display:grid; gap:10px}
+  .list .item{display:flex; align-items:center; gap:10px}
+  .list .item i{width:28px; text-align:center}
+  .socials{display:flex; gap:12px; flex-wrap:wrap}
+  .socials a{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; text-decoration:none; background:#0f1a2c; border:1px solid var(--edge)}
+  .socials a:hover{background:#14223a}
+  .contact-form{display:grid; gap:10px}
+  .contact-form input,.contact-form textarea{
+    width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--edge); background:#0f1a2c; color:var(--text);
+  }
+  .contact-form textarea{min-height:120px; resize:vertical}
+
+  @media (max-width:980px){ .about-grid{grid-template-columns:1fr} .cards{grid-template-columns:1fr 1fr} .contact-grid{grid-template-columns:1fr} }
   @media (max-width:620px){ .cards{grid-template-columns:1fr} }
 </style>
 </head>
@@ -75,7 +101,7 @@
   <nav class="nav">
     <a href="#home" data-view="home" class="active">Home</a>
     <a href="#about" data-view="about">About</a>
-    <a href="#portfolio" data-view="portfolio">Data Portfolio</a>
+    <a href="#projects" data-view="projects">Projects</a>
     <a href="#skills" data-view="skills">Skills</a>
     <a href="#contact" data-view="contact">Contact</a>
     <a class="btn" href="Ramesh CV.pdf" target="_blank" rel="noopener">Resume</a>
@@ -83,50 +109,49 @@
 </header>
 
 <main class="stage">
-  <!-- HOME -->
+  <!-- HOME (no profile photo, no About/Portfolio links) -->
   <section class="panel home active" id="view-home" role="region" aria-label="Home">
     <div class="hero">
       <div>
         <h1>Ramesh Kelavath</h1>
-        <p>Passionate MSc Data Science student crafting data-driven insights & tools.</p>
+        <p>
+          I’m an MSc Data Science student (ex-Accenture) skilled in Python, SQL, and Azure.
+          I work across data analysis, visualization, and machine learning, and I’m seeking roles in
+          Data Science, ML, and Data Analytics to turn data into impactful insights.
+        </p>
         <div class="cta-row">
-          <a class="btn" href="#portfolio" data-view="portfolio">Portfolio</a>
-          <a class="ghost" href="#about" data-view="about">About Me</a>
+          <!-- Keep only resume; no About/Projects buttons here per your request -->
+          <a class="btn" href="Ramesh CV.pdf" target="_blank" rel="noopener">Download Resume</a>
         </div>
-      </div>
-      <div class="photo">
-        <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh"
-             onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ABOUT (photo only here; no email/location/certification list) -->
   <section class="panel" id="view-about" role="region" aria-label="About" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>About</h2>
       <div class="about-grid">
         <div class="about-card photo">
-          <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh"
+          <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh Kelavath"
                onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
         </div>
         <div class="about-card">
           <p class="muted">
-            Hi there, I’m Ramesh. I work with Python, SQL, and Azure to build robust data workflows and predictive models.
-            Hands-on with ARIMA/ARIMAX, LSTM/GRU, and visualization. Ex-Accenture (Custom Software Engineering Associate).
+            Hi, I’m Ramesh — an aspiring Data Scientist & ML Engineer pursuing my MSc in Data Science at the University of Hertfordshire.
+            Previously at Accenture, I built scalable, reliable solutions and streamlined data workflows.
           </p>
-          <ul>
-            <li><b>Email:</b> <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></li>
-            <li><b>Location:</b> Hertfordshire, UK</li>
-            <li><b>Certification:</b> Azure AI Fundamentals (AI-900)</li>
-          </ul>
+          <p class="muted">
+            My toolkit includes Python, SQL, and Azure with hands-on experience in statistical modeling, EDA, visualization,
+            and predictive analytics. I enjoy solving real problems with machine learning and clear communication.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DATA PORTFOLIO -->
-  <section class="panel" id="view-portfolio" role="region" aria-label="Portfolio" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+  <!-- PROJECTS (was “Data Portfolio”) -->
+  <section class="panel" id="view-projects" role="region" aria-label="Projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Projects</h2>
       <div class="cards">
@@ -186,34 +211,54 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT (icons + details + form) -->
   <section class="panel" id="view-contact" role="region" aria-label="Contact" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Contact</h2>
-      <p class="muted">Open to internships and full-time roles in Data Science, ML, and Data Engineering.</p>
-      <div class="card" style="display:flex; gap:12px; flex-wrap:wrap">
-        <a class="pill" href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a>
-        <a class="pill" href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="pill" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">GitHub</a>
-        <a class="pill" href="Ramesh CV.pdf" target="_blank" rel="noopener">View CV (PDF)</a>
-      </div>
-      <div class="card" style="margin-top:12px; max-width:520px">
-        <h3>Quick Message</h3>
-        <form action="https://formspree.io/f/your-form-id" method="POST" style="display:grid; gap:10px">
-          <label>Name <input name="name" required style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:#0f1a2c;color:var(--text)"></label>
-          <label>Email <input name="email" type="email" required style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:#0f1a2c;color:var(--text)"></label>
-          <label>Message <textarea name="message" required style="min-height:120px;width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:#0f1a2c;color:var(--text)"></textarea></label>
-          <button class="btn" type="submit">Send</button>
-          <p class="muted" style="margin:4px 0 0">Replace <code>your-form-id</code> with your Formspree ID.</p>
-        </form>
+      <div class="contact-grid">
+        <!-- Left: social icons + contact details -->
+        <div class="card">
+          <h3 style="margin-top:0">Social Profiles</h3>
+          <div class="socials" style="margin:10px 0 18px">
+            <a href="mailto:rameshkelavath5@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i> Email</a>
+            <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            <a href="https://github.com/RameshKelavath" target="_blank" rel="noopener" title="GitHub"><i class="fa-brands fa-github"></i> GitHub</a>
+          </div>
+
+          <h3>Contact Details</h3>
+          <div class="list" style="margin-top:10px">
+            <div class="item"><i class="fa-solid fa-envelope"></i> <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></div>
+            <div class="item"><i class="fa-solid fa-phone"></i> 07440&nbsp;595&nbsp;986</div>
+            <div class="item"><i class="fa-solid fa-location-dot"></i> Hertfordshire, UK</div>
+            <div class="item"><i class="fa-solid fa-globe"></i> United Kingdom</div>
+          </div>
+        </div>
+
+        <!-- Right: message form -->
+        <div class="card">
+          <h3 style="margin-top:0">Send a Message</h3>
+          <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+            <label>Full Name
+              <input name="name" required>
+            </label>
+            <label>Email
+              <input name="email" type="email" required>
+            </label>
+            <label>Message
+              <textarea name="message" required></textarea>
+            </label>
+            <button class="btn" type="submit">Send</button>
+            <p class="muted">Replace <code>your-form-id</code> with your Formspree ID to activate the form.</p>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <script>
-  // Robust no-scroll router
-  const VIEWS = ['home','about','portfolio','skills','contact'];
+  // Robust no-scroll router (with “projects” tab)
+  const VIEWS = ['home','about','projects','skills','contact'];
   const PANELS = Object.fromEntries(VIEWS.map(v => [v, document.getElementById('view-'+v)]));
   const LINKS = Array.from(document.querySelectorAll('[data-view]'));
 
