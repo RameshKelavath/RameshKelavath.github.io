@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ramesh Kelavath | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     /* Base Styles */
     body {
@@ -13,69 +12,65 @@
       font-family: 'Inter', sans-serif;
       background-color: #0d0d0d;
       color: #f5f5f5;
-      scroll-behavior: smooth;
+      overflow-x: hidden;
     }
     a { color: #0A66C2; text-decoration: none; }
 
     /* Navbar */
     nav {
+      text-align: center;
+      background-color: #111;
       position: sticky;
       top: 0;
       z-index: 1000;
-      display: flex;
-      justify-content: center;
-      background: rgba(15,15,15,0.9);
-      padding: 15px;
-      backdrop-filter: blur(6px);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-    nav a {
+    nav button {
       margin: 0 15px;
       font-weight: 600;
       font-size: 18px;
+      background: none;
+      border: none;
       color: #f5f5f5;
+      cursor: pointer;
       transition: 0.3s;
     }
-    nav a:hover, nav a.active { color: #00ffcc; }
-
-    /* Hero Section */
-    header.hero {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, #0A66C2, #0d0d0d);
-    }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 800;
-    }
-    .highlight { color: #00ffcc; }
-    .subtitle { font-size: 1.2rem; color: #ddd; margin: 15px 0; }
-    .cta-btn {
-      display: inline-block;
-      padding: 12px 25px;
-      background: #00ffcc;
-      color: #0d0d0d;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .cta-btn:hover { background: #fff; transform: scale(1.05); }
+    nav button:hover, nav button.active { color: #00ffcc; transform: scale(1.1); }
 
     /* Sections */
     section {
+      display: none;
       padding: 80px 20px;
       max-width: 1000px;
       margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
     section h2 {
       font-size: 32px;
       margin-bottom: 20px;
-      border-bottom: 2px solid #0A66C2;
+      border-bottom: 2px solid #00ffcc;
       display: inline-block;
       padding-bottom: 5px;
     }
+
+    /* Home */
+    .home {
+      text-align: center;
+    }
+    .home h1 { font-size: 3rem; }
+    .highlight { color: #00ffcc; }
+    .subtitle { font-size: 1.2rem; color: #bbb; margin: 15px 0; }
+    .home-logos a { margin: 0 10px; display: inline-block; }
+    .home-logos img { width: 40px; height: 40px; transition: 0.3s; }
+    .home-logos img:hover { transform: scale(1.2); }
 
     /* About */
     .about-container {
@@ -98,33 +93,26 @@
       gap: 25px;
     }
     .card {
-      background: #1a1a1a;
+      background: rgba(30,30,30,0.8);
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       transition: 0.3s;
     }
-    .card:hover { transform: translateY(-8px); }
+    .card:hover { transform: translateY(-8px) scale(1.02); }
     .card h3 { margin-top: 0; }
     .card p { color: #aaa; }
-    .card .btns a {
+    .card a {
       display: inline-block;
-      margin-right: 10px;
+      margin-top: 10px;
       padding: 8px 15px;
       border-radius: 6px;
-      font-size: 14px;
+      background: #00ffcc;
+      color: #0d0d0d;
       font-weight: bold;
       transition: 0.3s;
     }
-    .btns a:first-child {
-      background: #00ffcc;
-      color: #0d0d0d;
-    }
-    .btns a:last-child {
-      border: 1px solid #00ffcc;
-      color: #00ffcc;
-    }
-    .btns a:hover { opacity: 0.8; }
+    .card a:hover { background: #fff; }
 
     /* Skills */
     .skills-container {
@@ -134,7 +122,7 @@
       justify-content: center;
     }
     .skill-box {
-      background: #1a1a1a;
+      background: rgba(30,30,30,0.8);
       padding: 20px;
       border-radius: 12px;
       flex: 1 1 250px;
@@ -149,21 +137,21 @@
       gap: 15px;
     }
     .skill-logos div { width: 70px; }
-    .skill-logos img { width: 50px; height: 50px; transition: transform 0.3s; }
+    .skill-logos img { width: 50px; height: 50px; transition: 0.3s; }
     .skill-logos img:hover { transform: rotate(10deg) scale(1.1); }
 
     /* Contact */
-    .contact-logos a {
-      margin: 0 10px;
-      display: inline-block;
-    }
+    .contact-logos a { margin: 0 10px; display: inline-block; }
     .contact-logos img { width: 40px; height: 40px; }
     .contact-form {
+      background: rgba(30,30,30,0.8);
+      padding: 20px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       max-width: 500px;
+      margin: 20px auto 0;
       gap: 12px;
-      margin-top: 20px;
     }
     .contact-form input, .contact-form textarea {
       padding: 12px;
@@ -197,24 +185,25 @@
 
 <!-- Navbar -->
 <nav>
-  <a href="#home" class="active">Home</a>
-  <a href="#about">About</a>
-  <a href="#projects">Projects</a>
-  <a href="#skills">Skills</a>
-  <a href="#contact">Contact</a>
+  <button onclick="showSection('home')" class="active">Home</button>
+  <button onclick="showSection('about')">About</button>
+  <button onclick="showSection('projects')">Projects</button>
+  <button onclick="showSection('skills')">Skills</button>
+  <button onclick="showSection('contact')">Contact</button>
 </nav>
 
-<!-- Hero -->
-<header id="home" class="hero">
-  <div class="hero-content" data-aos="fade-up">
-    <h1>Hi, I'm <span class="highlight">Ramesh Kelavath</span></h1>
-    <p class="subtitle">Data Science & Machine Learning Enthusiast</p>
-    <a href="#projects" class="cta-btn">View My Work</a>
+<!-- Sections -->
+<section id="home" class="home active">
+  <h1>Hi, I'm <span class="highlight">Ramesh Kelavath</span></h1>
+  <p class="subtitle">Data Science & Machine Learning Enthusiast</p>
+  <div class="home-logos">
+    <a href="mailto:rameshkelavath5@gmail.com"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email"></a>
+    <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn"></a>
+    <a href="https://github.com/RameshKelavath" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></a>
   </div>
-</header>
+</section>
 
-<!-- About -->
-<section id="about" data-aos="fade-right">
+<section id="about">
   <h2>About Me</h2>
   <div class="about-container">
     <img src="https://github.com/RameshKelavath/RameshKelavath.github.io/blob/main/Ramesh Linkedln Photo.jpg?raw=true" alt="Profile Picture">
@@ -224,29 +213,23 @@
   </div>
 </section>
 
-<!-- Projects -->
-<section id="projects" data-aos="fade-left">
+<section id="projects">
   <h2>Projects</h2>
   <div class="projects">
     <div class="card">
       <h3>NIFTY 50 Stock Price Prediction</h3>
       <p>Implemented ARIMA, ARIMAX, LSTM & GRU models on TCS & Infosys stocks. Evaluated using MAE, MSE, RMSE metrics.</p>
-      <div class="btns">
-        <a href="https://github.com/RameshKelavath/nifty50-stock-prediction" target="_blank">Code</a>
-      </div>
+      <a href="https://github.com/RameshKelavath/nifty50-stock-prediction" target="_blank">View Repo</a>
     </div>
     <div class="card">
       <h3>Oil Price Forecasting</h3>
       <p>Forecasted oil prices using LSTM, ARIMA, and Prophet. Multi-step 30-day window prediction validated against EIA data.</p>
-      <div class="btns">
-        <a href="https://github.com/RameshKelavath/oil-price-forecasting" target="_blank">Code</a>
-      </div>
+      <a href="https://github.com/RameshKelavath/oil-price-forecasting" target="_blank">View Repo</a>
     </div>
   </div>
 </section>
 
-<!-- Skills -->
-<section id="skills" data-aos="fade-up">
+<section id="skills">
   <h2>Skills</h2>
   <div class="skills-container">
     <div class="skill-box">
@@ -276,8 +259,7 @@
   </div>
 </section>
 
-<!-- Contact -->
-<section id="contact" data-aos="fade-up">
+<section id="contact">
   <h2>Contact</h2>
   <div class="contact-logos">
     <a href="mailto:rameshkelavath5@gmail.com"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email"></a>
@@ -298,32 +280,15 @@
   &copy; <span id="year"></span> Ramesh Kelavath
 </footer>
 
-<!-- Scripts -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  AOS.init();
-
-  // Highlight active nav link on scroll
-  const sections = document.querySelectorAll("section, header");
-  const navLinks = document.querySelectorAll("nav a");
-
-  window.addEventListener("scroll", () => {
-    let current = "";
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 60;
-      if (pageYOffset >= sectionTop) {
-        current = section.getAttribute("id");
-      }
-    });
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === "#" + current) {
-        link.classList.add("active");
-      }
-    });
-  });
-
-  // Set current year in footer
+  function showSection(sectionId) {
+    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+    document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  // Default load Home
+  showSection('home');
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 </body>
