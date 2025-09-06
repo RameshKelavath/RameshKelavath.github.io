@@ -1,783 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramesh Kelavath - Data Science Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ramesh Kelavath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+<style>
+  :root{
+    --bg:#0f1626; --bg2:#111c2f; --panel:#121c2f; --edge:rgba(255,255,255,.09);
+    --text:#e9edf7; --muted:#a8b0c8; --accent:#1fd36f; --accent2:#16b35d;
+    --r:16px; --shadow:0 18px 42px rgba(0,0,0,.38);
+  }
+  *{box-sizing:border-box} html,body{height:100%} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-        }
+  /* NAV */
+  .topbar{position:fixed; inset:0 0 auto 0; height:64px; display:flex; align-items:center; justify-content:space-between;
+          padding:0 18px; background:#0f1a2c; border-bottom:1px solid var(--edge); z-index:100}
+  .brand{font-weight:900; text-decoration:none; color:#fff}
+  .nav{display:flex; gap:18px; align-items:center}
+  .nav a{color:#cfd6ea; text-decoration:none; font-weight:700; position:relative; padding:10px 6px}
+  .nav a.active{color:#fff}
+  .nav a.active::after{content:""; position:absolute; left:0; right:0; bottom:6px; height:3px; background:var(--accent); border-radius:3px}
+  .btn{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#07131a; padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+  /* STAGE + PANELS */
+  .stage{position:fixed; inset:64px 0 0 0; display:grid; place-items:center; background:var(--bg)}
+  .panel{display:none; width:min(1160px,94vw); height:min(640px,calc(100vh - 96px)); background:var(--panel); border:1px solid var(--edge);
+         border-radius:18px; box-shadow:var(--shadow); overflow:auto}
+  .panel.active{display:block; animation:fade .2s ease} @keyframes fade{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+  /* HOME (hero like your screenshot) */
+  .home{
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.7)),
+      url('bg-home.jpg') center/cover no-repeat,
+      var(--bg2);
+  }
+  .hero{padding:40px clamp(16px,3vw,40px); display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center}
+  .hero h1{font-size:clamp(36px,7vw,72px); line-height:1.05; margin:.2rem 0 .6rem}
+  .hero p{font-size:1.1rem; color:#dfe7ff; font-weight:600}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+  .cta-row .ghost{background:#ffffff14; color:#fff; border:1px solid #ffffff30; text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:800}
+  .photo{display:flex; justify-content:center}
+  .photo img{width:min(320px,86%); aspect-ratio:1/1; object-fit:cover; border-radius:50%; border:1px solid rgba(255,255,255,.2); box-shadow:var(--shadow); background:#fff}
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  /* INSIDE PANELS */
+  .wrap{padding:24px clamp(16px,3vw,26px)}
+  h2{font-size:clamp(22px,3.2vw,32px); margin:2px 0 12px}
+  .muted{color:var(--muted)}
+  .about-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:24px; align-items:center}
+  .about-card{background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:var(--r); padding:16px}
+  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  .card{background:#0f1a2c; border:1px solid var(--edge); border-radius:14px; padding:16px}
+  .thumb{height:150px; border-radius:10px; border:1px solid var(--edge); background:#0d1728; display:grid; place-items:center; color:#8fb3ff; margin-bottom:10px}
+  .tags{display:flex; gap:8px; flex-wrap:wrap}
+  .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
+  .skill-block{margin-bottom:16px}
+  .skill-title{color:var(--accent); font-weight:900; margin:0 0 8px}
+  .icon-row{display:flex; gap:16px; flex-wrap:wrap; padding:12px; border:1px solid var(--edge); border-radius:12px; background:#0f1a2c}
+  .icon-row i{font-size:32px}
+  .pill{display:inline-block; padding:8px 12px; border:1px solid var(--edge); border-radius:12px; background:rgba(255,255,255,.06); font-weight:700}
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            background-color: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-
-        .nav-links a.active {
-            background-color: rgba(255,255,255,0.3);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid white;
-            margin: 0 auto 2rem;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #666;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 4rem 0;
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: #667eea;
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-card h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-tag {
-            background: #667eea;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .skill-category h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .skill-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .skill-bar {
-            width: 100px;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 4px;
-        }
-
-        /* Contact Section */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .contact-info {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-        }
-
-        /* Data Portfolio Section - Removed */
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .btn {
-            background: #667eea;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s ease;
-        }
-
-        .btn:hover {
-            background: #764ba2;
-        }
-    </style>
+  @media (max-width:980px){ .hero{grid-template-columns:1fr} .about-grid{grid-template-columns:1fr} .cards{grid-template-columns:1fr 1fr} }
+  @media (max-width:620px){ .cards{grid-template-columns:1fr} }
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <div class="logo">Ramesh Kelavath</div>
-            <ul class="nav-links">
-                <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
-                <li><a href="#" onclick="showSection('about')">About</a></li>
-                <li><a href="#" onclick="showSection('data-portfolio')">Data Portfolio</a></li>
-                <li><a href="#" onclick="showSection('projects')">Projects</a></li>
-                <li><a href="#" onclick="showSection('skills')">Skills</a></li>
-                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <!-- Home Section -->
-    <section id="home" class="section active">
-        <div class="hero">
-            <div class="container">
-                <div class="profile-img">RK</div>
-                <h1>Ramesh Kelavath</h1>
-                <p>MSc Data Science Student | Azure Certified | Machine Learning Enthusiast</p>
-                <a href="#" onclick="showSection('contact')" class="cta-button">Get In Touch</a>
-            </div>
+<header class="topbar">
+  <a class="brand" href="#home" data-view="home">Ramesh Kelavath</a>
+  <nav class="nav">
+    <a href="#home" data-view="home" class="active">Home</a>
+    <a href="#about" data-view="about">About</a>
+    <a href="#portfolio" data-view="portfolio">Data Portfolio</a>
+    <a href="#skills" data-view="skills">Skills</a>
+    <a href="#contact" data-view="contact">Contact</a>
+    <a class="btn" href="Ramesh CV.pdf" target="_blank" rel="noopener">Resume</a>
+  </nav>
+</header>
+
+<main class="stage">
+  <!-- HOME -->
+  <section class="panel home active" id="view-home" role="region" aria-label="Home">
+    <div class="hero">
+      <div>
+        <h1>Ramesh Kelavath</h1>
+        <p>Passionate MSc Data Science student crafting data-driven insights & tools.</p>
+        <div class="cta-row">
+          <a class="btn" href="#portfolio" data-view="portfolio">Portfolio</a>
+          <a class="ghost" href="#about" data-view="about">About Me</a>
         </div>
-    </section>
+      </div>
+      <div class="photo">
+        <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh"
+             onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
+      </div>
+    </div>
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="profile-img" style="width: 200px; height: 200px; font-size: 4rem;">RK</div>
-                <div class="about-text">
-                    <p>I am a motivated MSc Data Science student at the University of Hertfordshire with a solid foundation in Python, SQL, and cloud computing. Certified in Microsoft Azure AI Fundamentals (AI-900), with hands-on experience in machine learning, software development, and data-driven problem-solving.</p>
-                    
-                    <p>My passion lies in building efficient data pipelines and working with both structured and unstructured datasets. With a background in Electronics and Communication Engineering from NIT Agartala and professional experience at Accenture, I bring a unique blend of technical expertise and practical experience to data science challenges.</p>
-                    
-                    <p>I'm eager to contribute my technical skills and strong learning mindset to impactful data engineering projects and continue growing in the field of data science and artificial intelligence.</p>
-                </div>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">2+</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Certifications</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Technologies</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Languages</div>
-                </div>
-            </div>
+  <!-- ABOUT -->
+  <section class="panel" id="view-about" role="region" aria-label="About" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="about-grid">
+        <div class="about-card photo">
+          <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh"
+               onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
         </div>
-    </section>
-
-    <!-- Data Portfolio Section -->
-    <section id="data-portfolio" class="section">
-        <div class="container">
-            <h2>Data Portfolio</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-header">
-                        <h3>Stock Price Prediction Analysis</h3>
-                        <p>Time Series & Deep Learning Models</p>
-                    </div>
-                    <div class="portfolio-content">
-                        <p>Comprehensive study comparing ARIMA, ARIMAX, and LSTM models for predicting NIFTY 50 stocks using 20 years of historical data.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">Pandas</span>
-                            <span class="tech-tag">Statsmodels</span>
-                        </div>
-                        <div class="portfolio-metrics">
-                            <div class="metric">
-                                <div class="metric-value">20 Years</div>
-                                <div>Data Range</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">3 Models</div>
-                                <div>Compared</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">ARIMAX</div>
-                                <div>Best Model</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-header">
-                        <h3>Machine Learning Projects</h3>
-                        <p>Neural Networks & Deep Learning</p>
-                    </div>
-                    <div class="portfolio-content">
-                        <p>Various ML projects including neural network implementations, NLP tasks, and deep learning applications using modern frameworks.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">PyTorch</span>
-                            <span class="tech-tag">Keras</span>
-                            <span class="tech-tag">NumPy</span>
-                            <span class="tech-tag">Matplotlib</span>
-                        </div>
-                        <div class="portfolio-metrics">
-                            <div class="metric">
-                                <div class="metric-value">Multiple</div>
-                                <div>Projects</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">ML/DL</div>
-                                <div>Focus</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">Python</div>
-                                <div>Primary Lang</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-header">
-                        <h3>Data Visualization</h3>
-                        <p>Interactive Dashboards & Analytics</p>
-                    </div>
-                    <div class="portfolio-content">
-                        <p>Creating compelling visualizations and interactive dashboards for data-driven insights and business intelligence.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Matplotlib</span>
-                            <span class="tech-tag">Pandas</span>
-                            <span class="tech-tag">SQL</span>
-                            <span class="tech-tag">Azure</span>
-                        </div>
-                        <div class="portfolio-metrics">
-                            <div class="metric">
-                                <div class="metric-value">Multiple</div>
-                                <div>Dashboards</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">Business</div>
-                                <div>Intelligence</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">Interactive</div>
-                                <div>Visualizations</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="about-card">
+          <p class="muted">
+            Hi there, I’m Ramesh. I work with Python, SQL, and Azure to build robust data workflows and predictive models.
+            Hands-on with ARIMA/ARIMAX, LSTM/GRU, and visualization. Ex-Accenture (Custom Software Engineering Associate).
+          </p>
+          <ul>
+            <li><b>Email:</b> <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></li>
+            <li><b>Location:</b> Hertfordshire, UK</li>
+            <li><b>Certification:</b> Azure AI Fundamentals (AI-900)</li>
+          </ul>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>NIFTY 50 Stock Prediction</h3>
-                    <p>Investigated forecasting models using 20 years of historical stock data. Compared performance of ARIMA, ARIMAX, and LSTM models with comprehensive evaluation metrics.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">TensorFlow</span>
-                        <span class="tech-tag">Pandas</span>
-                        <span class="tech-tag">Statsmodels</span>
-                        <span class="tech-tag">Keras</span>
-                        <span class="tech-tag">Matplotlib</span>
-                    </div>
-                </div>
+  <!-- DATA PORTFOLIO -->
+  <section class="panel" id="view-portfolio" role="region" aria-label="Portfolio" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="thumb">Cover</div>
+          <h3 style="color:#2fe180;margin:.3rem 0">NIFTY 50 Stock Prediction</h3>
+          <p class="muted">ARIMA & ARIMAX (Open as exog) vs LSTM on 20+ years; MAE/MSE/RMSE comparison.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Statsmodels</span><span class="tag">TensorFlow</span></div>
+        </article>
+        <article class="card">
+          <div class="thumb">Cover</div>
+          <h3 style="color:#2fe180;margin:.3rem 0">Time-Series EDA Toolkit</h3>
+          <p class="muted">Stationarity tests, decomposition, ACF/PACF, hyper-param search, forecast charts.</p>
+          <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
+        </article>
+        <article class="card">
+          <div class="thumb">Cover</div>
+          <h3 style="color:#2fe180;margin:.3rem 0">Azure ML Pipeline (Concept)</h3>
+          <p class="muted">Ingest → transform → deploy on Azure (Blob, Data Factory, Functions, ML Studio).</p>
+          <div class="tags"><span class="tag">Azure</span><span class="tag">MLOps</span><span class="tag">CI/CD</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-                <div class="project-card">
-                    <h3>Data Science Coursework</h3>
-                    <p>Comprehensive projects covering fundamentals of data science, data handling & visualization, data mining, and applied data science with real-world datasets.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Pandas</span>
-                        <span class="tech-tag">NumPy</span>
-                        <span class="tech-tag">SQL</span>
-                        <span class="tech-tag">Machine Learning</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <h3>Insurance Software Development</h3>
-                    <p>Worked on Duck Creek Policy configuration, XSLT transforms, and database procedures. Developed level 3 forms and resolved system validation problems.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">.NET</span>
-                        <span class="tech-tag">SQL</span>
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">XSLT</span>
-                        <span class="tech-tag">Duck Creek</span>
-                    </div>
-                </div>
-            </div>
+  <!-- SKILLS -->
+  <section class="panel" id="view-skills" role="region" aria-label="Skills" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <div class="card skill-block">
+        <h3 class="skill-title">Languages</h3>
+        <div class="icon-row">
+          <i class="devicon-python-plain colored" title="Python"></i>
+          <i class="devicon-java-plain colored" title="Java"></i>
+          <i class="devicon-dotnetcore-plain colored" title=".NET"></i>
+          <span class="pill">SQL</span>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <div class="container">
-            <h2>Skills & Technologies</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
-                    <div class="skill-item">
-                        <span>Python</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 90%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>SQL</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>Java</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>.NET</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 80%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>AI & Machine Learning</h3>
-                    <div class="skill-item">
-                        <span>Neural Networks</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>Deep Learning</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 80%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>NLP</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>TensorFlow/PyTorch</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Data Science Libraries</h3>
-                    <div class="skill-item">
-                        <span>Pandas</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 90%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>NumPy</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>Matplotlib</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 80%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>Statsmodels</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3>Cloud & Databases</h3>
-                    <div class="skill-item">
-                        <span>Microsoft Azure</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>MySQL</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 80%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>SQLite</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span>Git</span>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="card skill-block">
+        <h3 class="skill-title">Technologies</h3>
+        <div class="icon-row">
+          <i class="devicon-git-plain colored" title="Git"></i>
+          <i class="devicon-azure-plain colored" title="Azure"></i>
+          <i class="devicon-docker-plain colored" title="Docker"></i>
+          <i class="devicon-linux-plain colored" title="Linux"></i>
+          <span class="pill">Jupyter</span><span class="pill">Colab</span>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <h2>Contact Me</h2>
-            <div class="contact-content">
-                <div class="contact-form">
-                    <h3>Send Message</h3>
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
-                </div>
-
-                <div class="contact-info">
-                    <h3>Get In Touch</h3>
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <div>
-                            <strong>Email</strong><br>
-                            rameshkelavath5@gmail.com
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div>
-                            <strong>Phone</strong><br>
-                            07440 595 986
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <strong>Location</strong><br>
-                            Hertfordshire, UK
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">💼</div>
-                        <div>
-                            <strong>LinkedIn</strong><br>
-                            <a href="#" style="color: #667eea;">LinkedIn Profile</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="card skill-block">
+        <h3 class="skill-title">Libraries</h3>
+        <div class="icon-row">
+          <i class="devicon-tensorflow-original colored" title="TensorFlow"></i>
+          <i class="devicon-pytorch-original colored" title="PyTorch"></i>
+          <span class="pill">Keras</span><span class="pill">Scikit-learn</span><span class="pill">Statsmodels</span><span class="pill">Pandas</span><span class="pill">NumPy</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+  <!-- CONTACT -->
+  <section class="panel" id="view-contact" role="region" aria-label="Contact" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="muted">Open to internships and full-time roles in Data Science, ML, and Data Engineering.</p>
+      <div class="card" style="display:flex; gap:12px; flex-wrap:wrap">
+        <a class="pill" href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a>
+        <a class="pill" href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="pill" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">GitHub</a>
+        <a class="pill" href="Ramesh CV.pdf" target="_blank" rel="noopener">View CV (PDF)</a>
+      </div>
+      <div class="card" style="margin-top:12px; max-width:520px">
+        <h3>Quick Message</h3>
+        <form action="https://formspree.io/f/your-form-id" method="POST" style="display:grid; gap:10px">
+          <label>Name <input name="name" required style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:#0f1a2c;color:var(--text)"></label>
+          <label>Email <input name="email" type="email" required style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:#0f1a2c;color:var(--text)"></label>
+          <label>Message <textarea name="message" required style="min-height:120px;width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:#0f1a2c;color:var(--text)"></textarea></label>
+          <button class="btn" type="submit">Send</button>
+          <p class="muted" style="margin:4px 0 0">Replace <code>your-form-id</code> with your Formspree ID.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
 
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
+<script>
+  // Robust no-scroll router
+  const VIEWS = ['home','about','portfolio','skills','contact'];
+  const PANELS = Object.fromEntries(VIEWS.map(v => [v, document.getElementById('view-'+v)]));
+  const LINKS = Array.from(document.querySelectorAll('[data-view]'));
 
-            // Update navigation
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
+  function show(view){
+    const chosen = VIEWS.includes(view) ? view : 'home';
+    for (const [k, el] of Object.entries(PANELS)) { el.classList.toggle('active', k===chosen); }
+    for (const a of LINKS) { a.classList.toggle('active', a.dataset.view===chosen); }
+    if (location.hash.slice(1) !== chosen) history.replaceState(null,'','#'+chosen);
+  }
+  LINKS.forEach(a => a.addEventListener('click', e => { e.preventDefault(); show(a.dataset.view); }));
+  window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+  document.addEventListener('DOMContentLoaded', () => show(location.hash.slice(1)));
+</script>
 
-            event.target.classList.add('active');
-        }
-
-        // Handle form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-        });
-    </script>
 </body>
 </html>
