@@ -1,20 +1,13 @@
 <!doctype html>
-<!--
-  GitHub Profile Page (single-file)
-  - Save as index.html and open in browser or push to GitHub Pages (gh-pages branch or repository settings -> GitHub Pages)
-  - This implements a single-page layout with sections: Home, Data Portfolio, About, Projects, Skills, Contact
-  - Navigation uses in-page anchors and JS to simulate "click -> get page" behaviour (shows/hides sections)
-  - Replace placeholder images and text with your real content.
--->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Name — GitHub Profile</title>
+  <title>Ramesh Kelavath — GitHub Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0f1724; /* deep navy */
+      --bg:#0f1724;
       --card:#0b1220;
       --muted:#9aa4b2;
       --accent:#7c3aed;
@@ -25,71 +18,52 @@
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071024 0%, var(--bg) 100%);}
     .wrap{max-width:var(--maxw);margin:32px auto;padding:24px}
-
-    /* NAV */
     .nav{display:flex;align-items:center;gap:16px;justify-content:space-between}
     .brand{display:flex;align-items:center;gap:12px}
     .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2dd4bf);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
     nav ul{display:flex;gap:12px;list-style:none;padding:0;margin:0}
     nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
     nav a.active, nav a:hover{background:var(--glass);color:#fff}
-
-    /* HERO */
     .hero{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center;margin-top:28px}
     .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:20px;box-shadow:0 6px 22px rgba(2,6,23,0.6)}
     .intro h1{margin:0 0 8px 0;font-size:28px}
     .intro p{margin:0;color:var(--muted)}
     .cta{margin-top:16px;display:flex;gap:12px}
     .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700}
-
-    /* sidebar profile */
     .profile{display:flex;flex-direction:column;gap:12px}
     .avatar{width:100%;height:280px;border-radius:10px;background-size:cover;background-position:center}
     .meta{display:flex;gap:10px;align-items:center}
     .meta .stat{flex:1;text-align:center}
     .stat strong{display:block}
-
-    /* sections */
     section{margin-top:20px}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
     .tile{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px}
     .tile h3{margin:6px 0 4px 0}
     .small{color:var(--muted);font-size:13px}
-
-    /* Data portfolio page (detailed) */
     .portfolio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
     .portfolio-item{display:flex;gap:12px;align-items:center}
     .thumb{width:120px;height:80px;border-radius:8px;background-size:cover;background-position:center}
     .link{color:var(--accent);text-decoration:none;font-weight:600}
-
-    /* About page large image */
     .about-hero{display:flex;gap:18px;align-items:center}
     .about-hero img{width:320px;height:200px;border-radius:12px;object-fit:cover}
-
-    /* Projects/Skills/Contact small layouts */
     .badge{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:999px;margin:4px 4px 4px 0}
-
-    /* footer */
     footer{text-align:center;color:var(--muted);margin:28px 0}
-
-    /* responsive */
     @media (max-width:940px){
       .hero{grid-template-columns:1fr}
       .profile{order:-1}
       .about-hero{flex-direction:column}
       .portfolio-grid{grid-template-columns:1fr}
     }
-
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="nav">
       <div class="brand">
-        <div class="logo">YN</div>
+        <div class="logo">RK</div>
         <div>
-          <div style="font-weight:700">Your Name</div>
-          <div style="font-size:12px;color:var(--muted)">Data Scientist • ML • Time Series</div>
+          <div style="font-weight:700">Ramesh Kelavath</div>
+          <div style="font-size:12px;color:var(--muted)">MSc Data Science • University of Hertfordshire</div>
         </div>
       </div>
       <nav>
@@ -104,13 +78,12 @@
       </nav>
     </div>
 
-    <!-- MAIN CONTENT AREAS: show/hide by JS -->
     <main>
       <section id="home" class="card" data-page>
         <div class="hero">
           <div class="intro">
-            <h1>Hi — I'm Your Name</h1>
-            <p>Master's student • Time series & ML practitioner. I build reproducible forecasting pipelines and data visualisations.</p>
+            <h1>Hi — I'm Ramesh Kelavath</h1>
+            <p>MSc Data Science student at University of Hertfordshire. Certified in Azure AI Fundamentals, with strong skills in Python, SQL, cloud, and machine learning. Passionate about data-driven problem-solving and efficient pipelines.</p>
             <div class="cta">
               <a class="btn" data-link="portfolio">View portfolio</a>
               <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Download CV</a>
@@ -125,19 +98,18 @@
                 </div>
                 <div class="tile">
                   <h3>NIFTY-50 analysis</h3>
-                  <div class="small">Sector comparison — deep learning vs statistical models</div>
+                  <div class="small">ARIMA, ARIMAX, LSTM comparison on IT sector stocks</div>
                 </div>
               </div>
             </div>
-
           </div>
 
           <aside class="profile card">
-            <div class="avatar" style="background-image:url('https://placehold.co/600x400?text=Your+Photo')"></div>
+            <div class="avatar" style="background-image:url('https://placehold.co/600x400?text=Ramesh+Kelavath')"></div>
             <div class="meta">
               <div class="stat"><strong>5</strong><span class="small">Projects</span></div>
-              <div class="stat"><strong>1.2k</strong><span class="small">GitHub stars</span></div>
-              <div class="stat"><strong>10</strong><span class="small">Publications</span></div>
+              <div class="stat"><strong>3</strong><span class="small">Certifications</span></div>
+              <div class="stat"><strong>2+</strong><span class="small">Years Work Exp.</span></div>
             </div>
             <div style="display:flex;gap:8px">
               <a class="btn" href="#contact" data-link="contact">Hire / Contact</a>
@@ -147,168 +119,98 @@
         </div>
       </section>
 
-      <!-- Data Portfolio page -->
       <section id="portfolio" class="card" data-page style="display:none">
         <h2>Data Portfolio</h2>
-        <p class="small">Click any item to open the full project page.</p>
-
         <div class="portfolio-grid" style="margin-top:12px">
           <div class="tile portfolio-item">
-            <div class="thumb" style="background-image:url('https://placehold.co/640x360?text=Project+1')"></div>
+            <div class="thumb" style="background-image:url('https://placehold.co/640x360?text=Oil+Forecast')"></div>
             <div>
               <h3>Oil Price Forecasting</h3>
-              <div class="small">LSTM, ARIMA, evaluation, 24-month forecast</div>
-              <div style="margin-top:8px"><a class="link" href="#" onclick="openProject('oil')">Open project →</a></div>
+              <div class="small">LSTM vs ARIMA — 24-month forecast with evaluation</div>
+              <div style="margin-top:8px"><a class="link" href="#">View code →</a></div>
             </div>
           </div>
 
           <div class="tile portfolio-item">
-            <div class="thumb" style="background-image:url('https://placehold.co/640x360?text=Project+2')"></div>
+            <div class="thumb" style="background-image:url('https://placehold.co/640x360?text=NIFTY+Stocks')"></div>
             <div>
-              <h3>NIFTY-50 Sector Analysis</h3>
-              <div class="small">Deep learning vs ARIMA on IT sector</div>
-              <div style="margin-top:8px"><a class="link" href="#" onclick="openProject('nifty')">Open project →</a></div>
+              <h3>NIFTY-50 Stock Prediction</h3>
+              <div class="small">Comparative study of ARIMA, ARIMAX, and LSTM</div>
+              <div style="margin-top:8px"><a class="link" href="#">View code →</a></div>
             </div>
           </div>
-
         </div>
-
-        <!-- Detailed project viewer (simulates the "following page" from your doc) -->
-        <div id="projectViewer" style="margin-top:18px;display:none">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h3 id="projectTitle">Project Title</h3>
-            <button onclick="closeProject()" style="background:transparent;border:none;color:var(--muted);font-weight:700;cursor:pointer">Close ✕</button>
-          </div>
-          <div style="margin-top:8px;color:var(--muted)" id="projectDesc">Project description goes here.</div>
-          <div style="margin-top:14px" id="projectImages">
-            <img src="https://placehold.co/1000x400?text=Project+image" alt="project" style="width:100%;border-radius:12px" />
-          </div>
-          <div style="margin-top:12px;display:flex;gap:10px">
-            <a class="btn" id="projectCodeLink" href="#">View code</a>
-            <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)" href="#">Read report</a>
-          </div>
-        </div>
-
       </section>
 
-      <!-- About page (shows large image as described in your doc) -->
       <section id="about" class="card" data-page style="display:none">
         <h2>About</h2>
         <div class="about-hero">
-          <img src="https://placehold.co/800x500?text=About+photo" alt="about image" />
+          <img src="https://placehold.co/800x500?text=About+Ramesh" alt="about image" />
           <div>
-            <p style="margin-top:0">I am a MSc student at the University of Greenwich (MSc Mechanical & Manufacturing Engineering) with experience in time series forecasting, LSTM/GRU, ARIMA/SARIMA, and applied machine learning. I previously worked at Accenture and have implemented models for stock & oil price forecasts.</p>
-            <p class="small">When I click on the about navigation tab I will get below image — this section renders a large illustrative image and an about description as in your document. Replace this image with the one from your doc if you want exact match.</p>
+            <p>I am pursuing MSc Data Science (2024–2026) at University of Hertfordshire, with strong foundations in Python, SQL, cloud, and applied ML. Experienced as Custom Software Engineering Associate at Accenture, and in academic projects such as NIFTY-50 stock prediction. Passionate about data engineering and AI solutions.</p>
+            <p class="small">Certified in Microsoft Azure AI Fundamentals. Completed Machine Learning Specialization by Andrew Ng, and trained in Python, Java, and .NET. Volunteering and leadership experience in sustainability and sports.</p>
           </div>
         </div>
       </section>
 
-      <!-- Projects page (next projects) -->
       <section id="projects" class="card" data-page style="display:none">
-        <h2>Projects — Next projects</h2>
+        <h2>Projects</h2>
         <div class="grid" style="margin-top:12px">
           <div class="tile">
-            <h3>Next project 1</h3>
-            <div class="small">Short description and outcomes. Replace with the content you want.</div>
+            <h3>NIFTY-50 Stock Forecasting</h3>
+            <div class="small">Compared ARIMA, ARIMAX, and LSTM on 20 years of data.</div>
           </div>
           <div class="tile">
-            <h3>Next project 2</h3>
-            <div class="small">Short description and outcomes.</div>
+            <h3>Oil Price Forecasting</h3>
+            <div class="small">LSTM vs ARIMA — built full forecasting pipeline with evaluation.</div>
           </div>
         </div>
       </section>
 
-      <!-- Skills page (next skills) -->
       <section id="skills" class="card" data-page style="display:none">
-        <h2>Skills — Next skills</h2>
-        <p class="small">Technical & soft skills</p>
+        <h2>Skills</h2>
         <div style="margin-top:12px">
           <span class="badge">Python</span>
-          <span class="badge">Time series</span>
-          <span class="badge">LSTM / GRU</span>
-          <span class="badge">ARIMA</span>
-          <span class="badge">Docker</span>
-          <span class="badge">Git & GitHub</span>
+          <span class="badge">TensorFlow</span>
+          <span class="badge">PyTorch</span>
+          <span class="badge">SQL</span>
+          <span class="badge">Azure</span>
+          <span class="badge">Git</span>
+          <span class="badge">Java</span>
+          <span class="badge">.NET</span>
+          <span class="badge">Machine Learning</span>
+          <span class="badge">Deep Learning</span>
+          <span class="badge">NLP</span>
         </div>
       </section>
 
-      <!-- Contact page (next contact page) -->
       <section id="contact" class="card" data-page style="display:none">
-        <h2>Contact — Next contact page</h2>
-        <p class="small">Want to collaborate or hire me? Reach out below.</p>
-        <form onsubmit="event.preventDefault();alert('Contact form submitted (demo)')" style="margin-top:12px;display:grid;gap:8px;max-width:560px">
-          <input required placeholder="Your name" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
-          <input required type="email" placeholder="Email" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
-          <textarea required placeholder="Message" rows="5" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff"></textarea>
-          <div style="display:flex;gap:8px">
-            <button class="btn" type="submit">Send</button>
-            <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)" href="mailto:your.email@example.com">Email me</a>
-          </div>
-        </form>
+        <h2>Contact</h2>
+        <p class="small">Ramesh Kelavath</p>
+        <p class="small">📞 07440 595 986</p>
+        <p class="small">📧 <a href="mailto:rameshkelavath5@gmail.com" style="color:var(--accent)">rameshkelavath5@gmail.com</a></p>
+        <p class="small">📍 Hertfordshire, UK</p>
+        <p class="small"><a href="#" style="color:var(--accent)">LinkedIn Profile</a></p>
       </section>
-
     </main>
 
     <footer>
-      Built with ❤️ — replace content and images to match your exact look.
+      Built by Ramesh Kelavath — MSc Data Science, University of Hertfordshire
     </footer>
-
   </div>
 
   <script>
-    // Basic SPA navigation: show/hide sections. Keeps history state for back/forward support.
     const links = document.querySelectorAll('a[data-link]');
     const pages = document.querySelectorAll('[data-page]');
-
     function showPage(name, push=true){
       pages.forEach(p=>p.style.display = (p.id === name ? 'block' : 'none'));
       links.forEach(a=> a.classList.toggle('active', a.dataset.link===name));
       if(push) history.pushState({page:name}, '', '#'+name);
     }
-
-    links.forEach(a=>a.addEventListener('click', e=>{
-      const name = a.dataset.link;
-      showPage(name, true);
-      e.preventDefault();
-    }));
-
-    // handle back/forward
-    window.addEventListener('popstate', e=>{
-      const page = (e.state && e.state.page) || location.hash.replace('#','') || 'home';
-      showPage(page, false);
-    });
-
-    // initial load
+    links.forEach(a=>a.addEventListener('click', e=>{const name = a.dataset.link;showPage(name, true);e.preventDefault();}));
+    window.addEventListener('popstate', e=>{const page = (e.state && e.state.page) || location.hash.replace('#','') || 'home';showPage(page, false);});
     const initial = location.hash.replace('#','') || 'home';
     showPage(initial, false);
-
-    // Project viewer functionality
-    function openProject(key){
-      const viewer = document.getElementById('projectViewer');
-      const title = document.getElementById('projectTitle');
-      const desc = document.getElementById('projectDesc');
-      const images = document.getElementById('projectImages');
-      const codeLink = document.getElementById('projectCodeLink');
-
-      if(key==='oil'){
-        title.textContent = 'Oil Price Forecasting — LSTM vs ARIMA';
-        desc.textContent = 'Detailed project: LSTM and ARIMA modelling, 24-month forecast with evaluation. Includes Python notebooks and report.';
-        images.innerHTML = '<img src="https://placehold.co/1000x400?text=Oil+forecast+chart" style="width:100%;border-radius:12px">';
-        codeLink.href = '#';
-      } else if(key==='nifty'){
-        title.textContent = 'NIFTY-50 Sector Analysis';
-        desc.textContent = 'Comparative study of TCS & Infosys using ARIMA, ARIMAX, LSTM and GRU. Notebooks and results included.';
-        images.innerHTML = '<img src="https://placehold.co/1000x400?text=NIFTY+charts" style="width:100%;border-radius:12px">';
-        codeLink.href = '#';
-      }
-
-      viewer.style.display = 'block';
-      viewer.scrollIntoView({behavior:'smooth'});
-    }
-    function closeProject(){
-      document.getElementById('projectViewer').style.display='none';
-    }
-
   </script>
 </body>
 </html>
