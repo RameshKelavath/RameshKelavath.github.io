@@ -6,44 +6,65 @@
   <title>Ramesh Kelavath | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    /* Base Styles */
+    /* Base */
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #0d0d0d;
+      background: #0d0d0d;
       color: #f5f5f5;
-      overflow-x: hidden;
+      display: flex;
+      min-height: 100vh;
+      overflow: hidden;
     }
-    a { color: #0A66C2; text-decoration: none; }
+    a { color: #00ff66; text-decoration: none; }
 
-    /* Navbar */
-    nav {
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+    }
+    .sidebar h1 {
+      font-size: 1.6rem;
+      color: #00ff66;
+      margin-bottom: 40px;
       text-align: center;
-      background-color: #111;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 15px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
     }
     nav button {
-      margin: 0 15px;
-      font-weight: 600;
-      font-size: 18px;
       background: none;
       border: none;
       color: #f5f5f5;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 10px;
+      text-align: left;
       cursor: pointer;
       transition: 0.3s;
+      border-radius: 6px;
     }
-    nav button:hover, nav button.active { color: #00ffcc; transform: scale(1.1); }
+    nav button.active, nav button:hover {
+      background: #00ff66;
+      color: #0d0d0d;
+    }
 
-    /* Sections */
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 40px;
+      position: relative;
+    }
     section {
       display: none;
-      padding: 80px 20px;
-      max-width: 1000px;
-      margin: 0 auto;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.5s ease;
@@ -54,241 +75,205 @@
       transform: translateY(0);
     }
     section h2 {
-      font-size: 32px;
+      font-size: 28px;
+      color: #00ff66;
       margin-bottom: 20px;
-      border-bottom: 2px solid #00ffcc;
+      border-bottom: 2px solid #00ff66;
       display: inline-block;
       padding-bottom: 5px;
     }
 
-    /* Home */
-    .home {
-      text-align: center;
+    /* Home with particles */
+    #particles-js {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
     }
-    .home h1 { font-size: 3rem; }
-    .highlight { color: #00ffcc; }
-    .subtitle { font-size: 1.2rem; color: #bbb; margin: 15px 0; }
-    .home-logos a { margin: 0 10px; display: inline-block; }
-    .home-logos img { width: 40px; height: 40px; transition: 0.3s; }
-    .home-logos img:hover { transform: scale(1.2); }
+    .home-content {
+      text-align: center;
+      margin-top: 20%;
+    }
+    .home-content h2 { font-size: 2.5rem; color: #fff; }
+    .home-content p { color: #bbb; }
 
     /* About */
-    .about-container {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 30px;
-    }
+    .about-container { display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
     .about-container img {
-      max-width: 220px;
+      max-width: 200px;
       border-radius: 50%;
       box-shadow: 0 4px 15px rgba(0,0,0,0.6);
     }
-    .about-container div { flex: 1; min-width: 250px; }
 
     /* Projects */
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-      gap: 25px;
-    }
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 20px; }
     .card {
-      background: rgba(30,30,30,0.8);
+      background: rgba(30,30,30,0.9);
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
       transition: 0.3s;
     }
-    .card:hover { transform: translateY(-8px) scale(1.02); }
-    .card h3 { margin-top: 0; }
-    .card p { color: #aaa; }
-    .card a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 15px;
-      border-radius: 6px;
-      background: #00ffcc;
-      color: #0d0d0d;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .card a:hover { background: #fff; }
+    .card:hover { transform: translateY(-8px); }
+    .card h3 { color: #00ff66; }
 
     /* Skills */
-    .skills-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
+    .skills-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
     .skill-box {
-      background: rgba(30,30,30,0.8);
+      background: rgba(30,30,30,0.9);
       padding: 20px;
       border-radius: 12px;
       flex: 1 1 250px;
       text-align: center;
-      transition: 0.3s;
     }
-    .skill-box:hover { transform: scale(1.05); }
-    .skill-logos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-    .skill-logos div { width: 70px; }
-    .skill-logos img { width: 50px; height: 50px; transition: 0.3s; }
-    .skill-logos img:hover { transform: rotate(10deg) scale(1.1); }
+    .skill-box h3 { color: #00ff66; }
+    .skill-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .skill-logos img { width: 50px; transition: 0.3s; }
+    .skill-logos img:hover { transform: scale(1.2) rotate(10deg); }
 
     /* Contact */
-    .contact-logos a { margin: 0 10px; display: inline-block; }
-    .contact-logos img { width: 40px; height: 40px; }
     .contact-form {
-      background: rgba(30,30,30,0.8);
+      background: rgba(30,30,30,0.9);
       padding: 20px;
       border-radius: 12px;
+      max-width: 500px;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
-      max-width: 500px;
-      margin: 20px auto 0;
       gap: 12px;
     }
     .contact-form input, .contact-form textarea {
       padding: 12px;
       border-radius: 6px;
       border: none;
-      width: 100%;
     }
     .contact-form button {
       padding: 12px;
       border: none;
       border-radius: 6px;
-      background: #0A66C2;
-      color: white;
+      background: #00ff66;
+      color: #0d0d0d;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
     }
-    .contact-form button:hover { background: #00ffcc; color: #0d0d0d; }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      border-top: 1px solid #333;
-      color: #aaa;
-      margin-top: 40px;
-    }
+    .contact-form button:hover { background: #fff; }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav>
-  <button onclick="showSection('home')" class="active">Home</button>
-  <button onclick="showSection('about')">About</button>
-  <button onclick="showSection('projects')">Projects</button>
-  <button onclick="showSection('skills')">Skills</button>
-  <button onclick="showSection('contact')">Contact</button>
-</nav>
+<!-- Sidebar -->
+<div class="sidebar">
+  <h1>Ramesh<br>Kelavath</h1>
+  <nav>
+    <button class="active" onclick="showSection('home')">Home</button>
+    <button onclick="showSection('about')">About</button>
+    <button onclick="showSection('projects')">Projects</button>
+    <button onclick="showSection('skills')">Skills</button>
+    <button onclick="showSection('contact')">Contact</button>
+  </nav>
+</div>
 
-<!-- Sections -->
-<section id="home" class="home active">
-  <h1>Hi, I'm <span class="highlight">Ramesh Kelavath</span></h1>
-  <p class="subtitle">Data Science & Machine Learning Enthusiast</p>
-  <div class="home-logos">
-    <a href="mailto:rameshkelavath5@gmail.com"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email"></a>
-    <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn"></a>
-    <a href="https://github.com/RameshKelavath" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></a>
-  </div>
-</section>
+<!-- Main content -->
+<div class="main">
+  <!-- Home -->
+  <section id="home" class="active">
+    <div id="particles-js"></div>
+    <div class="home-content">
+      <h2>Hi, I'm <span style="color:#00ff66">Ramesh Kelavath</span></h2>
+      <p>Data Science & Machine Learning Enthusiast</p>
+    </div>
+  </section>
 
-<section id="about">
-  <div class="about-container">
-    <img src="https://github.com/RameshKelavath/RameshKelavath.github.io/blob/main/Ramesh Linkedln Photo.jpg?raw=true" alt="Profile Picture">
-    <div>
+  <!-- About -->
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-container">
+      <img src="https://github.com/RameshKelavath/RameshKelavath.github.io/blob/main/Ramesh%20Linkedln%20Photo.jpg?raw=true" alt="Profile Picture">
       <p>I am a MSc Data Science student at the University of Hertfordshire with strong skills in Python, SQL, Statistics, and Machine Learning. I have professional experience as an Associate Software Engineer at Accenture, and I enjoy building end-to-end ML solutions and data-driven projects.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="projects">
-  <h2>Projects</h2>
-  <div class="projects">
-    <div class="card">
-      <h3>NIFTY 50 Stock Price Prediction</h3>
-      <p>Implemented ARIMA, ARIMAX, LSTM & GRU models on TCS & Infosys stocks. Evaluated using MAE, MSE, RMSE metrics.</p>
-      <a href="https://github.com/RameshKelavath/nifty50-stock-prediction" target="_blank">View Repo</a>
-    </div>
-    <div class="card">
-      <h3>Oil Price Forecasting</h3>
-      <p>Forecasted oil prices using LSTM, ARIMA, and Prophet. Multi-step 30-day window prediction validated against EIA data.</p>
-      <a href="https://github.com/RameshKelavath/oil-price-forecasting" target="_blank">View Repo</a>
-    </div>
-  </div>
-</section>
-
-<section id="skills">
-  <h2>Skills</h2>
-  <div class="skills-container">
-    <div class="skill-box">
-      <h3>Languages</h3>
-      <div class="skill-logos">
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"><p>Python</p></div>
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"><p>SQL</p></div>
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"><p>Java</p></div>
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <div class="card">
+        <h3>NIFTY 50 Stock Price Prediction</h3>
+        <p>ARIMA, ARIMAX, LSTM & GRU on TCS & Infosys stocks. Evaluated using MAE, MSE, RMSE.</p>
+        <a href="https://github.com/RameshKelavath/nifty50-stock-prediction" target="_blank">View Repo</a>
+      </div>
+      <div class="card">
+        <h3>Oil Price Forecasting</h3>
+        <p>LSTM, ARIMA, and Prophet. Multi-step 30-day prediction validated against EIA data.</p>
+        <a href="https://github.com/RameshKelavath/oil-price-forecasting" target="_blank">View Repo</a>
       </div>
     </div>
-    <div class="skill-box">
-      <h3>Technologies</h3>
-      <div class="skill-logos">
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"><p>Git</p></div>
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"><p>Azure</p></div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-container">
+      <div class="skill-box">
+        <h3>Languages</h3>
+        <div class="skill-logos">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg">
+        </div>
+      </div>
+      <div class="skill-box">
+        <h3>Technologies</h3>
+        <div class="skill-logos">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg">
+        </div>
+      </div>
+      <div class="skill-box">
+        <h3>Libraries</h3>
+        <div class="skill-logos">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg">
+        </div>
       </div>
     </div>
-    <div class="skill-box">
-      <h3>Libraries</h3>
-      <div class="skill-logos">
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg"><p>Pandas</p></div>
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg"><p>NumPy</p></div>
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg"><p>TensorFlow</p></div>
-        <div><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg"><p>PyTorch</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <div class="contact-logos">
-    <a href="mailto:rameshkelavath5@gmail.com"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email"></a>
-    <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn"></a>
-    <a href="https://github.com/RameshKelavath" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"></a>
-  </div>
-  <form class="contact-form" action="mailto:rameshkelavath5@gmail.com" method="post" enctype="text/plain">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <input type="text" name="subject" placeholder="Subject" required>
-    <textarea name="message" rows="5" placeholder="Message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-</section>
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="subject" placeholder="Subject" required>
+      <textarea name="message" rows="5" placeholder="Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+</div>
 
-<!-- Footer -->
-<footer>
-  &copy; <span id="year"></span> Ramesh Kelavath
-</footer>
-
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
+  // Section switching
   function showSection(sectionId) {
     document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
     document.getElementById(sectionId).classList.add('active');
     document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
   }
-  // Default load Home
-  showSection('home');
-  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Particles background
+  particlesJS("particles-js", {
+    "particles": {
+      "number": { "value": 70 },
+      "size": { "value": 3 },
+      "move": { "speed": 2 },
+      "line_linked": { "enable": true, "color": "#00ff66" },
+      "color": { "value": "#00ff66" }
+    }
+  });
 </script>
 </body>
 </html>
