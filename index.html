@@ -1,526 +1,314 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--
+  GitHub Profile Page (single-file)
+  - Save as index.html and open in browser or push to GitHub Pages (gh-pages branch or repository settings -> GitHub Pages)
+  - This implements a single-page layout with sections: Home, Data Portfolio, About, Projects, Skills, Contact
+  - Navigation uses in-page anchors and JS to simulate "click -> get page" behaviour (shows/hides sections)
+  - Replace placeholder images and text with your real content.
+-->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ramesh Kelavath — Portfolio</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
+  <title>Your Name — GitHub Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b0b0b;
-      --panel: rgba(20,20,20,0.75);
-      --accent: #00c776; /* green accent */
-      --muted:#bdbdbd;
-      --glass: rgba(255,255,255,0.03);
-      --radius:12px;
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#7c3aed;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --maxw:1100px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background:var(--bg);
-      color:#eee;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071024 0%, var(--bg) 100%);}
+    .wrap{max-width:var(--maxw);margin:32px auto;padding:24px}
+
+    /* NAV */
+    .nav{display:flex;align-items:center;gap:16px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2dd4bf);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    nav ul{display:flex;gap:12px;list-style:none;padding:0;margin:0}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+    nav a.active, nav a:hover{background:var(--glass);color:#fff}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center;margin-top:28px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:20px;box-shadow:0 6px 22px rgba(2,6,23,0.6)}
+    .intro h1{margin:0 0 8px 0;font-size:28px}
+    .intro p{margin:0;color:var(--muted)}
+    .cta{margin-top:16px;display:flex;gap:12px}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700}
+
+    /* sidebar profile */
+    .profile{display:flex;flex-direction:column;gap:12px}
+    .avatar{width:100%;height:280px;border-radius:10px;background-size:cover;background-position:center}
+    .meta{display:flex;gap:10px;align-items:center}
+    .meta .stat{flex:1;text-align:center}
+    .stat strong{display:block}
+
+    /* sections */
+    section{margin-top:20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .tile{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px}
+    .tile h3{margin:6px 0 4px 0}
+    .small{color:var(--muted);font-size:13px}
+
+    /* Data portfolio page (detailed) */
+    .portfolio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .portfolio-item{display:flex;gap:12px;align-items:center}
+    .thumb{width:120px;height:80px;border-radius:8px;background-size:cover;background-position:center}
+    .link{color:var(--accent);text-decoration:none;font-weight:600}
+
+    /* About page large image */
+    .about-hero{display:flex;gap:18px;align-items:center}
+    .about-hero img{width:320px;height:200px;border-radius:12px;object-fit:cover}
+
+    /* Projects/Skills/Contact small layouts */
+    .badge{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:999px;margin:4px 4px 4px 0}
+
+    /* footer */
+    footer{text-align:center;color:var(--muted);margin:28px 0}
+
+    /* responsive */
+    @media (max-width:940px){
+      .hero{grid-template-columns:1fr}
+      .profile{order:-1}
+      .about-hero{flex-direction:column}
+      .portfolio-grid{grid-template-columns:1fr}
     }
 
-    /* Top header (name always visible) */
-    header.topbar{
-      height:72px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 20px;
-      gap:16px;
-      background:rgba(12,12,12,0.98);
-      border-bottom:1px solid rgba(255,255,255,0.03);
-      position:relative;
-      z-index:40;
-      box-shadow:0 2px 12px rgba(0,0,0,0.6);
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-    .brand .name{
-      font-weight:800;
-      color:var(--accent);
-      font-size:18px;
-      line-height:1;
-    }
-    .brand .title{
-      color:var(--muted);
-      font-weight:600;
-      font-size:13px;
-      opacity:0.9;
-    }
-
-    /* Resume button next to name */
-    .resume-btn{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.04);
-      color:var(--muted);
-      padding:8px 12px;
-      border-radius:8px;
-      font-weight:600;
-      cursor:pointer;
-    }
-    .resume-btn:hover{ background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03)); color:var(--accent); }
-
-    /* Layout container */
-    .app {
-      display:flex;
-      flex:1;
-      min-height:0; /* allows child overflow scroll */
-      overflow:hidden;
-    }
-
-    /* Sidebar (vertical nav) */
-    aside.sidebar{
-      width:220px;
-      background:var(--panel);
-      padding:28px 14px;
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      border-right:1px solid rgba(255,255,255,0.03);
-      backdrop-filter: blur(6px);
-      box-shadow: 2px 0 18px rgba(0,0,0,0.6);
-      transition: transform 300ms ease;
-    }
-    .nav-btn{
-      background:none;
-      border:none;
-      color:#e6e6e6;
-      text-align:left;
-      padding:12px 14px;
-      font-weight:700;
-      font-size:15px;
-      border-radius:8px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      transition: all 180ms ease;
-    }
-    .nav-btn:hover{ transform:translateX(6px); }
-    .nav-btn.active{
-      background:var(--accent);
-      color:#07110a;
-      box-shadow: 0 6px 18px rgba(0,199,118,0.12);
-    }
-
-    /* Mobile collapse for sidebar (hamburger) */
-    .hamburger{
-      display:none;
-      background:none;
-      border:1px solid rgba(255,255,255,0.05);
-      padding:8px;
-      border-radius:8px;
-      color:var(--muted);
-      cursor:pointer;
-    }
-
-    /* Content area */
-    .content-wrap{
-      flex:1;
-      position:relative;
-      display:flex;
-      overflow:hidden;
-    }
-    main.content{
-      flex:1;
-      padding:28px;
-      overflow:auto;
-      min-height:0;
-    }
-
-    /* Each section behaves like a page: only .active shows */
-    section.page{
-      display:none;
-      opacity:0;
-      transform: translateY(18px);
-      transition: all 320ms ease;
-      max-width:1000px;
-      margin:18px auto;
-    }
-    section.page.active{
-      display:block;
-      opacity:1;
-      transform: translateY(0);
-    }
-
-    /* Home styling with subtle hero */
-    .home-hero{
-      height:360px;
-      border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%), var(--glass);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:28px;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 8px 30px rgba(0,0,0,0.6);
-    }
-    .home-hero h2{
-      margin:0;
-      font-size:34px;
-      line-height:1.05;
-      color:#ffffff;
-    }
-    .home-hero p{ color:var(--muted); margin-top:10px; font-weight:600; }
-
-    /* Card style used in projects/skills/about */
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-      border:1px solid rgba(255,255,255,0.03);
-    }
-
-    /* Projects grid */
-    .projects-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap:16px;
-      margin-top:16px;
-    }
-    .project-title{ color:var(--accent); font-weight:800; margin:0 0 8px 0; }
-    .project-desc{ color:var(--muted); margin:0 0 12px 0; }
-
-    /* Skills */
-    .skills-grid{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .skill-column{
-      min-width:220px;
-      flex:1;
-    }
-    .skill-title{
-      color:var(--accent);
-      font-weight:800;
-      margin-bottom:8px;
-      font-size:14px;
-    }
-    .skill-logos{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
-    .skill-logos img{ width:48px; height:48px; filter:grayscale(0.05); transition:transform 180ms ease; }
-    .skill-logos img:hover{ transform:scale(1.08) rotate(6deg); }
-
-    /* About */
-    .about-grid{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .about-photo{ width:160px; height:160px; border-radius:50%; object-fit:cover; box-shadow:0 8px 26px rgba(0,0,0,0.6); }
-
-    /* Contact form */
-    .contact-form{ margin-top:12px; display:flex; flex-direction:column; gap:10px; max-width:560px; }
-    .contact-form input, .contact-form textarea{
-      padding:12px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,0.04);
-      background: rgba(255,255,255,0.02);
-      color:#fff;
-      font-size:14px;
-    }
-    .contact-form input::placeholder, .contact-form textarea::placeholder{ color:#aaaaaa; }
-    .contact-submit{
-      padding:12px 14px;
-      border-radius:10px;
-      border:none;
-      background:var(--accent);
-      color:#07110a;
-      font-weight:800;
-      cursor:pointer;
-      width:160px;
-    }
-    .contact-submit:hover{ opacity:0.95; transform:translateY(-2px); }
-
-    /* Footer in content */
-    .page-footer{ margin-top:28px; color:var(--muted); font-size:13px; text-align:center; }
-
-    /* scrollbars (subtle) */
-    main.content::-webkit-scrollbar{ width:10px; }
-    main.content::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.03); border-radius:10px; }
-
-    /* Responsive */
-    @media (max-width:900px){
-      aside.sidebar{ width:100%; height:auto; display:flex; flex-direction:row; padding:10px; gap:8px; overflow:auto; }
-      .app{ flex-direction:column; }
-      .hamburger{ display:block; }
-      header.topbar{ padding:10px; }
-      .brand .name{ font-size:16px }
-    }
-    @media (max-width:640px){
-      .home-hero{ height:260px; padding:18px }
-      .about-photo{ width:120px;height:120px }
-    }
   </style>
 </head>
 <body>
-
-  <!-- Top header -->
-  <header class="topbar" role="banner">
-    <div class="brand" aria-hidden>
-      <div style="display:flex;flex-direction:column;">
-        <div class="name">Ramesh Kelavath</div>
-        <div class="title" style="font-size:12px">Data Science & Machine Learning</div>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">YN</div>
+        <div>
+          <div style="font-weight:700">Your Name</div>
+          <div style="font-size:12px;color:var(--muted)">Data Scientist • ML • Time Series</div>
+        </div>
       </div>
+      <nav>
+        <ul>
+          <li><a href="#home" data-link="home" class="active">Home</a></li>
+          <li><a href="#portfolio" data-link="portfolio">Data Portfolio</a></li>
+          <li><a href="#about" data-link="about">About</a></li>
+          <li><a href="#projects" data-link="projects">Projects</a></li>
+          <li><a href="#skills" data-link="skills">Skills</a></li>
+          <li><a href="#contact" data-link="contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
 
-    <!-- On small screens the sidebar collapses into these nav buttons (keeps consistent behavior) -->
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button class="hamburger" title="Toggle navigation" aria-label="Toggle navigation" onclick="toggleSidebar()">☰</button>
-      <a class="resume-btn" href="#" id="downloadResume" download>Download Resume</a>
-    </div>
-  </header>
-
-  <!-- App layout: sidebar + content -->
-  <div class="app" role="application">
-    <!-- Sidebar (vertical navigation) -->
-    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Primary">
-      <button class="nav-btn active" data-target="home" aria-pressed="true">Home</button>
-      <button class="nav-btn" data-target="about">About</button>
-      <button class="nav-btn" data-target="projects">Projects</button>
-      <button class="nav-btn" data-target="skills">Skills</button>
-      <button class="nav-btn" data-target="contact">Contact</button>
-    </aside>
-
-    <!-- Content -->
-    <div class="content-wrap">
-      <main class="content" id="mainContent" role="main">
-        <!-- HOME (only content visible when Home nav is active) -->
-        <section id="home" class="page active" aria-labelledby="home-title">
-          <div class="home-hero card" aria-hidden="false">
-            <!-- Particles container (absolute) -->
-            <div id="particles-js" style="position:absolute;inset:0;z-index:0;opacity:0.25"></div>
-
-            <div style="position:relative;z-index:2">
-              <h2 id="home-title">Hello — I'm <span style="color:var(--accent);font-weight:900">Ramesh Kelavath</span></h2>
-              <p>Data Science & Machine Learning enthusiast. I build data-driven solutions and ML prototypes end-to-end.</p>
+    <!-- MAIN CONTENT AREAS: show/hide by JS -->
+    <main>
+      <section id="home" class="card" data-page>
+        <div class="hero">
+          <div class="intro">
+            <h1>Hi — I'm Your Name</h1>
+            <p>Master's student • Time series & ML practitioner. I build reproducible forecasting pipelines and data visualisations.</p>
+            <div class="cta">
+              <a class="btn" data-link="portfolio">View portfolio</a>
+              <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Download CV</a>
             </div>
+
+            <div style="margin-top:18px">
+              <div style="font-weight:700;margin-bottom:6px">Featured work</div>
+              <div class="grid">
+                <div class="tile">
+                  <h3>Oil price forecasting</h3>
+                  <div class="small">LSTM vs ARIMA — 24-month forecast, evaluation & report</div>
+                </div>
+                <div class="tile">
+                  <h3>NIFTY-50 analysis</h3>
+                  <div class="small">Sector comparison — deep learning vs statistical models</div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
-            <div class="card" style="flex:1;min-width:220px">
-              <strong style="color:var(--accent);display:block;margin-bottom:6px">Quick Links</strong>
-              <a href="https://github.com/RameshKelavath" target="_blank" rel="noopener">GitHub repo</a><br>
-              <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener">LinkedIn</a>
+          <aside class="profile card">
+            <div class="avatar" style="background-image:url('https://placehold.co/600x400?text=Your+Photo')"></div>
+            <div class="meta">
+              <div class="stat"><strong>5</strong><span class="small">Projects</span></div>
+              <div class="stat"><strong>1.2k</strong><span class="small">GitHub stars</span></div>
+              <div class="stat"><strong>10</strong><span class="small">Publications</span></div>
             </div>
-
-            <div class="card" style="min-width:220px">
-              <strong style="color:var(--accent);display:block;margin-bottom:6px">Contact</strong>
-              <div style="color:var(--muted)">rameshkelavath5@gmail.com</div>
+            <div style="display:flex;gap:8px">
+              <a class="btn" href="#contact" data-link="contact">Hire / Contact</a>
+              <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)" href="#projects" data-link="projects">See projects</a>
             </div>
-          </div>
+          </aside>
+        </div>
+      </section>
 
-          <div class="page-footer">Designed to match your shared GitHub profile document exactly (improved visuals + accessibility).</div>
-        </section>
+      <!-- Data Portfolio page -->
+      <section id="portfolio" class="card" data-page style="display:none">
+        <h2>Data Portfolio</h2>
+        <p class="small">Click any item to open the full project page.</p>
 
-        <!-- ABOUT -->
-        <section id="about" class="page" aria-labelledby="about-title">
-          <div class="card about-grid">
-            <img class="about-photo" src="https://github.com/RameshKelavath/Ramesh%20Linkedln%20Photo.jpg?raw=true" alt="Ramesh Kelavath photo">
+        <div class="portfolio-grid" style="margin-top:12px">
+          <div class="tile portfolio-item">
+            <div class="thumb" style="background-image:url('https://placehold.co/640x360?text=Project+1')"></div>
             <div>
-              <p style="color:var(--muted);margin:0 0 10px 0;">
-                I am a MSc Data Science student at the University of Hertfordshire with strong abilities in Python, SQL,
-                Statistics and Machine Learning. Previously worked as Associate Software Engineer at Accenture.
-              </p>
-
-              <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-                <a class="resume-btn" href="#" id="aboutResume">Download CV</a>
-                <a class="resume-btn" href="mailto:rameshkelavath5@gmail.com">Email me</a>
-              </div>
+              <h3>Oil Price Forecasting</h3>
+              <div class="small">LSTM, ARIMA, evaluation, 24-month forecast</div>
+              <div style="margin-top:8px"><a class="link" href="#" onclick="openProject('oil')">Open project →</a></div>
             </div>
           </div>
 
-          <div class="page-footer">About content (keeps page clean and focused).</div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section id="projects" class="page" aria-labelledby="projects-title">
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div style="font-weight:800;color:var(--accent);">Selected projects</div>
-            </div>
-
-            <div class="projects-grid">
-              <div class="card">
-                <div class="project-title">NIFTY 50 Stock Price Prediction</div>
-                <div class="project-desc">ARIMA/ARIMAX + LSTM + GRU models; evaluated with MAE/MSE/RMSE.</div>
-                <a href="https://github.com/RameshKelavath/nifty50-stock-prediction" target="_blank" rel="noopener">View Repo</a>
-              </div>
-
-              <div class="card">
-                <div class="project-title">Oil Price Forecasting</div>
-                <div class="project-desc">LSTM, ARIMA and Prophet — multi-step 30-day forecasts validated against EIA data.</div>
-                <a href="https://github.com/RameshKelavath/oil-price-forecasting" target="_blank" rel="noopener">View Repo</a>
-              </div>
+          <div class="tile portfolio-item">
+            <div class="thumb" style="background-image:url('https://placehold.co/640x360?text=Project+2')"></div>
+            <div>
+              <h3>NIFTY-50 Sector Analysis</h3>
+              <div class="small">Deep learning vs ARIMA on IT sector</div>
+              <div style="margin-top:8px"><a class="link" href="#" onclick="openProject('nifty')">Open project →</a></div>
             </div>
           </div>
 
-          <div class="page-footer">Click a project to open its repository.</div>
-        </section>
+        </div>
 
-        <!-- SKILLS -->
-        <section id="skills" class="page" aria-labelledby="skills-title">
-          <div class="card">
-            <div style="display:flex;gap:20px;flex-wrap:wrap">
-              <div class="skill-column">
-                <div class="skill-title">Languages</div>
-                <div class="skill-logos">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQL">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-                </div>
-              </div>
-
-              <div class="skill-column">
-                <div class="skill-title">Technologies</div>
-                <div class="skill-logos">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure">
-                </div>
-              </div>
-
-              <div class="skill-column">
-                <div class="skill-title">Libraries</div>
-                <div class="skill-logos">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
-                </div>
-              </div>
-            </div>
+        <!-- Detailed project viewer (simulates the "following page" from your doc) -->
+        <div id="projectViewer" style="margin-top:18px;display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 id="projectTitle">Project Title</h3>
+            <button onclick="closeProject()" style="background:transparent;border:none;color:var(--muted);font-weight:700;cursor:pointer">Close ✕</button>
           </div>
-
-          <div class="page-footer">Skills are grouped exactly as in your document and sub-headings are green.</div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="page" aria-labelledby="contact-title">
-          <div class="card">
-            <div style="font-weight:800;color:var(--accent);margin-bottom:8px">Let's connect</div>
-
-            <!-- IMPORTANT: replace YOUR_FORM_ID with your Formspree form id. Using https prevents "form not secure" -->
-            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" autocomplete="on">
-              <input name="name" type="text" placeholder="Your name" autocomplete="name" required>
-              <input name="email" type="email" placeholder="Your email" autocomplete="email" required>
-              <input name="subject" type="text" placeholder="Subject" autocomplete="organization" required>
-              <textarea name="message" rows="6" placeholder="Message" required></textarea>
-
-              <!-- show inline status -->
-              <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
-                <button type="submit" class="contact-submit">Send message</button>
-                <div id="formStatus" style="color:var(--muted);font-size:13px">Secure form powered by Formspree</div>
-              </div>
-            </form>
+          <div style="margin-top:8px;color:var(--muted)" id="projectDesc">Project description goes here.</div>
+          <div style="margin-top:14px" id="projectImages">
+            <img src="https://placehold.co/1000x400?text=Project+image" alt="project" style="width:100%;border-radius:12px" />
           </div>
+          <div style="margin-top:12px;display:flex;gap:10px">
+            <a class="btn" id="projectCodeLink" href="#">View code</a>
+            <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)" href="#">Read report</a>
+          </div>
+        </div>
 
-          <div class="page-footer">Form uses HTTPS — browser autofill will work correctly once you replace the Formspree ID and host on GitHub Pages (HTTPS).</div>
-        </section>
-      </main>
-    </div>
+      </section>
+
+      <!-- About page (shows large image as described in your doc) -->
+      <section id="about" class="card" data-page style="display:none">
+        <h2>About</h2>
+        <div class="about-hero">
+          <img src="https://placehold.co/800x500?text=About+photo" alt="about image" />
+          <div>
+            <p style="margin-top:0">I am a MSc student at the University of Greenwich (MSc Mechanical & Manufacturing Engineering) with experience in time series forecasting, LSTM/GRU, ARIMA/SARIMA, and applied machine learning. I previously worked at Accenture and have implemented models for stock & oil price forecasts.</p>
+            <p class="small">When I click on the about navigation tab I will get below image — this section renders a large illustrative image and an about description as in your document. Replace this image with the one from your doc if you want exact match.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects page (next projects) -->
+      <section id="projects" class="card" data-page style="display:none">
+        <h2>Projects — Next projects</h2>
+        <div class="grid" style="margin-top:12px">
+          <div class="tile">
+            <h3>Next project 1</h3>
+            <div class="small">Short description and outcomes. Replace with the content you want.</div>
+          </div>
+          <div class="tile">
+            <h3>Next project 2</h3>
+            <div class="small">Short description and outcomes.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills page (next skills) -->
+      <section id="skills" class="card" data-page style="display:none">
+        <h2>Skills — Next skills</h2>
+        <p class="small">Technical & soft skills</p>
+        <div style="margin-top:12px">
+          <span class="badge">Python</span>
+          <span class="badge">Time series</span>
+          <span class="badge">LSTM / GRU</span>
+          <span class="badge">ARIMA</span>
+          <span class="badge">Docker</span>
+          <span class="badge">Git & GitHub</span>
+        </div>
+      </section>
+
+      <!-- Contact page (next contact page) -->
+      <section id="contact" class="card" data-page style="display:none">
+        <h2>Contact — Next contact page</h2>
+        <p class="small">Want to collaborate or hire me? Reach out below.</p>
+        <form onsubmit="event.preventDefault();alert('Contact form submitted (demo)')" style="margin-top:12px;display:grid;gap:8px;max-width:560px">
+          <input required placeholder="Your name" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
+          <input required type="email" placeholder="Email" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
+          <textarea required placeholder="Message" rows="5" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff"></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn" type="submit">Send</button>
+            <a class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)" href="mailto:your.email@example.com">Email me</a>
+          </div>
+        </form>
+      </section>
+
+    </main>
+
+    <footer>
+      Built with ❤️ — replace content and images to match your exact look.
+    </footer>
+
   </div>
 
-  <!-- Particles library -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" async></script>
-
   <script>
-    // Initialize particles (very subtle)
-    function initParticles(){
-      if (!window.particlesJS) return;
-      particlesJS('particles-js', {
-        particles: {
-          number: { value: 60, density: { enable: true, value_area: 800 }},
-          color: { value: "#00c776" },
-          shape: { type: "circle" },
-          opacity: { value: 0.18 },
-          size: { value: 3, random: true },
-          line_linked: { enable: true, distance: 120, color: "#00c776", opacity: 0.08, width: 1 },
-          move: { enable: true, speed: 1.5, out_mode: "out" }
-        },
-        retina_detect: true
-      });
-    }
-    window.addEventListener('load', initParticles);
+    // Basic SPA navigation: show/hide sections. Keeps history state for back/forward support.
+    const links = document.querySelectorAll('a[data-link]');
+    const pages = document.querySelectorAll('[data-page]');
 
-    // Robust navigation logic (no inline event.target issues)
-    const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
-    function showPage(id, clickedBtn){
-      // hide all pages
-      document.querySelectorAll('section.page').forEach(s => s.classList.remove('active'));
-      // show target
-      const target = document.getElementById(id);
-      if (target) {
-        target.classList.add('active');
-        // ensure scroll to top of content area for long pages
-        document.querySelector('main.content').scrollTop = 0;
-      }
-      // update active nav states
-      navButtons.forEach(b => {
-        b.classList.toggle('active', b === clickedBtn);
-        b.setAttribute('aria-pressed', b === clickedBtn ? 'true' : 'false');
-      });
+    function showPage(name, push=true){
+      pages.forEach(p=>p.style.display = (p.id === name ? 'block' : 'none'));
+      links.forEach(a=> a.classList.toggle('active', a.dataset.link===name));
+      if(push) history.pushState({page:name}, '', '#'+name);
     }
 
-    navButtons.forEach(btn => {
-      btn.addEventListener('click', function(e){
-        const id = this.dataset.target;
-        showPage(id, this);
-      });
+    links.forEach(a=>a.addEventListener('click', e=>{
+      const name = a.dataset.link;
+      showPage(name, true);
+      e.preventDefault();
+    }));
+
+    // handle back/forward
+    window.addEventListener('popstate', e=>{
+      const page = (e.state && e.state.page) || location.hash.replace('#','') || 'home';
+      showPage(page, false);
     });
 
-    // Sidebar toggle on small screens
-    function toggleSidebar(){
-      const sb = document.getElementById('sidebar');
-      if (!sb) return;
-      if (sb.style.transform === 'translateY(-100%)' || sb.style.transform === 'translateX(-120%)'){
-        sb.style.transform = 'none';
-      } else {
-        // on mobile hide temporarily (user can tap hamburger)
-        sb.style.transform = 'translateY(-100%)';
-        setTimeout(()=> sb.style.transform = 'none', 350);
+    // initial load
+    const initial = location.hash.replace('#','') || 'home';
+    showPage(initial, false);
+
+    // Project viewer functionality
+    function openProject(key){
+      const viewer = document.getElementById('projectViewer');
+      const title = document.getElementById('projectTitle');
+      const desc = document.getElementById('projectDesc');
+      const images = document.getElementById('projectImages');
+      const codeLink = document.getElementById('projectCodeLink');
+
+      if(key==='oil'){
+        title.textContent = 'Oil Price Forecasting — LSTM vs ARIMA';
+        desc.textContent = 'Detailed project: LSTM and ARIMA modelling, 24-month forecast with evaluation. Includes Python notebooks and report.';
+        images.innerHTML = '<img src="https://placehold.co/1000x400?text=Oil+forecast+chart" style="width:100%;border-radius:12px">';
+        codeLink.href = '#';
+      } else if(key==='nifty'){
+        title.textContent = 'NIFTY-50 Sector Analysis';
+        desc.textContent = 'Comparative study of TCS & Infosys using ARIMA, ARIMAX, LSTM and GRU. Notebooks and results included.';
+        images.innerHTML = '<img src="https://placehold.co/1000x400?text=NIFTY+charts" style="width:100%;border-radius:12px">';
+        codeLink.href = '#';
       }
+
+      viewer.style.display = 'block';
+      viewer.scrollIntoView({behavior:'smooth'});
+    }
+    function closeProject(){
+      document.getElementById('projectViewer').style.display='none';
     }
 
-    // Enable pressing number keys 1–5 to jump to tabs (nice for quick testing)
-    window.addEventListener('keydown', (e) => {
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-      if (e.key >= '1' && e.key <= '5'){
-        const idx = parseInt(e.key,10) - 1;
-        const btn = navButtons[idx];
-        if (btn) btn.click();
-      }
-    });
-
-    // wire "download resume" actions (replace '#')
-    document.getElementById('downloadResume').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      // Replace with your resume file path, e.g. '/Ramesh_Kelavath_Resume.pdf'
-      window.open('/Ramesh_Kelavath_Resume.pdf', '_blank');
-    });
-    document.getElementById('aboutResume').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      window.open('/Ramesh_Kelavath_Resume.pdf', '_blank');
-    });
   </script>
 </body>
 </html>
