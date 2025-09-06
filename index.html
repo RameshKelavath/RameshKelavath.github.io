@@ -1,285 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ramesh Kelavath</title>
-<meta name="description" content="Ramesh Kelavath — Data Portfolio"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<!-- Devicon icons for Skills rows -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 <style>
-  :root{
-    --bg:#0e1323; --bg-2:#111a2d; --panel:#162033; --edge:rgba(255,255,255,.08);
-    --text:#e9edf7; --muted:#a6afc9; --brand:#20c063; --brand-dark:#12a24e;
-    --radius:16px; --shadow:0 18px 40px rgba(0,0,0,.35);
+  :root {
+    --bg:#0f1220; --panel-bg:#111a2d; --text:#e8ecf8; --muted:#a5adcf;
+    --accent:#20c063; --edge:rgba(255,255,255,.08); --shadow:0 15px 35px rgba(0,0,0,.4);
+    --radius:14px;
   }
-  *{box-sizing:border-box} html,body{height:100%} body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--text);overflow:hidden}
-  a{color:inherit}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
+  html, body { height:100%; overflow:hidden; color:var(--text); background:var(--bg); }
 
-  /* ===== Topbar ===== */
-  .topbar{
-    position:fixed; inset:0 0 auto 0; height:64px; display:flex; align-items:center; justify-content:space-between;
-    padding:0 18px; border-bottom:1px solid var(--edge); background:rgba(9,13,24,.85); backdrop-filter:blur(8px); z-index:10;
+  /* Top navbar */
+  .nav{position:fixed; top:0; width:100%; height:60px; background:var(--panel-bg); display:flex;
+        align-items:center; justify-content:space-between; padding:0 20px; border-bottom:1px solid var(--edge); z-index:100;}
+  .nav .brand{font-weight:800;}
+  .nav a{color:var(--muted); text-decoration:none; margin:0 12px; position:relative;}
+  .nav a.active{color:#fff;}
+  .nav a.active::after{content:""; position:absolute; height:3px; background:var(--accent); bottom:8px; left:0; right:0;}
+
+  /* Stage / panels */
+  .stage{position:absolute; top:60px; bottom:0; left:0; right:0; overflow:hidden; display:grid; align-items:center; justify-items:center;}
+  .panel{display:none; width:92vw; height:calc(100vh - 80px); border-radius:var(--radius); box-shadow:var(--shadow); overflow:auto; background:var(--panel-bg); padding:30px;}
+  .panel.active{display:block;}
+
+  /* Hero with code-fall background */
+  @keyframes fall {0%{background-position:0 0;}100%{background-position:0 100%;}}
+  .hero {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.75)),
+      url('matrix-bg.jpg') center/cover no-repeat;
+    animation: fall 12s linear infinite;
+    display:grid; grid-template-columns:1fr .8fr; align-items:center; gap:30px;
   }
-  .brand{font-weight:800; text-decoration:none}
-  .nav{display:flex; gap:18px; align-items:center}
-  .nav a{position:relative; text-decoration:none; color:#cfd6ea; font-weight:700; padding:10px 6px}
-  .nav a.active{color:#fff}
-  .nav a.active::after{
-    content:""; position:absolute; left:0; right:0; bottom:4px; height:3px; border-radius:3px;
-    background:var(--brand);
-  }
-  .btn{background:linear-gradient(135deg,var(--brand),var(--brand-dark)); color:#07131a; padding:10px 12px; border-radius:10px; font-weight:800; text-decoration:none}
+  .hero .text h1{font-size:clamp(36px,6vw,72px); margin-bottom:8px;}
+  .hero .text p{font-size:1.2rem;} 
+  .hero .links a{font-weight:600; padding:10px 14px; border-radius:8px; text-decoration:none;}
+  .hero .links .btn-primary{background:var(--accent); color:#0f1220;}
+  .hero .links .btn-secondary{border:1px solid var(--accent); color:var(--accent); background:none;}
+  .hero .photo img{width:280px; aspect-ratio:1/1; object-fit:cover; border-radius:50%; border:2px solid var(--edge); box-shadow:var(--shadow);}
 
-  /* ===== Stage / Panels ===== */
-  .stage{position:fixed; inset:64px 0 0 0; display:grid; place-items:center; background:var(--bg)}
-  .panel{
-    width:min(1160px,94vw); height:min(640px,calc(100vh - 96px)); display:none; border-radius:18px; box-shadow:var(--shadow); overflow:auto;
-    border:1px solid var(--edge); background:var(--panel);
-  }
-  .panel.active{display:block; animation:fade .2s ease}
-  @keyframes fade{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
+  /* Section wrappers */
+  .wrap {display:grid; gap:20px;}
+  h2{margin-bottom:12px;}
+  .about-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:24px; align-items:center;}
+  .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px;}
+  .card{background:var(--bg); border:1px solid var(--edge); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);}
+  .tags{margin-top:8px; display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{font-size:0.9rem; color:var(--muted); padding:5px 10px; background:rgba(255,255,255,0.05); border-radius:12px;}
 
-  /* ===== HOME (hero with matrix background) ===== */
-  .panel.home{
-    background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.55)),
-      url('bg-home.jpg') center/cover no-repeat, /* put a file named bg-home.jpg for your background */
-      radial-gradient(900px 480px at 80% -10%, rgba(32,192,99,.20), transparent 70%),
-      var(--bg);
-    border:1px solid rgba(255,255,255,.12);
-  }
-  .hero{
-    padding:40px clamp(16px,4vw,40px);
-    display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center;
-  }
-  .hero h1{font-size:clamp(34px,6vw,56px); margin:.2rem 0 .6rem; line-height:1.05}
-  .hero p{color:#e8f5ee; font-weight:600}
-  .links{display:flex; gap:16px; margin-top:14px}
-  .socials{display:flex; gap:10px; margin-top:18px}
-  .socials a{
-    width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.18); text-decoration:none; font-weight:900; color:#fff;
-  }
-  .photo{display:flex; justify-content:center}
-  .photo img{
-    width:min(320px,86%); aspect-ratio:1/1; object-fit:cover; border-radius:50%;
-    border:1px solid rgba(255,255,255,.2); box-shadow:var(--shadow); background:#fff
-  }
+  .skill-block{margin-bottom:20px;}
+  .skill-title{color:var(--accent); margin-bottom:8px;}
+  .icon-row{display:flex; flex-wrap:wrap; gap:16px;}
+  .icon-row i{font-size:32px;}
 
-  /* ===== ABOUT / PORTFOLIO / SKILLS / CONTACT ===== */
-  .wrap{padding:24px clamp(16px,3vw,26px)}
-  .section-title{font-size:clamp(22px,3.2vw,32px); margin:4px 0 16px}
-  .about-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:24px; align-items:center}
-  .card{background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:var(--radius); padding:16px}
-  .muted{color:var(--muted)}
-
-  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-  .proj .thumb{height:160px; border-radius:12px; background:#0d1728; border:1px solid var(--edge); margin-bottom:10px; display:grid; place-items:center; color:#8fb3ff}
-  .proj h3{margin:.3rem 0 .4rem}
-  .tags{display:flex; flex-wrap:wrap; gap:8px}
-  .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
-  .proj a.btn{margin-top:10px; display:inline-block}
-
-  .skill-block{margin-bottom:16px}
-  .skill-title{color:var(--brand); font-weight:800; margin:0 0 8px}
-  .icon-row{display:flex; gap:16px; flex-wrap:wrap; padding:12px; background:rgba(255,255,255,.03); border:1px solid var(--edge); border-radius:12px}
-  .icon-row i{font-size:32px}
-
-  .contact-list{display:flex; gap:12px; flex-wrap:wrap}
-  .pill{background:rgba(255,255,255,.06); border:1px solid var(--edge); padding:8px 12px; border-radius:12px; font-weight:700}
-
-  /* responsive inside panels (page itself still non-scroll) */
-  @media (max-width:980px){ .hero{grid-template-columns:1fr} .about-grid{grid-template-columns:1fr} .cards{grid-template-columns:1fr 1fr} }
-  @media (max-width:620px){ .cards{grid-template-columns:1fr} }
+  .contact .pill{display:inline-block; padding:8px 12px; border:1px solid var(--edge); border-radius:12px; margin-right:10px;}
 </style>
 </head>
 <body>
-  <!-- ===== NAVBAR ===== -->
-  <header class="topbar">
-    <a class="brand" href="#home" data-view="home">Ramesh Kelavath</a>
-    <nav class="nav" id="nav">
-      <a href="#home" data-view="home" class="active">Home</a>
-      <a href="#about" data-view="about">About</a>
-      <a href="#portfolio" data-view="portfolio">Data&nbsp;Portfolio</a>
-      <a href="#skills" data-view="skills">Skills</a>
-      <a href="#contact" data-view="contact">Contact</a>
-      <a class="btn" href="Ramesh CV.pdf" target="_blank" rel="noopener">Resume</a>
-    </nav>
-  </header>
 
-  <!-- ===== STAGE ===== -->
-  <main class="stage">
+<div class="nav">
+  <div class="brand">Ramesh Kelavath</div>
+  <div>
+    <a href="#home" data-view="home" class="active">Home</a>
+    <a href="#about" data-view="about">About</a>
+    <a href="#portfolio" data-view="portfolio">Data Portfolio</a>
+    <a href="#skills" data-view="skills">Skills</a>
+    <a href="#contact" data-view="contact">Contact</a>
+  </div>
+</div>
 
-    <!-- HOME (like your first screenshot) -->
-    <section class="panel home active" id="view-home" role="region" aria-label="Home">
-      <div class="hero">
-        <div>
-          <h1>Ramesh Kelavath</h1>
-          <p>I am a <span style="color:var(--brand);font-weight:800">Data Enthusiast</span></p>
-          <div class="links">
-            <a class="btn" href="#portfolio" data-view="portfolio">Data Portfolio</a>
-            <a class="btn" style="background:#ffffff22;color:#fff;border:1px solid #ffffff33" href="#about" data-view="about">About Me</a>
-          </div>
-          <div class="socials">
-            <a href="mailto:rameshkelavath5@gmail.com" title="Email">G</a>
-            <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener" title="LinkedIn">in</a>
-            <a href="https://github.com/RameshKelavath" target="_blank" rel="noopener" title="GitHub">G</a>
-          </div>
-        </div>
-        <div class="photo">
-          <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh Kelavath"
-               onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
-        </div>
+<div class="stage">
+  <!-- Home Panel -->
+  <div class="panel hero active" id="view-home">
+    <div class="text">
+      <h1>Ramesh Kelavath</h1>
+      <p>Passionate MSc Data Science student crafting data-driven insights & tools.</p>
+      <div class="links">
+        <a class="btn-primary" href="#" data-view="portfolio">Portfolio</a>
+        <a class="btn-secondary" href="#" data-view="about">About Me</a>
       </div>
-    </section>
+    </div>
+    <div class="photo">
+      <img src="Ramesh Linkedln Photo.jpg" alt="Photo" onerror="this.onerror=null;this.src='Ramesh LinkedIn Photo.jpg';">
+    </div>
+  </div>
 
-    <!-- ABOUT (like screenshot #2) -->
-    <section class="panel" id="view-about" role="region" aria-label="About" style="background:linear-gradient(180deg,var(--bg),var(--bg-2))">
-      <div class="wrap">
-        <div class="about-grid">
-          <div class="card photo">
-            <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh Kelavath"
-                 onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
-          </div>
-          <div>
-            <h2 class="section-title">Hi there, This is Ramesh Kelavath.</h2>
-            <p class="muted">
-              A motivated MSc Data Science student sharpening skills in data manipulation, statistical modeling,
-              visualization and deep learning (LSTM, NLP, Time Series). Ex-Accenture (Custom Software Engineering Associate).
-            </p>
-            <p class="muted">I enjoy turning raw data into actionable insights and reliable products.</p>
-            <div class="card" style="margin-top:12px">
-              <strong>Quick facts</strong>
-              <ul>
-                <li><b>Email:</b> <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></li>
-                <li><b>Location:</b> Hertfordshire, UK</li>
-                <li><b>Certification:</b> Azure AI Fundamentals (AI-900)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <!-- About Panel -->
+  <div class="panel wrap" id="view-about">
+    <h2>About Me</h2>
+    <div class="about-grid">
+      <div>
+        <img src="Ramesh Linkedln Photo.jpg" alt="Photo" style="width:260px;border-radius:50%;" onerror="this.onerror=null;this.src='Ramesh LinkedIn Photo.jpg';">
       </div>
-    </section>
-
-    <!-- DATA PORTFOLIO (looks like screenshot #3 cards) -->
-    <section class="panel" id="view-portfolio" role="region" aria-label="Data Portfolio" style="background:linear-gradient(180deg,var(--bg),var(--bg-2))">
-      <div class="wrap">
-        <h2 class="section-title">Projects</h2>
-        <div class="cards">
-          <article class="card proj">
-            <div class="thumb">Project Cover</div>
-            <h3 class="muted" style="color:#2ee07f">NIFTY 50 Stock Prediction</h3>
-            <p class="muted">ARIMA/ARIMAX (Open as exog) vs LSTM on 20+ years; compared MAE/MSE/RMSE.</p>
-            <div class="tags"><span class="tag">Python</span><span class="tag">Statsmodels</span><span class="tag">TensorFlow</span></div>
-            <a class="btn" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">Repo</a>
-          </article>
-
-          <article class="card proj">
-            <div class="thumb">Project Cover</div>
-            <h3 class="muted" style="color:#2ee07f">Time-Series EDA Toolkit</h3>
-            <p class="muted">Decomposition, stationarity tests, ACF/PACF, hyper-param search, forecast charts.</p>
-            <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
-            <a class="btn" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">Repo</a>
-          </article>
-
-          <article class="card proj">
-            <div class="thumb">Project Cover</div>
-            <h3 class="muted" style="color:#2ee07f">Azure ML Pipeline (Concept)</h3>
-            <p class="muted">Ingest → transform → deploy on Azure (Blob, Data Factory, Functions, ML Studio).</p>
-            <div class="tags"><span class="tag">Azure</span><span class="tag">MLOps</span><span class="tag">CI/CD</span></div>
-            <a class="btn" href="#" aria-disabled="true">Case Study</a>
-          </article>
-        </div>
+      <div>
+        <p>Motivated MSc Data Science student with hands-on in Python, ML, Time Series, and Azure. Ex-Accenture as a Custom Software Engineer.</p>
+        <ul>
+          <li>Email: <a href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a></li>
+          <li>Location: Hertfordshire, UK</li>
+          <li>Certification: AI-900 (Azure AI Fundamentals)</li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <!-- SKILLS (like screenshot #4 with icon rows) -->
-    <section class="panel" id="view-skills" role="region" aria-label="Skills" style="background:linear-gradient(180deg,var(--bg),var(--bg-2))">
-      <div class="wrap">
-        <h2 class="section-title">Skills</h2>
-
-        <div class="card skill-block">
-          <h3 class="skill-title">Languages</h3>
-          <div class="icon-row">
-            <i class="devicon-python-plain colored" title="Python"></i>
-            <i class="devicon-java-plain colored" title="Java"></i>
-            <i class="devicon-dotnetcore-plain colored" title=".NET"></i>
-            <span class="pill">SQL</span>
-          </div>
-        </div>
-
-        <div class="card skill-block">
-          <h3 class="skill-title">Technologies</h3>
-          <div class="icon-row">
-            <i class="devicon-git-plain colored" title="Git"></i>
-            <i class="devicon-azure-plain colored" title="Azure"></i>
-            <i class="devicon-docker-plain colored" title="Docker"></i>
-            <i class="devicon-linux-plain colored" title="Linux"></i>
-            <span class="pill">Jupyter</span>
-            <span class="pill">Colab</span>
-          </div>
-        </div>
-
-        <div class="card skill-block">
-          <h3 class="skill-title">Libraries</h3>
-          <div class="icon-row">
-            <i class="devicon-tensorflow-original colored" title="TensorFlow"></i>
-            <i class="devicon-pytorch-original colored" title="PyTorch"></i>
-            <span class="pill">Keras</span>
-            <span class="pill">Scikit-learn</span>
-            <span class="pill">Statsmodels</span>
-            <span class="pill">Pandas</span>
-            <span class="pill">NumPy</span>
-          </div>
-        </div>
+  <!-- Portfolio Panel -->
+  <div class="panel wrap" id="view-portfolio">
+    <h2>Data Portfolio</h2>
+    <div class="cards">
+      <!-- Repeat this block for each project -->
+      <div class="card">
+        <h3>NIFTY 50 Stock Prediction</h3>
+        <p>ARIMA vs LSTM on 20+ yrs, measured by MAE/MSE/RMSE.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Statsmodels</span><span class="tag">TF</span></div>
       </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="panel" id="view-contact" role="region" aria-label="Contact" style="background:linear-gradient(180deg,var(--bg),var(--bg-2))">
-      <div class="wrap">
-        <h2 class="section-title">Contact</h2>
-        <p class="muted">Open to internships and full-time roles in Data Science, ML and Data Engineering.</p>
-        <div class="contact-list" style="margin:12px 0 16px">
-          <a class="pill" href="mailto:rameshkelavath5@gmail.com">rameshkelavath5@gmail.com</a>
-          <a class="pill" href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="pill" href="https://github.com/RameshKelavath" target="_blank" rel="noopener">GitHub</a>
-          <a class="pill" href="Ramesh CV.pdf" target="_blank" rel="noopener">View CV (PDF)</a>
-        </div>
-
-        <div class="card">
-          <h3>Quick Message</h3>
-          <form action="https://formspree.io/f/your-form-id" method="POST" style="display:grid;gap:10px;max-width:520px">
-            <label>Name <input name="name" required style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:rgba(255,255,255,.06);color:var(--text)"></label>
-            <label>Email <input name="email" type="email" required style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:rgba(255,255,255,.06);color:var(--text)"></label>
-            <label>Message <textarea name="message" required style="min-height:120px;width:100%;padding:10px;border-radius:10px;border:1px solid var(--edge);background:rgba(255,255,255,.06);color:var(--text)"></textarea></label>
-            <button class="btn" type="submit">Send</button>
-            <p class="muted">Replace <code>your-form-id</code> with your Formspree ID to enable the form.</p>
-          </form>
-        </div>
+      <div class="card">
+        <h3>Time-Series EDA Toolkit</h3>
+        <p>Stationarity checks, decomposition, ACF/PACF, hyperparam search.</p>
+        <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
       </div>
-    </section>
+      <div class="card">
+        <h3>Azure ML Pipeline (Concept)</h3>
+        <p>Design for ingestion → transformation → deployment using Azure services.</p>
+        <div class="tags"><span class="tag">Azure</span><span class="tag">MLOps</span></div>
+      </div>
+    </div>
+  </div>
 
-  </main>
+  <!-- Skills Panel -->
+  <div class="panel wrap" id="view-skills">
+    <h2>Skills</h2>
+    <div class="skill-block">
+      <h3 class="skill-title">Languages</h3>
+      <div class="icon-row">
+        <i class="devicon-python-plain colored"></i>
+        <i class="devicon-java-plain colored"></i>
+        <i class="devicon-dotnetcore-plain colored"></i>
+        <span class="muted">SQL</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3 class="skill-title">Technologies</h3>
+      <div class="icon-row">
+        <i class="devicon-git-plain colored"></i>
+        <i class="devicon-azure-plain colored"></i>
+        <i class="devicon-docker-plain colored"></i>
+        <i class="devicon-linux-plain colored"></i>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3 class="skill-title">Libraries</h3>
+      <div class="icon-row">
+        <i class="devicon-tensorflow-original colored"></i>
+        <i class="devicon-pytorch-original colored"></i>
+        <span class="muted">Keras</span>
+        <span class="muted">Scikit-learn</span>
+        <span class="muted">Statsmodels</span>
+        <span class="muted">Pandas</span>
+        <span class="muted">NumPy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Panel -->
+  <div class="panel wrap" id="view-contact">
+    <h2>Contact</h2>
+    <div class="contact">
+      <div>
+        <span class="pill">rameshkelavath5@gmail.com</span>
+        <span class="pill">LinkedIn</span>
+        <span class="pill">GitHub</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-  // Simple router: show one view, page does not scroll
-  const views = ['home','about','portfolio','skills','contact'];
-  const panels = Object.fromEntries(views.map(v => [v, document.getElementById('view-'+v)]));
-  const navLinks = Array.from(document.querySelectorAll('[data-view]'));
+const views = ['home','about','portfolio','skills','contact'];
+const panels = Object.fromEntries(views.map(v => [v, document.getElementById('view-'+v)]));
+const navLinks = document.querySelectorAll('[data-view]');
 
-  function show(view){
-    const chosen = views.includes(view) ? view : 'home';
-    Object.entries(panels).forEach(([k,el]) => el.classList.toggle('active', k===chosen));
-    navLinks.forEach(a => a.classList.toggle('active', a.dataset.view===chosen));
-    if (location.hash.replace('#','') !== chosen) history.replaceState(null,'','#'+chosen);
-  }
-  window.addEventListener('hashchange', () => show(location.hash.replace('#','')));
-  navLinks.forEach(a => a.addEventListener('click', e => { e.preventDefault(); show(a.dataset.view); }));
-  show(location.hash.replace('#',''));
+function show(view) {
+  panels.forEach((_, k) => panels[k].classList.toggle('active', k===views.indexOf(view)));
+  navLinks.forEach(a => a.classList.toggle('active', a.dataset.view===view));
+}
+
+navLinks.forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  show(a.dataset.view);
+}));
+show('home');
 </script>
+
 </body>
 </html>
