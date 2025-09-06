@@ -182,21 +182,36 @@
 </div>
 
 <script>
-const views = ['home','about','portfolio','skills','contact'];
-const panels = Object.fromEntries(views.map(v => [v, document.getElementById('view-'+v)]));
-const navLinks = document.querySelectorAll('[data-view]');
+  // Tiny hash router: show exactly one panel (no page scroll)
+  const views   = ['home','about','portfolio','skills','contact'];
+  const panels  = Object.fromEntries(views.map(v => [v, document.getElementById('view-'+v)]));
+  const navLinks = Array.from(document.querySelectorAll('a[data-view]'));
 
-function show(view) {
-  panels.forEach((_, k) => panels[k].classList.toggle('active', k===views.indexOf(view)));
-  navLinks.forEach(a => a.classList.toggle('active', a.dataset.view===view));
-}
+  function show(view){
+    const chosen = views.includes(view) ? view : 'home';
 
-navLinks.forEach(a => a.addEventListener('click', e => {
-  e.preventDefault();
-  show(a.dataset.view);
-}));
-show('home');
+    // toggle panels
+    for (const [key, el] of Object.entries(panels)) {
+      if (el) el.classList.toggle('active', key === chosen);
+    }
+    // highlight nav
+    for (const a of navLinks) {
+      a.classList.toggle('active', a.dataset.view === chosen);
+    }
+    // keep the hash in the URL without jumping
+    if (location.hash.slice(1) !== chosen) {
+      history.replaceState(null, '', '#'+chosen);
+    }
+  }
+
+  // click → switch view (no navigation)
+  navLinks.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    show(a.dataset.view);
+  }));
+
+  // support loading with a hash and manual hash changes
+  window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+  document.addEventListener('DOMContentLoaded', () => show(location.hash.slice(1)));
 </script>
 
-</body>
-</html>
