@@ -147,42 +147,35 @@
   </section>
 
   <!-- ABOUT -->
-  <section class="panel" id="view-about" role="region" aria-label="About" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
-    <div class="wrap">
-      <h2>About</h2>
-      <div class="about-grid">
-        <div class="about-card photo">
-          <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh Kelavath"
-               onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
-        </div>
-        <div class="about-card">
-  <p class="muted">
-    Hi there, I’m <strong>Ramesh Kelavath</strong>.
-  </p>
-  <p class="muted">
-    Exploring data’s hidden patterns and turning them into real-world impact — that’s what excites me. 
-    As an <strong>MSc Data Science student</strong> at the University of Hertfordshire and a former 
-    <strong>Associate at Accenture</strong>, I’ve built a strong foundation in 
-    <strong>Python, SQL, and Azure</strong>, along with hands-on experience in 
-    <strong>machine learning, time-series forecasting, and data visualization</strong>.
-  </p>
-  <p class="muted">
-    What sets me apart is my ability to bridge <strong>technical depth with business value</strong>. 
-    From building predictive models to creating clear, actionable dashboards, I focus on delivering 
-    insights that drive better decisions. My projects — from 
-    <strong>financial time-series prediction</strong> to 
-    <strong>EDA and ML pipelines</strong> — reflect both analytical rigor and creativity.
-  </p>
-  <p class="muted">
-    I’m actively pursuing opportunities in <strong>Data Science, Machine Learning, and Data Analytics</strong> 
-    where I can combine my technical expertise with my passion for solving problems, 
-    helping organizations unlock the full potential of their data.
-  </p>
-</div>
-
+  <section class="panel about-panel" id="view-about">
+  <div class="about-wrap">
+    <div class="about-grid-slim">
+      <div class="about-photo-slim">
+        <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh Kelavath"
+             onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
+      </div>
+      <div class="about-copy">
+        <p>Hi there, I’m <strong>Ramesh Kelavath</strong>.</p>
+        <p>
+          Exploring data’s hidden patterns and turning them into real-world impact - that’s what excites me.
+          I’m an MSc Data Science student at the University of Hertfordshire and a former Associate at Accenture,
+          with a strong foundation in Python, SQL, and Azure. I work across machine learning, time-series
+          forecasting, and data visualization to turn complex datasets into clear insights.
+        </p>
+        <p>
+          I focus on bridging technical depth with business value: building predictive models, shaping clean
+          data pipelines, and communicating results that drive better decisions. Recent projects span financial
+          time-series prediction, an EDA toolkit, and an Azure-oriented ML pipeline concept.
+        </p>
+        <p>
+          I’m actively pursuing opportunities in Data Science, Machine Learning, and Data Analytics
+          where I can help teams make faster, smarter decisions with data.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- PROJECTS -->
   <section class="panel" id="view-projects" role="region" aria-label="Projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
@@ -217,50 +210,52 @@
       <h2>Skills</h2>
 
       <!-- Languages (ordered) -->
-      <div class="skill-section">
-        <div class="skill-heading">Languages</div>
-        <div class="skill-row">
-          <div class="skill" title="C"><i class="devicon-c-plain colored"></i><span>C</span></div>
-          <div class="skill" title="Java"><i class="devicon-java-plain colored"></i><span>Java</span></div>
-          <div class="skill" title="Python"><i class="devicon-python-plain colored"></i><span>Python</span></div>
-          <div class="skill" title=".NET / C#"><i class="devicon-dotnetcore-plain colored"></i><span>.NET</span></div>
-          <div class="skill" title="MATLAB"><i class="devicon-matlab-plain colored"></i><span>MATLAB</span></div>
-          <div class="skill" title="SQL"><span class="pill-skill">SQL</span></div>
-        </div>
-      </div>
+      <!-- Languages -->
+<div class="skill-section">
+  <div class="skill-heading">Languages</div>
+  <div class="skill-row">
+    <div class="skill"><i class="devicon-c-plain colored"></i><span>C</span></div>
+    <div class="skill"><i class="devicon-java-plain colored"></i><span>Java</span></div>
+    <div class="skill"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+    <div class="skill"><i class="devicon-dotnetcore-plain colored"></i><span>.NET</span></div>
+    <div class="skill"><i class="devicon-matlab-plain colored"></i><span>MATLAB</span></div>
+    <div class="skill"><span class="pill-skill">SQL</span></div>
+  </div>
+</div>
 
-      <!-- Technologies (React & Node removed; GitHub via Font Awesome; Seaborn handled later) -->
-      <div class="skill-section">
-        <div class="skill-heading">Technologies</div>
-        <div class="skill-row">
-          <div class="skill" title="Azure"><i class="devicon-azure-plain colored"></i><span>Azure</span></div>
-          <div class="skill" title="Git"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-          <div class="skill" title="GitHub"><i class="fa-brands fa-github" style="font-size:44px"></i><span>GitHub</span></div>
-          <div class="skill" title="Docker"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
-          <div class="skill" title="MySQL"><i class="devicon-mysql-original colored"></i><span>MySQL</span></div>
-          <div class="skill" title="SQLite"><i class="devicon-sqlite-plain colored"></i><span>SQLite</span></div>
-          <div class="skill" title="Jupyter"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
-          <div class="skill" title="Colab"><span class="pill-skill">Colab</span></div>
-          <div class="skill" title="Excel"><i class="fa-solid fa-file-excel" style="font-size:44px;color:#21a366"></i><span>Excel</span></div>
-          <div class="skill" title="Power BI"><span class="pill-skill">Power&nbsp;BI</span></div>
-        </div>
-      </div>
+<!-- Technologies -->
+<div class="skill-section">
+  <div class="skill-heading">Technologies</div>
+  <div class="skill-row">
+    <div class="skill"><i class="devicon-azure-plain colored"></i><span>Azure</span></div>
+    <div class="skill"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+    <div class="skill"><i class="fa-brands fa-github" style="font-size:44px"></i><span>GitHub</span></div>
+    <div class="skill"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+    <div class="skill"><i class="devicon-mysql-original colored"></i><span>MySQL</span></div>
+    <div class="skill"><i class="devicon-sqlite-plain colored"></i><span>SQLite</span></div>
+    <div class="skill"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
+    <div class="skill"><span class="pill-skill">Colab</span></div>
+    <div class="skill"><i class="fa-solid fa-file-excel" style="font-size:44px;color:#21a366"></i><span>Excel</span></div>
+    <div class="skill"><span class="pill-skill">Power BI</span></div>
+  </div>
+</div>
 
-      <!-- Libraries -->
-      <div class="skill-section">
-        <div class="skill-heading">Libraries</div>
-        <div class="skill-row">
-          <div class="skill" title="TensorFlow"><i class="devicon-tensorflow-original colored"></i><span>TensorFlow</span></div>
-          <div class="skill" title="Keras"><i class="devicon-keras-plain colored"></i><span>Keras</span></div>
-          <div class="skill" title="PyTorch"><i class="devicon-pytorch-original colored"></i><span>PyTorch</span></div>
-          <div class="skill" title="Scikit-learn"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn</span></div>
-          <div class="skill" title="Statsmodels"><span class="pill-skill">Statsmodels</span></div>
-          <div class="skill" title="Pandas"><i class="devicon-pandas-original colored"></i><span>Pandas</span></div>
-          <div class="skill" title="NumPy"><i class="devicon-numpy-original colored"></i><span>NumPy</span></div>
-          <div class="skill" title="Matplotlib"><i class="devicon-matplotlib-plain colored"></i><span>Matplotlib</span></div>
-          <div class="skill" title="Seaborn"><span class="pill-skill">Seaborn</span></div>
-        </div>
-      </div>
+<!-- Libraries -->
+<div class="skill-section">
+  <div class="skill-heading">Libraries</div>
+  <div class="skill-row">
+    <div class="skill"><i class="devicon-tensorflow-original colored"></i><span>TensorFlow</span></div>
+    <div class="skill"><i class="devicon-keras-plain colored"></i><span>Keras</span></div>
+    <div class="skill"><i class="devicon-pytorch-plain colored"></i><span>PyTorch</span></div>
+    <div class="skill"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn</span></div>
+    <div class="skill"><span class="pill-skill">Statsmodels</span></div>
+    <div class="skill"><i class="devicon-pandas-plain colored"></i><span>Pandas</span></div>
+    <div class="skill"><i class="devicon-numpy-plain colored"></i><span>NumPy</span></div>
+    <div class="skill"><i class="devicon-matplotlib-plain colored"></i><span>Matplotlib</span></div>
+    <div class="skill"><span class="pill-skill">Seaborn</span></div>
+  </div>
+</div>
+
     </div>
   </section>
 
