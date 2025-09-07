@@ -17,31 +17,34 @@
   :root{
     --bg:#0f1626; --bg2:#111c2f; --panel:#121c2f; --edge:rgba(255,255,255,.09);
     --text:#e9edf7; --muted:#a8b0c8; --accent:#1fd36f;
-    --shadow:0 18px 42px rgba(0,0,0,.38);
+    --r:16px; --shadow:0 18px 42px rgba(0,0,0,.38);
   }
   *{box-sizing:border-box} html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
 
-  /* Top bar hidden on Home */
-  .topbar{position:fixed; top:0; left:0; right:0; height:56px; display:flex; align-items:center; justify-content:space-between;
-    padding:0 18px; background:#0f1a2c; border-bottom:1px solid var(--edge); z-index:100}
+  /* Top bar (hidden on Home) */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; height:56px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 18px; background:#0f1a2c; border-bottom:1px solid var(--edge); z-index:100
+  }
   .brand{font-weight:900; text-decoration:none; color:#fff}
   .topnav{display:flex; gap:16px; align-items:center}
   .topnav a{color:#cfd6ea; text-decoration:none; font-weight:700; position:relative; padding:8px 6px}
   .topnav a.active{color:#fff}
   .topnav a.active::after{content:""; position:absolute; left:0; right:0; bottom:4px; height:3px; background:var(--accent); border-radius:3px}
+  /* hide topbar on HOME */
   body[data-view="home"] .topbar{display:none}
 
   /* Stage + panels */
   .stage{position:fixed; inset:56px 0 0 0; display:grid; place-items:center; background:var(--bg)}
-  body[data-view="home"] .stage{inset:0}
+  body[data-view="home"] .stage{inset:0} /* full canvas on home */
   .panel{display:none; width:min(1160px,94vw); height:min(640px,calc(100vh - 88px)); background:var(--panel); border:1px solid var(--edge);
-    border-radius:18px; box-shadow:var(--shadow); overflow:auto}
-  body[data-view="home"] .panel{height:100vh}
+         border-radius:18px; box-shadow:var(--shadow); overflow:auto}
+  body[data-view="home"] .panel{height:calc(100vh - 0px)}
   .panel.active{display:block; animation:fade .2s ease}
   @keyframes fade{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* HOME */
+  /* HOME hero */
   .home{
     background:
       linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)),
@@ -50,39 +53,37 @@
   }
   .hero{padding:42px clamp(16px,4vw,48px)}
   .hero h1{font-size:clamp(40px,7vw,72px); line-height:1.05; margin:0 0 10px}
-  .subtitle{font-size:clamp(18px,2.8vw,28px); font-weight:800; color:#eaf7ef; margin:0 0 22px}
+  .subtitle{font-size:clamp(18px,2.8vw,28px); font-weight:800; color:#eaf7ef; margin:0 0 22px; display:inline-block}
   .subtitle .u{position:relative; color:#2fe180}
   .subtitle .u::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:4px; background:#2fe180; border-radius:3px}
   .hero-nav{display:flex; gap:28px; flex-wrap:wrap; margin:10px 0 18px}
   .hero-nav a{color:#fff; text-decoration:none; font-weight:700; opacity:.95; position:relative}
   .hero-nav a.active::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:3px; background:#2fe180; border-radius:3px}
   .socials{display:flex; gap:14px; margin-top:8px}
-  .socials a{width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
-    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.25); color:#fff; font-size:18px}
+  .socials a{
+    width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
+    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.25); color:#fff; text-decoration:none; font-size:18px;
+  }
 
-  /* ABOUT (Sumanth style) */
-  .about-panel{background:linear-gradient(180deg,var(--bg),var(--bg2))}
-  .about-wrap{padding:36px clamp(18px,4vw,48px)}
-  .about-title{font-size:clamp(36px,5vw,56px); font-weight:900; margin:0 0 18px}
-  .about-divider{height:1px; background:var(--edge); border:0; margin:10px 0 28px}
-  .about-grid-slim{display:grid; grid-template-columns:minmax(260px,380px) 1fr; gap:32px; align-items:center}
-  .about-photo-slim{display:flex; justify-content:center; align-items:center}
-  .about-photo-slim img{width:min(340px,90%); aspect-ratio:1/1; object-fit:cover; border-radius:50%; box-shadow:0 18px 42px rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.18); background:#fff}
-  .about-copy{font-size:1.05rem; line-height:1.6; color:#dbe4ff}
-  .about-copy p{margin:0 0 14px}
-  @media (max-width:980px){.about-grid-slim{grid-template-columns:1fr} .about-photo-slim{order:-1}}
-
-  /* Projects */
+  /* generic wraps */
   .wrap{padding:24px clamp(16px,3vw,26px)}
   h2{font-size:clamp(22px,3.2vw,32px); margin:2px 0 12px}
   .muted{color:var(--muted)}
+
+  /* About */
+  .about-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:24px; align-items:center}
+  .about-card{background:rgba(255,255,255,.04); border:1px solid var(--edge); border-radius:var(--r); padding:16px}
+  .photo{display:flex; justify-content:center}
+  .photo img{width:min(320px,86%); aspect-ratio:1/1; object-fit:cover; border-radius:50%; border:1px solid rgba(255,255,255,.2); box-shadow:var(--shadow); background:#fff}
+
+  /* Projects */
   .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px}
   .card{background:#0f1a2c; border:1px solid var(--edge); border-radius:14px; padding:16px}
   .thumb{height:150px; border-radius:10px; border:1px solid var(--edge); background:#0d1728; display:grid; place-items:center; color:#8fb3ff; margin-bottom:10px}
   .tags{display:flex; gap:8px; flex-wrap:wrap}
   .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
 
-  /* Skills */
+  /* Skills gallery */
   .skills-wrap{padding:24px clamp(16px,3vw,26px)}
   .skill-section{background:#0f1a2c;border:1px solid var(--edge);border-radius:12px;padding:16px 16px 8px;margin-bottom:18px}
   .skill-heading{color:var(--accent);font-weight:900;font-size:1.25rem;margin:0 0 12px}
@@ -103,7 +104,8 @@
   .contact-form{display:grid; gap:10px}
   .contact-form input,.contact-form textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--edge); background:#0f1a2c; color:var(--text)}
   .contact-form textarea{min-height:120px; resize:vertical}
-  @media (max-width:980px){.contact-grid{grid-template-columns:1fr}}
+
+  @media (max-width:980px){ .about-grid{grid-template-columns:1fr} .contact-grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -121,10 +123,12 @@
 
 <main class="stage">
   <!-- HOME -->
-  <section class="panel home active" id="view-home">
+  <section class="panel home active" id="view-home" role="region" aria-label="Home">
     <div class="hero">
       <h1>Ramesh Kelavath</h1>
       <p class="subtitle">I am a <span class="u">Data Science and Machine Learning Enthusiast</span></p>
+
+      <!-- hero nav -->
       <div class="hero-nav">
         <a href="#home" data-view="home" class="active">Home</a>
         <a href="#about" data-view="about">About</a>
@@ -132,66 +136,74 @@
         <a href="#skills" data-view="skills">Skills</a>
         <a href="#contact" data-view="contact">Contact</a>
       </div>
+
+      <!-- social icons -->
       <div class="socials">
-        <a href="mailto:rameshkelavath5@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-        <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/RameshKelavath" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:rameshkelavath5@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://github.com/RameshKelavath" target="_blank" rel="noopener" title="GitHub"><i class="fa-brands fa-github"></i></a>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section class="panel about-panel" id="view-about">
-    <div class="about-wrap">
-      <h1 class="about-title">Ramesh Kelavath</h1>
-      <div class="about-divider"></div>
-      <div class="about-grid-slim">
-        <div class="about-photo-slim">
+  <section class="panel" id="view-about" role="region" aria-label="About" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="about-grid">
+        <div class="about-card photo">
           <img src="Ramesh Linkedln Photo.jpg" alt="Ramesh Kelavath"
                onerror="this.onerror=null; this.src='Ramesh LinkedIn Photo.jpg';">
         </div>
-        <div class="about-copy">
-          <p>Hi there, I’m Ramesh Kelavath.</p>
-          <p>
-            Exploring data’s hidden patterns and turning them into real-world impact — that’s what excites me.
-            I’m an MSc Data Science student at the University of Hertfordshire and a former Associate at Accenture,
-            with a strong foundation in Python, SQL, and Azure. I work across machine learning, time-series
-            forecasting, and data visualization to turn complex datasets into clear insights.
-          </p>
-          <p>
-            I focus on bridging technical depth with business value: building predictive models, shaping clean
-            data pipelines, and communicating results that drive better decisions. Recent projects span financial
-            time-series prediction, an EDA toolkit, and an Azure-oriented ML pipeline concept.
-          </p>
-          <p>
-            I’m actively pursuing opportunities in Data Science, Machine Learning, and Data Analytics
-            where I can help teams make faster, smarter decisions with data.
-          </p>
-        </div>
+        <div class="about-card">
+  <p class="muted">
+    Hi there, I’m <strong>Ramesh Kelavath</strong>.
+  </p>
+  <p class="muted">
+    Exploring data’s hidden patterns and turning them into real-world impact — that’s what excites me. 
+    As an <strong>MSc Data Science student</strong> at the University of Hertfordshire and a former 
+    <strong>Associate at Accenture</strong>, I’ve built a strong foundation in 
+    <strong>Python, SQL, and Azure</strong>, along with hands-on experience in 
+    <strong>machine learning, time-series forecasting, and data visualization</strong>.
+  </p>
+  <p class="muted">
+    What sets me apart is my ability to bridge <strong>technical depth with business value</strong>. 
+    From building predictive models to creating clear, actionable dashboards, I focus on delivering 
+    insights that drive better decisions. My projects — from 
+    <strong>financial time-series prediction</strong> to 
+    <strong>EDA and ML pipelines</strong> — reflect both analytical rigor and creativity.
+  </p>
+  <p class="muted">
+    I’m actively pursuing opportunities in <strong>Data Science, Machine Learning, and Data Analytics</strong> 
+    where I can combine my technical expertise with my passion for solving problems, 
+    helping organizations unlock the full potential of their data.
+  </p>
+</div>
+
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section class="panel" id="view-projects">
+  <section class="panel" id="view-projects" role="region" aria-label="Projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Projects</h2>
       <div class="cards">
         <article class="card">
           <div class="thumb">Cover</div>
-          <h3 style="color:#2fe180">NIFTY 50 Stock Prediction</h3>
+          <h3 style="color:#2fe180;margin:.3rem 0">NIFTY 50 Stock Prediction</h3>
           <p class="muted">ARIMA & ARIMAX vs LSTM on 20+ years; MAE/MSE/RMSE comparison.</p>
           <div class="tags"><span class="tag">Python</span><span class="tag">Statsmodels</span><span class="tag">TensorFlow</span></div>
         </article>
         <article class="card">
           <div class="thumb">Cover</div>
-          <h3 style="color:#2fe180">Time-Series EDA Toolkit</h3>
+          <h3 style="color:#2fe180;margin:.3rem 0">Time-Series EDA Toolkit</h3>
           <p class="muted">Stationarity tests, decomposition, ACF/PACF, hyper-param search, forecast charts.</p>
           <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
         </article>
         <article class="card">
           <div class="thumb">Cover</div>
-          <h3 style="color:#2fe180">Azure ML Pipeline (Concept)</h3>
+          <h3 style="color:#2fe180;margin:.3rem 0">Azure ML Pipeline (Concept)</h3>
           <p class="muted">Ingest → transform → deploy on Azure (Blob, Data Factory, Functions, ML Studio).</p>
           <div class="tags"><span class="tag">Azure</span><span class="tag">MLOps</span><span class="tag">CI/CD</span></div>
         </article>
@@ -200,95 +212,110 @@
   </section>
 
   <!-- SKILLS -->
-  <section class="panel" id="view-skills">
+  <section class="panel" id="view-skills" role="region" aria-label="Skills" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="skills-wrap">
       <h2>Skills</h2>
-      <!-- Languages -->
+
+      <!-- Languages (ordered) -->
       <div class="skill-section">
         <div class="skill-heading">Languages</div>
         <div class="skill-row">
-          <div class="skill"><i class="devicon-c-plain colored"></i><span>C</span></div>
-          <div class="skill"><i class="devicon-java-plain colored"></i><span>Java</span></div>
-          <div class="skill"><i class="devicon-python-plain colored"></i><span>Python</span></div>
-          <div class="skill"><i class="devicon-dotnetcore-plain colored"></i><span>.NET</span></div>
-          <div class="skill"><i class="devicon-matlab-plain colored"></i><span>MATLAB</span></div>
-          <div class="skill"><span class="pill-skill">SQL</span></div>
+          <div class="skill" title="C"><i class="devicon-c-plain colored"></i><span>C</span></div>
+          <div class="skill" title="Java"><i class="devicon-java-plain colored"></i><span>Java</span></div>
+          <div class="skill" title="Python"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+          <div class="skill" title=".NET / C#"><i class="devicon-dotnetcore-plain colored"></i><span>.NET</span></div>
+          <div class="skill" title="MATLAB"><i class="devicon-matlab-plain colored"></i><span>MATLAB</span></div>
+          <div class="skill" title="SQL"><span class="pill-skill">SQL</span></div>
         </div>
       </div>
-      <!-- Technologies -->
+
+      <!-- Technologies (React & Node removed; GitHub via Font Awesome; Seaborn handled later) -->
       <div class="skill-section">
         <div class="skill-heading">Technologies</div>
         <div class="skill-row">
-          <div class="skill"><i class="devicon-azure-plain colored"></i><span>Azure</span></div>
-          <div class="skill"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-          <div class="skill"><i class="fa-brands fa-github" style="font-size:44px"></i><span>GitHub</span></div>
-          <div class="skill"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
-          <div class="skill"><i class="devicon-mysql-original colored"></i><span>MySQL</span></div>
-          <div class="skill"><i class="devicon-sqlite-plain colored"></i><span>SQLite</span></div>
-          <div class="skill"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
-          <div class="skill"><span class="pill-skill">Colab</span></div>
-          <div class="skill"><i class="fa-solid fa-file-excel" style="font-size:44px;color:#21a366"></i><span>Excel</span></div>
-          <div class="skill"><span class="pill-skill">Power BI</span></div>
+          <div class="skill" title="Azure"><i class="devicon-azure-plain colored"></i><span>Azure</span></div>
+          <div class="skill" title="Git"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+          <div class="skill" title="GitHub"><i class="fa-brands fa-github" style="font-size:44px"></i><span>GitHub</span></div>
+          <div class="skill" title="Docker"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+          <div class="skill" title="MySQL"><i class="devicon-mysql-original colored"></i><span>MySQL</span></div>
+          <div class="skill" title="SQLite"><i class="devicon-sqlite-plain colored"></i><span>SQLite</span></div>
+          <div class="skill" title="Jupyter"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
+          <div class="skill" title="Colab"><span class="pill-skill">Colab</span></div>
+          <div class="skill" title="Excel"><i class="fa-solid fa-file-excel" style="font-size:44px;color:#21a366"></i><span>Excel</span></div>
+          <div class="skill" title="Power BI"><span class="pill-skill">Power&nbsp;BI</span></div>
         </div>
       </div>
+
       <!-- Libraries -->
       <div class="skill-section">
         <div class="skill-heading">Libraries</div>
         <div class="skill-row">
-          <div class="skill"><i class="devicon-tensorflow-original colored"></i><span>TensorFlow</span></div>
-          <div class="skill"><i class="devicon-keras-plain colored"></i><span>Keras</span></div>
-          <div class="skill"><i class="devicon-pytorch-plain colored"></i><span>PyTorch</span></div>
-          <div class="skill"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn</span></div>
-          <div class="skill"><span class="pill-skill">Statsmodels</span></div>
-          <div class="skill"><i class="devicon-pandas-plain colored"></i><span>Pandas</span></div>
-          <div class="skill"><i class="devicon-numpy-plain colored"></i><span>NumPy</span></div>
-          <div class="skill"><i class="devicon-matplotlib-plain colored"></i><span>Matplotlib</span></div>
-          <div class="skill"><span class="pill-skill">Seaborn</span></div>
+          <div class="skill" title="TensorFlow"><i class="devicon-tensorflow-original colored"></i><span>TensorFlow</span></div>
+          <div class="skill" title="Keras"><i class="devicon-keras-plain colored"></i><span>Keras</span></div>
+          <div class="skill" title="PyTorch"><i class="devicon-pytorch-original colored"></i><span>PyTorch</span></div>
+          <div class="skill" title="Scikit-learn"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn</span></div>
+          <div class="skill" title="Statsmodels"><span class="pill-skill">Statsmodels</span></div>
+          <div class="skill" title="Pandas"><i class="devicon-pandas-original colored"></i><span>Pandas</span></div>
+          <div class="skill" title="NumPy"><i class="devicon-numpy-original colored"></i><span>NumPy</span></div>
+          <div class="skill" title="Matplotlib"><i class="devicon-matplotlib-plain colored"></i><span>Matplotlib</span></div>
+          <div class="skill" title="Seaborn"><span class="pill-skill">Seaborn</span></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="panel" id="view-contact">
+  <section class="panel" id="view-contact" role="region" aria-label="Contact" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Contact</h2>
       <div class="contact-grid">
-        <div>
+        <div class="card">
+          <h3>Social Profiles</h3>
+          <div class="socials-contact">
+            <a href="mailto:rameshkelavath5@gmail.com"><i class="fa-solid fa-envelope"></i>Email</a>
+            <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>
+            <a href="https://github.com/RameshKelavath" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i>GitHub</a>
+          </div>
+          <h3 style="margin-top:16px">Contact Details</h3>
           <div class="list">
             <div class="item"><i class="fa-solid fa-envelope"></i> rameshkelavath5@gmail.com</div>
-            <div class="item"><i class="fa-solid fa-phone"></i> +44-XXXXXXXXXX</div>
-            <div class="item"><i class="fa-solid fa-location-dot"></i> London, UK</div>
-          </div>
-          <div class="socials-contact" style="margin-top:20px">
-            <a href="mailto:rameshkelavath5@gmail.com"><i class="fa-solid fa-envelope"></i>Email</a>
-            <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>
-            <a href="https://github.com/RameshKelavath" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
+            <div class="item"><i class="fa-solid fa-phone"></i> 07440 595 986</div>
+            <div class="item"><i class="fa-solid fa-location-dot"></i> Hertfordshire, UK</div>
           </div>
         </div>
-        <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required>
-          <input type="email" name="_replyto" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Your Message" required></textarea>
-          <button type="submit" style="padding:10px 16px; border:none; border-radius:10px; background:var(--accent); font-weight:700; color:#fff; cursor:pointer">Send</button>
-        </form>
+        <div class="card">
+          <h3>Send a Message</h3>
+          <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="message" placeholder="Message" required></textarea>
+            <button class="topnav btn" type="submit" style="width:max-content">Send</button>
+            <p class="muted">Replace <code>your-form-id</code> with your Formspree ID.</p>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <script>
-document.querySelectorAll('[data-view]').forEach(link=>{
-  link.addEventListener('click', e=>{
-    e.preventDefault();
-    const view=link.getAttribute('data-view');
-    document.body.setAttribute('data-view',view);
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    document.querySelector('#view-'+view).classList.add('active');
-    document.querySelectorAll('.topnav a, .hero-nav a').forEach(a=>a.classList.remove('active'));
-    document.querySelectorAll('[data-view="'+view+'"]').forEach(a=>a.classList.add('active'));
-  });
-});
+  // No-scroll router
+  const VIEWS = ['home','about','projects','skills','contact'];
+  const PANELS = Object.fromEntries(VIEWS.map(v => [v, document.getElementById('view-'+v)]));
+  const LINKS = Array.from(document.querySelectorAll('[data-view]'));
+
+  function show(view){
+    const chosen = VIEWS.includes(view) ? view : 'home';
+    document.body.setAttribute('data-view', chosen); // to toggle topbar on home
+    for (const [k, el] of Object.entries(PANELS)) el.classList.toggle('active', k===chosen);
+    for (const a of LINKS) a.classList.toggle('active', a.dataset.view===chosen);
+    if (location.hash.slice(1) !== chosen) history.replaceState(null,'','#'+chosen);
+  }
+
+  LINKS.forEach(a => a.addEventListener('click', e => { e.preventDefault(); show(a.dataset.view); }));
+  window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+  document.addEventListener('DOMContentLoaded', () => show(location.hash.slice(1)));
 </script>
+
 </body>
 </html>
