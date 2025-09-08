@@ -32,19 +32,18 @@
   .topnav a{color:#cfd6ea; text-decoration:none; font-weight:700; position:relative; padding:8px 6px}
   .topnav a.active{color:#fff}
   .topnav a.active::after{content:""; position:absolute; left:0; right:0; bottom:4px; height:3px; background:var(--accent); border-radius:3px}
-  /* hide topbar on HOME */
   body[data-view="home"] .topbar{display:none}
 
   /* Stage + panels */
   .stage{position:fixed; inset:56px 0 0 0; display:grid; place-items:center; background:var(--bg)}
-  body[data-view="home"] .stage{inset:0} /* full canvas on home */
+  body[data-view="home"] .stage{inset:0}
   .panel{display:none; width:min(1160px,94vw); height:min(640px,calc(100vh - 88px)); background:var(--panel); border:1px solid var(--edge);
          border-radius:18px; box-shadow:var(--shadow); overflow:auto}
   body[data-view="home"] .panel{height:100vh}
   .panel.active{display:block; animation:fade .2s ease}
   @keyframes fade{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* HOME hero */
+  /* HOME */
   .home{
     background:
       linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)),
@@ -62,7 +61,7 @@
   .socials{display:flex; gap:14px; margin-top:8px}
   .socials a{
     width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
-    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.25); color:#fff; text-decoration:none; font-size:18px;
+    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.25); color:#fff; font-size:18px;
   }
 
   /* generic wraps */
@@ -70,7 +69,7 @@
   h2{font-size:clamp(22px,3.2vw,32px); margin:2px 0 12px}
   .muted{color:var(--muted)}
 
-  /* ====== ABOUT (Sumanth-style, with proper sizing) ====== */
+  /* ====== ABOUT (Sumanth-style) ====== */
   .about-panel{background:linear-gradient(180deg,var(--bg),var(--bg2))}
   .about-wrap{padding:32px clamp(16px,4vw,40px)}
   .about-grid-slim{
@@ -79,12 +78,9 @@
   }
   .about-photo-slim{display:flex; justify-content:center; align-items:center}
   .about-photo-slim img{
-    width:min(320px,90%);
-    aspect-ratio:1/1; object-fit:cover;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 18px 42px rgba(0,0,0,.35);
-    background:#fff;
+    width:min(320px,90%); aspect-ratio:1/1; object-fit:cover;
+    border-radius:50%; border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 18px 42px rgba(0,0,0,.35); background:#fff;
   }
   .about-copy{font-size:1.05rem; line-height:1.6; color:#dbe4ff}
   .about-copy p{margin:0 0 14px}
@@ -97,7 +93,7 @@
   .tags{display:flex; gap:8px; flex-wrap:wrap}
   .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
 
-  /* Skills gallery */
+  /* Skills */
   .skills-wrap{padding:24px clamp(16px,3vw,26px)}
   .skill-section{background:#0f1a2c;border:1px solid var(--edge);border-radius:12px;padding:16px 16px 8px;margin-bottom:18px}
   .skill-heading{color:var(--accent);font-weight:900;font-size:1.25rem;margin:0 0 12px}
@@ -106,14 +102,14 @@
   .skill i{font-size:44px;display:block;margin:0 auto 8px}
   .skill span{font-size:.95rem;color:#dbe4ff}
   .pill-skill{width:auto;padding:8px 12px;border:1px solid var(--edge);background:#0f1a2c;border-radius:10px;font-weight:700;color:#dbe4ff}
+  /* NEW: make image icons match size of font icons */
+  .skill img{width:44px;height:44px;display:block;margin:0 auto 8px}
 
   /* Contact */
   .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px}
   .list{display:grid; gap:10px}
   .list .item{display:flex; align-items:center; gap:10px}
   .list .item i{width:28px; text-align:center}
-
-  /* Make these headings green, as requested */
   .contact-grid h3{color:var(--accent); margin:0 0 10px; font-weight:900}
 
   .socials-contact{display:flex; gap:12px; flex-wrap:wrap}
@@ -121,10 +117,9 @@
   .socials-contact a:hover{background:#14223a}
 
   .contact-form{display:grid; gap:10px}
-  .contact-form input,.contact-form textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--edge); background:#0f1a2c; color:var(--text)}
+  .contact-form input,.contact-form textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--edge); background:#0f1a2c; color:#fff}
   .contact-form textarea{min-height:120px; resize:vertical}
 
-  /* Button with green text & outline; fills green on hover */
   .btn-outline-accent{
     padding:10px 16px; border-radius:10px; border:2px solid var(--accent);
     background:transparent; color:var(--accent); font-weight:800; cursor:pointer
@@ -149,12 +144,11 @@
 
 <main class="stage">
   <!-- HOME -->
-  <section class="panel home active" id="view-home" role="region" aria-label="Home">
+  <section class="panel home active" id="view-home">
     <div class="hero">
       <h1>Ramesh Kelavath</h1>
       <p class="subtitle">I am a <span class="u">Data Science and Machine Learning Enthusiast</span></p>
 
-      <!-- hero nav -->
       <div class="hero-nav">
         <a href="#home" data-view="home" class="active">Home</a>
         <a href="#about" data-view="about">About</a>
@@ -163,7 +157,6 @@
         <a href="#contact" data-view="contact">Contact</a>
       </div>
 
-      <!-- social icons -->
       <div class="socials">
         <a href="mailto:rameshkelavath5@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
         <a href="https://www.linkedin.com/in/kelavath-ramesh-583255151/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
@@ -172,8 +165,8 @@
     </div>
   </section>
 
-  <!-- ABOUT (with proper classes/styles) -->
-  <section class="panel about-panel" id="view-about" role="region" aria-label="About">
+  <!-- ABOUT -->
+  <section class="panel about-panel" id="view-about">
     <div class="about-wrap">
       <div class="about-grid-slim">
         <div class="about-photo-slim">
@@ -182,28 +175,22 @@
         </div>
         <div class="about-copy">
           <p>Hi there, I’m <strong>Ramesh Kelavath</strong>.</p>
-          <p>
-            Exploring data’s hidden patterns and turning them into real-world impact — that’s what excites me.
+          <p>Exploring data’s hidden patterns and turning them into real-world impact — that’s what excites me.
             I’m an MSc Data Science student at the University of Hertfordshire and a former Associate at Accenture,
             with a strong foundation in Python, SQL, and Azure. I work across machine learning, time-series
-            forecasting, and data visualization to turn complex datasets into clear insights.
-          </p>
-          <p>
-            I focus on bridging technical depth with business value: building predictive models, shaping clean
+            forecasting, and data visualization to turn complex datasets into clear insights.</p>
+          <p>I focus on bridging technical depth with business value: building predictive models, shaping clean
             data pipelines, and communicating results that drive better decisions. Recent projects span financial
-            time-series prediction, an EDA toolkit, and an Azure-oriented ML pipeline concept.
-          </p>
-          <p>
-            I’m actively pursuing opportunities in Data Science, Machine Learning, and Data Analytics
-            where I can help teams make faster, smarter decisions with data.
-          </p>
+            time-series prediction, an EDA toolkit, and an Azure-oriented ML pipeline concept.</p>
+          <p>I’m actively pursuing opportunities in Data Science, Machine Learning, and Data Analytics
+            where I can help teams make faster, smarter decisions with data.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section class="panel" id="view-projects" role="region" aria-label="Projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+  <section class="panel" id="view-projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Projects</h2>
       <div class="cards">
@@ -230,7 +217,7 @@
   </section>
 
   <!-- SKILLS -->
-  <section class="panel" id="view-skills" role="region" aria-label="Skills" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+  <section class="panel" id="view-skills" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="skills-wrap">
       <h2>Skills</h2>
 
@@ -255,12 +242,14 @@
           <div class="skill"><i class="devicon-git-plain colored"></i><span>Git</span></div>
           <div class="skill"><i class="fa-brands fa-github" style="font-size:44px"></i><span>GitHub</span></div>
           <div class="skill"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
-          <div class="skill"><i class="devicon-mysql-original colored"></i><span>MySQL</span></div>
+
+          <!-- Reliable SVGs for these -->
+          <div class="skill"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL"><span>MySQL</span></div>
           <div class="skill"><i class="devicon-sqlite-plain colored"></i><span>SQLite</span></div>
           <div class="skill"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
-          <div class="skill"><span class="pill-skill">Colab</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/googlecolab/F9AB00" alt="Colab"><span>Colab</span></div>
           <div class="skill"><i class="fa-solid fa-file-excel" style="font-size:44px;color:#21a366"></i><span>Excel</span></div>
-          <div class="skill"><span class="pill-skill">Power BI</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/powerbi/F2C811" alt="Power BI"><span>Power&nbsp;BI</span></div>
         </div>
       </div>
 
@@ -269,21 +258,21 @@
         <div class="skill-heading">Libraries</div>
         <div class="skill-row">
           <div class="skill"><i class="devicon-tensorflow-original colored"></i><span>TensorFlow</span></div>
-          <div class="skill"><i class="devicon-keras-plain colored"></i><span>Keras</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/keras/D00000" alt="Keras"><span>Keras</span></div>
           <div class="skill"><i class="devicon-pytorch-plain colored"></i><span>PyTorch</span></div>
-          <div class="skill"><i class="devicon-scikitlearn-plain colored"></i><span>Scikit-learn</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/scikitlearn/F7931E" alt="Scikit-learn"><span>Scikit-learn</span></div>
           <div class="skill"><span class="pill-skill">Statsmodels</span></div>
           <div class="skill"><i class="devicon-pandas-plain colored"></i><span>Pandas</span></div>
           <div class="skill"><i class="devicon-numpy-plain colored"></i><span>NumPy</span></div>
-          <div class="skill"><i class="devicon-matplotlib-plain colored"></i><span>Matplotlib</span></div>
-          <div class="skill"><span class="pill-skill">Seaborn</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/matplotlib/11557C" alt="Matplotlib"><span>Matplotlib</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/seaborn/4C72B0" alt="Seaborn"><span>Seaborn</span></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="panel" id="view-contact" role="region" aria-label="Contact" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+  <section class="panel" id="view-contact" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Contact</h2>
       <div class="contact-grid">
@@ -301,14 +290,16 @@
             <div class="item"><i class="fa-solid fa-location-dot"></i> Hertfordshire, UK</div>
           </div>
         </div>
+
+        <!-- Updated form: no heading, your placeholders, subject field, Send Message button -->
         <div class="card">
-          <h3>Send a Message</h3>
           <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-            <input type="text" name="name" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="subject" placeholder="Subject" required>
             <textarea name="message" placeholder="Message" required></textarea>
-            <button class="btn-outline-accent" type="submit">Send</button>
-            <p class="muted">Replace <code>your-form-id</code> with your Formspree ID.</p>
+            <input type="hidden" name="_subject" value="New message from portfolio site">
+            <button class="btn-outline-accent" type="submit">Send Message</button>
           </form>
         </div>
       </div>
@@ -324,9 +315,9 @@
 
   function show(view){
     const chosen = VIEWS.includes(view) ? view : 'home';
-    document.body.setAttribute('data-view', chosen); // to toggle topbar on home
-    for (const [k, el] of Object.entries(PANELS)) el.classList.toggle('active', k===chosen);
-    for (const a of LINKS) a.classList.toggle('active', a.dataset.view===chosen);
+    document.body.setAttribute('data-view', chosen);
+    Object.entries(PANELS).forEach(([k,el]) => el.classList.toggle('active', k===chosen));
+    LINKS.forEach(a => a.classList.toggle('active', a.dataset.view===chosen));
     if (location.hash.slice(1) !== chosen) history.replaceState(null,'','#'+chosen);
   }
 
