@@ -54,7 +54,7 @@
     padding: 0;
   }
   .home{
-    /* NOTE: background image is applied by JS when it loads successfully */
+    /* background image is applied by JS when it loads successfully */
     background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)), var(--bg2);
   }
   .hero{
@@ -95,12 +95,16 @@
   .about-copy p{margin:0 0 14px}
   @media (max-width:980px){ .about-grid-slim{grid-template-columns:1fr} .about-photo-slim{order:-1} }
 
-  /* Projects */
+  /* Projects (card grid) */
   .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px}
   .card{background:#0f1a2c; border:1px solid var(--edge); border-radius:14px; padding:16px}
-  .thumb{height:150px; border-radius:10px; border:1px solid var(--edge); background:#0d1728; display:grid; place-items:center; color:#8fb3ff; margin-bottom:10px}
-  .tags{display:flex; gap:8px; flex-wrap:wrap}
-  .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
+  .thumb{
+    height:180px; border-radius:10px; border:1px solid var(--edge);
+    background:#0d1728 center/cover no-repeat; display:grid; place-items:center; color:#8fb3ff; margin-bottom:10px
+  }
+  .card h3{margin:.3rem 0 .25rem; color:#2fe180}
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+  .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:#cfe1ff; font-weight:700; font-size:.85rem}
   .repo-meta{display:flex; gap:12px; align-items:center; color:#aeb7d4; font-size:.9rem}
 
   /* Skills */
@@ -130,7 +134,7 @@
   .contact-grid h3{color:var(--accent); margin:0 0 10px; font-weight:900}
 
   .socials-contact{display:flex; gap:12px; flex-wrap:wrap}
-  .socials-contact a{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; text-decoration:none; background:#0f1a2c; border:1px solid var(--edge); color:var(--text)}
+  .socials-contact a{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; text-decoration:none; background:#0f1a2c; border:1px solid var(--edge); color:#fff}
   .socials-contact a:hover{background:#14223a}
 
   .contact-form{display:grid; gap:10px}
@@ -206,21 +210,14 @@
     </div>
   </section>
 
-  <!-- PROJECTS (auto from GitHub) -->
+  <!-- PROJECTS (curated covers + fetched repo data, with excludes) -->
   <section class="panel" id="view-projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Projects</h2>
-
-      <!-- Repo Filters (optional) -->
-      <div class="muted" style="margin-bottom:10px">
-        Latest public repositories from <strong>github.com/RameshKelavath</strong>
-      </div>
-
       <div class="cards" id="repo-cards">
-        <!-- Populated by JS -->
         <div class="card" id="repo-skeleton">
-          <div class="thumb">Loading repositories…</div>
-          <p class="muted">Fetching from GitHub API.</p>
+          <div class="thumb">Loading projects…</div>
+          <p class="muted">Fetching your repos & applying covers/descriptions.</p>
         </div>
       </div>
     </div>
@@ -329,6 +326,7 @@
         </div>
 
         <div class="card">
+          <!-- Replace your-form-id with your real Formspree ID -->
           <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
@@ -348,7 +346,6 @@
   const VIEWS = ['home','about','projects','skills','contact'];
   const PANELS = Object.fromEntries(VIEWS.map(v => [v, document.getElementById('view-'+v)]));
   const LINKS = Array.from(document.querySelectorAll('[data-view]'));
-
   function show(view){
     const chosen = VIEWS.includes(view) ? view : 'home';
     document.body.setAttribute('data-view', chosen);
@@ -361,26 +358,15 @@
   document.addEventListener('DOMContentLoaded', () => show(location.hash.slice(1)));
 </script>
 
-<!-- ===== BG image preloader & applier (fix path issues) ===== -->
+<!-- ===== BG image preloader (full-cover) ===== -->
 <script>
 (function(){
-  const home = document.querySelector('.home');
-  if (!home) return;
-
-  // Try common relative paths (works for user sites + project pages)
-  const base = location.pathname.replace(/[^/]*$/, ''); // path of current folder
-  const candidates = [
-    'bg-home.jpg',
-    './bg-home.jpg',
-    base + 'bg-home.jpg'
-  ];
-
+  const home = document.querySelector('.home'); if (!home) return;
+  const base = location.pathname.replace(/[^/]*$/, '');
+  const candidates = ['bg-home.jpg','./bg-home.jpg', base + 'bg-home.jpg'];
   function tryLoad(i){
-    if (i >= candidates.length) {
-      console.warn('[bg-home] Could not find bg-home.jpg. Check filename & location.');
-      return;
-    }
-    const url = candidates[i] + '?v=' + Date.now(); // cache-bust
+    if (i >= candidates.length) { console.warn('[bg-home] not found'); return; }
+    const url = candidates[i] + '?v=' + Date.now();
     const img = new Image();
     img.onload = function(){
       home.style.backgroundImage =
@@ -396,60 +382,107 @@
 })();
 </script>
 
-<!-- ===== GitHub repos → Projects ===== -->
+<!-- ===== Curated Projects with covers + excludes ===== -->
 <script>
 (async function(){
   const USERNAME = 'RameshKelavath';
   const container = document.getElementById('repo-cards');
   if (!container) return;
-
-  // Clear skeleton
   container.innerHTML = '';
 
-  const url = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=12`;
+  /* ========== EDIT THIS MAP for your cover images & nice descriptions ==========
+     key = exact repo name on GitHub (case sensitive)
+     cover: 'covers/<your-image>.jpg'  (put files in /covers next to this HTML)
+     title: display title
+     desc : short description
+     tags : array of strings (optional)
+  */
+  const FEATURED = {
+    // Examples — change these to your actual repo names + your images
+    'StockPricePrediction': {
+      cover: 'covers/stock price prediction.jpg',
+      title: 'Stock Price Prediction',
+      desc: 'Developed forecasting models using ARIMA, ARIMAX, and LSTM on 20+ years of stock data. Compared classical time-series approaches with deep learning to evaluate predictive accuracy and insights.'
+    },
+    'Hackathon-Project': {
+      cover: 'covers/Transfer Learning',
+      title: 'CIFAR-10 Image Classification (Hackathon Project)',
+      desc: 'Built in a one-day hackathon using transfer learning with VGG16. Fine-tuned on a subset of 5 CIFAR-10 classes (Airplane, Automobile, Bird, Cat, Dog) to achieve efficient image classification.'
+    },
+    'Final_Visualisation_Code': {
+      cover: 'covers/Crypto Market',
+      title: 'Cryptocurrency Market Analysis',
+      desc: 'Explored trends, volatility, market capitalization, and interrelations of major cryptocurrencies using data visualization techniques.'
+    },
+    'Logistic-Regression': {
+      cover: 'covers/Logistic Regression',
+      title: 'Logistic Regression with Regularization',
+      desc: 'Tutorial project demonstrating Logistic Regression and how L1 (Lasso) and L2 (Ridge) regularization help prevent overfitting and improve model generalization.'
+    },
+    'Oil-Price-Forecasting': {
+      cover: 'covers/oil price',
+      title: 'Oil Price Forecasting with ARIMA vs LSTM',
+      desc: 'Study comparing ARIMA and LSTM models for forecasting oil prices (2020–2024). Results showed ARIMA outperformed LSTM in real-world testing, predicting stable prices around $85, while LSTM overestimated trends. Highlights the value of simpler models in volatile markets.'
+    },
+  };
 
+  /* Excludes — case/spacing insensitive (spaces, dashes, dots ignored) */
+  const EXCLUDE_NAMES = [
+    'RameshKelavath.github.io',
+    'RameshKelavath',
+    'Gan case study',
+    'Fundamentals of Data Science',
+    'Statistics and trends',
+    'Clustering and fitting'
+  ];
+  const norm = s => (s||'').toLowerCase().replace(/[\s._-]+/g,'');
+  const EXCLUDE_SET = new Set(EXCLUDE_NAMES.map(norm));
+
+  const url = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=30`;
   try {
-    const res = await fetch(url, {
-      headers: {
-        'Accept': 'application/vnd.github+json'
-      }
-    });
-    if (!res.ok) throw new Error('GitHub API error: ' + res.status);
-    const repos = await res.json();
+    const res = await fetch(url, { headers:{'Accept':'application/vnd.github+json'} });
+    if (!res.ok) throw new Error('GitHub API: '+res.status);
+    let repos = await res.json();
 
-    if (!Array.isArray(repos) || repos.length === 0) {
-      container.innerHTML = `
-        <div class="card"><div class="thumb">No public repos</div>
-        <p class="muted">Add repositories to your GitHub or make some public.</p></div>`;
+    // filter: public, not forks, not excluded
+    repos = repos.filter(r => !r.fork && !EXCLUDE_SET.has(norm(r.name)));
+
+    // Feature-first ordering: FEATURED repos first (keep your curated order), then the rest
+    const featuredKeys = Object.keys(FEATURED);
+    const featured = [];
+    const others = [];
+    for (const r of repos) {
+      (featuredKeys.includes(r.name) ? featured : others).push(r);
+    }
+    // keep FEATURED order
+    featured.sort((a,b)=>featuredKeys.indexOf(a.name)-featuredKeys.indexOf(b.name));
+
+    const finalList = [...featured, ...others].slice(0, 12);
+
+    if (finalList.length === 0) {
+      container.innerHTML = `<div class="card"><div class="thumb">No projects</div>
+      <p class="muted">Everything you excluded… add/rename repos or update the FEATURED map.</p></div>`;
       return;
     }
 
-    // Filter out forks & super-old template repos if desired
-    const filtered = repos
-      .filter(r => !r.fork) // no forks
-      .slice(0, 12);
-
-    for (const r of filtered) {
-      const updated = new Date(r.updated_at);
-      const updatedTxt = updated.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'2-digit'});
+    for (const r of finalList) {
+      const meta = FEATURED[r.name] || {};
+      const title = meta.title || r.name;
+      const desc  = meta.desc || r.description || 'No description';
+      const cover = meta.cover || null;
+      const tags  = meta.tags || (r.language ? [r.language] : []);
 
       const card = document.createElement('article');
       card.className = 'card';
+      const thumbStyle = cover ? `style="background-image:url('${cover}');"` : '';
       card.innerHTML = `
-        <div class="thumb"><i class="fa-brands fa-github"></i></div>
-        <h3 style="color:#2fe180;margin:.3rem 0">${r.name}</h3>
-        <p class="muted">${r.description ? r.description.replace(/</g,'&lt;') : 'No description'}</p>
-        <div class="repo-meta">
-          ${r.language ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ''}
-          <span title="Stars"><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
-          <span title="Last updated"><i class="fa-regular fa-clock"></i> ${updatedTxt}</span>
-        </div>
+        <div class="thumb" ${thumbStyle}>${cover ? '' : '<i class="fa-brands fa-github"></i>'}</div>
+        <h3>${title}</h3>
+        <p class="muted">${desc.replace(/</g,'&lt;')}</p>
+        ${ (tags && tags.length) ? `<div class="tags">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : '' }
       `;
-
-      // Make whole card clickable
       card.style.cursor = 'pointer';
       card.addEventListener('click', () => window.open(r.html_url, '_blank', 'noopener'));
-
       container.appendChild(card);
     }
   } catch (e) {
