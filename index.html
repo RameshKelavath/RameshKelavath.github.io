@@ -424,13 +424,14 @@
 
   /* Excludes — case/spacing insensitive (spaces, dashes, dots ignored) */
   const EXCLUDE_NAMES = [
-    'RameshKelavath.github.io',
-    'RameshKelavath',
-    'Gan case study',
-    'Fundamentals of Data Science',
-    'Statistics and trends Assignments',
-    'Clustering and fitting'
-  ];
+  'RameshKelavath.github.io',
+  'RameshKelavath',
+  'Gan-case-study',
+  'Fundamentals-of-Data-Science',
+  'Statistics_and_Trends_Assignment',
+  'Clustering-and-fitting'
+];
+
   const norm = s => (s||'').toLowerCase().replace(/[\s._-]+/g,'');
   const EXCLUDE_SET = new Set(EXCLUDE_NAMES.map(norm));
 
@@ -475,7 +476,6 @@
         <div class="thumb" ${thumbStyle}>${cover ? '' : '<i class="fa-brands fa-github"></i>'}</div>
         <h3>${title}</h3>
         <p class="muted">${desc.replace(/</g,'&lt;')}</p>
-        ${ (tags && tags.length) ? `<div class="tags">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : '' }
       `;
       card.style.cursor = 'pointer';
       card.addEventListener('click', () => window.open(r.html_url, '_blank', 'noopener'));
