@@ -42,7 +42,7 @@
   .panel.active{display:block; animation:fade .2s ease}
   @keyframes fade{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* === FIX 1: Home full screen === */
+  /* === Home (full screen) === */
   body[data-view="home"] .panel {
     width: 100%;
     height: 100vh;
@@ -53,13 +53,9 @@
     margin: 0;
     padding: 0;
   }
-
-  /* HOME */
   .home{
-    background:
-      linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)),
-      url('bg-home.jpg') center/cover no-repeat,
-      var(--bg2);
+    /* NOTE: background image is applied by JS when it loads successfully */
+    background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)), var(--bg2);
   }
   .hero{
     height: 100vh;
@@ -67,10 +63,7 @@
     justify-content:center; align-items:flex-start;
     padding:0 clamp(16px,4vw,48px);
   }
-
-  /* === FIX 2: Smaller name === */
   .hero h1{font-size:clamp(28px,4vw,42px); line-height:1.2; margin:0 0 10px}
-
   .subtitle{font-size:clamp(18px,2.8vw,26px); font-weight:800; color:#eaf7ef; margin:0 0 22px; display:inline-block}
   .subtitle .u{position:relative; color:#2fe180}
   .subtitle .u::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:4px; background:#2fe180; border-radius:3px}
@@ -91,10 +84,7 @@
   /* ====== ABOUT ====== */
   .about-panel{background:linear-gradient(180deg,var(--bg),var(--bg2))}
   .about-wrap{padding:32px clamp(16px,4vw,40px)}
-  .about-grid-slim{
-    display:grid; grid-template-columns:minmax(240px,360px) 1fr;
-    gap:28px; align-items:center;
-  }
+  .about-grid-slim{display:grid; grid-template-columns:minmax(240px,360px) 1fr; gap:28px; align-items:center}
   .about-photo-slim{display:flex; justify-content:center; align-items:center}
   .about-photo-slim img{
     width:min(320px,90%); aspect-ratio:1/1; object-fit:cover;
@@ -111,6 +101,7 @@
   .thumb{height:150px; border-radius:10px; border:1px solid var(--edge); background:#0d1728; display:grid; place-items:center; color:#8fb3ff; margin-bottom:10px}
   .tags{display:flex; gap:8px; flex-wrap:wrap}
   .tag{padding:6px 10px; border-radius:999px; border:1px solid var(--edge); background:rgba(255,255,255,.06); color:var(--muted); font-weight:700}
+  .repo-meta{display:flex; gap:12px; align-items:center; color:#aeb7d4; font-size:.9rem}
 
   /* Skills */
   .skills-wrap{padding:24px clamp(16px,3vw,26px)}
@@ -215,34 +206,27 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- PROJECTS (auto from GitHub) -->
   <section class="panel" id="view-projects" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
       <h2>Projects</h2>
-      <div class="cards">
-        <article class="card">
-          <div class="thumb">Cover</div>
-          <h3 style="color:#2fe180;margin:.3rem 0">NIFTY 50 Stock Prediction</h3>
-          <p class="muted">ARIMA & ARIMAX vs LSTM on 20+ years; MAE/MSE/RMSE comparison.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Statsmodels</span><span class="tag">TensorFlow</span></div>
-        </article>
-        <article class="card">
-          <div class="thumb">Cover</div>
-          <h3 style="color:#2fe180;margin:.3rem 0">Time-Series EDA Toolkit</h3>
-          <p class="muted">Stationarity tests, decomposition, ACF/PACF, hyper-param search, forecast charts.</p>
-          <div class="tags"><span class="tag">EDA</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span></div>
-        </article>
-        <article class="card">
-          <div class="thumb">Cover</div>
-          <h3 style="color:#2fe180;margin:.3rem 0">Azure ML Pipeline (Concept)</h3>
-          <p class="muted">Ingest → transform → deploy on Azure (Blob, Data Factory, Functions, ML Studio).</p>
-          <div class="tags"><span class="tag">Azure</span><span class="tag">MLOps</span><span class="tag">CI/CD</span></div>
-        </article>
+
+      <!-- Repo Filters (optional) -->
+      <div class="muted" style="margin-bottom:10px">
+        Latest public repositories from <strong>github.com/RameshKelavath</strong>
+      </div>
+
+      <div class="cards" id="repo-cards">
+        <!-- Populated by JS -->
+        <div class="card" id="repo-skeleton">
+          <div class="thumb">Loading repositories…</div>
+          <p class="muted">Fetching from GitHub API.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS (with guaranteed icons) -->
+  <!-- SKILLS -->
   <section class="panel" id="view-skills" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="skills-wrap">
       <h2>Skills</h2>
@@ -256,7 +240,6 @@
           <div class="skill"><i class="devicon-python-plain colored"></i><span>Python</span></div>
           <div class="skill"><i class="devicon-dotnetcore-plain colored"></i><span>.NET</span></div>
           <div class="skill"><i class="devicon-matlab-plain colored"></i><span>MATLAB</span></div>
-          <!-- SQL now uses a reliable Font Awesome icon -->
           <div class="skill"><i class="fa-solid fa-database"></i><span>SQL</span></div>
         </div>
       </div>
@@ -269,12 +252,11 @@
           <div class="skill"><i class="devicon-git-plain colored"></i><span>Git</span></div>
           <div class="skill"><i class="fa-brands fa-github" style="font-size:44px"></i><span>GitHub</span></div>
           <div class="skill"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
-          <div class="skill"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL" class="svg-icon"><span>MySQL</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL"><span>MySQL</span></div>
           <div class="skill"><i class="devicon-sqlite-plain colored"></i><span>SQLite</span></div>
           <div class="skill"><i class="devicon-jupyter-plain colored"></i><span>Jupyter</span></div>
-          <div class="skill"><img src="https://cdn.simpleicons.org/googlecolab/F9AB00" alt="Colab" class="svg-icon"><span>Colab</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/googlecolab/F9AB00" alt="Colab"><span>Colab</span></div>
           <div class="skill"><i class="fa-solid fa-file-excel" style="font-size:44px;color:#21a366"></i><span>Excel</span></div>
-          <!-- Power BI inline SVG -->
           <div class="skill">
             <svg class="svg-icon" viewBox="0 0 64 64" aria-hidden="true">
               <rect x="6"  y="28" width="8" height="24" rx="2" fill="#F2C811"/>
@@ -292,17 +274,12 @@
         <div class="skill-heading">Libraries</div>
         <div class="skill-row">
           <div class="skill"><i class="devicon-tensorflow-original colored"></i><span>TensorFlow</span></div>
-          <div class="skill"><img src="https://cdn.simpleicons.org/keras/D00000" alt="Keras" class="svg-icon"><span>Keras</span></div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/keras/D00000" alt="Keras"><span>Keras</span></div>
           <div class="skill"><i class="devicon-pytorch-plain colored"></i><span>PyTorch</span></div>
-          <div class="skill"><img src="https://cdn.simpleicons.org/scikitlearn/F7931E" alt="Scikit-learn" class="svg-icon"><span>Scikit-learn</span></div>
-          <!-- Statsmodels badge -->
-          <div class="skill">
-            <div class="stats-badge">Σ</div>
-            <span>Statsmodels</span>
-          </div>
+          <div class="skill"><img src="https://cdn.simpleicons.org/scikitlearn/F7931E" alt="Scikit-learn"><span>Scikit-learn</span></div>
+          <div class="skill"><div class="stats-badge">Σ</div><span>Statsmodels</span></div>
           <div class="skill"><i class="devicon-pandas-plain colored"></i><span>Pandas</span></div>
           <div class="skill"><i class="devicon-numpy-plain colored"></i><span>NumPy</span></div>
-          <!-- Matplotlib inline SVG -->
           <div class="skill">
             <svg class="svg-icon" viewBox="0 0 64 64" aria-hidden="true">
               <rect x="6" y="6" width="52" height="52" rx="8" fill="#0F1A2C" stroke="#11557C" stroke-width="2"/>
@@ -316,7 +293,6 @@
             </svg>
             <span>Matplotlib</span>
           </div>
-          <!-- Seaborn inline SVG -->
           <div class="skill">
             <svg class="svg-icon" viewBox="0 0 64 64" aria-hidden="true">
               <rect x="6" y="6" width="52" height="52" rx="8" fill="#0F1A2C" stroke="#4C72B0" stroke-width="2"/>
@@ -352,9 +328,8 @@
           </div>
         </div>
 
-        <!-- Formspree form -->
         <div class="card">
-          <form class="contact-form" action="https://formspree.io/f/mzzayoeb" method="POST">
+          <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
             <input type="text" name="subject" placeholder="Subject" required>
@@ -381,10 +356,111 @@
     LINKS.forEach(a => a.classList.toggle('active', a.dataset.view===chosen));
     if (location.hash.slice(1) !== chosen) history.replaceState(null,'','#'+chosen);
   }
-
   LINKS.forEach(a => a.addEventListener('click', e => { e.preventDefault(); show(a.dataset.view); }));
   window.addEventListener('hashchange', () => show(location.hash.slice(1)));
   document.addEventListener('DOMContentLoaded', () => show(location.hash.slice(1)));
+</script>
+
+<!-- ===== BG image preloader & applier (fix path issues) ===== -->
+<script>
+(function(){
+  const home = document.querySelector('.home');
+  if (!home) return;
+
+  // Try common relative paths (works for user sites + project pages)
+  const base = location.pathname.replace(/[^/]*$/, ''); // path of current folder
+  const candidates = [
+    'bg-home.jpg',
+    './bg-home.jpg',
+    base + 'bg-home.jpg'
+  ];
+
+  function tryLoad(i){
+    if (i >= candidates.length) {
+      console.warn('[bg-home] Could not find bg-home.jpg. Check filename & location.');
+      return;
+    }
+    const url = candidates[i] + '?v=' + Date.now(); // cache-bust
+    const img = new Image();
+    img.onload = function(){
+      home.style.backgroundImage =
+        `linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)), url('${url}')`;
+      home.style.backgroundPosition = 'center';
+      home.style.backgroundRepeat = 'no-repeat';
+      home.style.backgroundSize = 'cover';
+    };
+    img.onerror = function(){ tryLoad(i+1); };
+    img.src = url;
+  }
+  tryLoad(0);
+})();
+</script>
+
+<!-- ===== GitHub repos → Projects ===== -->
+<script>
+(async function(){
+  const USERNAME = 'RameshKelavath';
+  const container = document.getElementById('repo-cards');
+  if (!container) return;
+
+  // Clear skeleton
+  container.innerHTML = '';
+
+  const url = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=12`;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'Accept': 'application/vnd.github+json'
+      }
+    });
+    if (!res.ok) throw new Error('GitHub API error: ' + res.status);
+    const repos = await res.json();
+
+    if (!Array.isArray(repos) || repos.length === 0) {
+      container.innerHTML = `
+        <div class="card"><div class="thumb">No public repos</div>
+        <p class="muted">Add repositories to your GitHub or make some public.</p></div>`;
+      return;
+    }
+
+    // Filter out forks & super-old template repos if desired
+    const filtered = repos
+      .filter(r => !r.fork) // no forks
+      .slice(0, 12);
+
+    for (const r of filtered) {
+      const updated = new Date(r.updated_at);
+      const updatedTxt = updated.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'2-digit'});
+
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="thumb"><i class="fa-brands fa-github"></i></div>
+        <h3 style="color:#2fe180;margin:.3rem 0">${r.name}</h3>
+        <p class="muted">${r.description ? r.description.replace(/</g,'&lt;') : 'No description'}</p>
+        <div class="repo-meta">
+          ${r.language ? `<span><i class="fa-solid fa-code"></i> ${r.language}</span>` : ''}
+          <span title="Stars"><i class="fa-regular fa-star"></i> ${r.stargazers_count}</span>
+          <span title="Last updated"><i class="fa-regular fa-clock"></i> ${updatedTxt}</span>
+        </div>
+      `;
+
+      // Make whole card clickable
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => window.open(r.html_url, '_blank', 'noopener'));
+
+      container.appendChild(card);
+    }
+  } catch (e) {
+    console.error(e);
+    container.innerHTML = `
+      <div class="card">
+        <div class="thumb">Couldn’t load</div>
+        <p class="muted">GitHub API limit or network error. Try again later.</p>
+      </div>`;
+  }
+})();
 </script>
 
 </body>
