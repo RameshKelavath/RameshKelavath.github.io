@@ -390,40 +390,36 @@
   if (!container) return;
   container.innerHTML = '';
 
-  /* ========== EDIT THIS MAP for your cover images & nice descriptions ==========
-     key = exact repo name on GitHub (case sensitive)
-     cover: 'covers/<your-image>.jpg'  (put files in /covers next to this HTML)
-     title: display title
-     desc : short description
-     tags : array of strings (optional)
-  */
+  // Encode + cache-bust helper
+  const asset = p => encodeURI(p) + '?v=' + Date.now();
+
+  // EXACT repo names as on GitHub (case-sensitive)
   const FEATURED = {
-    // Examples — change these to your actual repo names + your images
     'StockPricePrediction': {
-      cover: 'covers/stock price prediction.jpg',
+      cover: asset('covers/stock-price-prediction.jpg'),
       title: 'Stock Price Prediction',
       desc: 'Developed forecasting models using ARIMA, ARIMAX, and LSTM on 20+ years of stock data. Compared classical time-series approaches with deep learning to evaluate predictive accuracy and insights.'
     },
     'Hackathon-Project': {
-      cover: 'covers/Transfer Learning',
+      cover: asset('covers/transfer-learning.jpg'),
       title: 'CIFAR-10 Image Classification (Hackathon Project)',
-      desc: 'Built in a one-day hackathon using transfer learning with VGG16. Fine-tuned on a subset of 5 CIFAR-10 classes (Airplane, Automobile, Bird, Cat, Dog) to achieve efficient image classification.'
+      desc: 'One-day hackathon project using transfer learning (VGG16) on 5 CIFAR-10 classes: airplane, automobile, bird, cat, dog.'
     },
     'Final_Visualisation_Code': {
-      cover: 'covers/Crypto Market',
+      cover: asset('covers/crypto-market.jpg'),
       title: 'Cryptocurrency Market Analysis',
-      desc: 'Explored trends, volatility, market capitalization, and interrelations of major cryptocurrencies using data visualization techniques.'
+      desc: 'Explored trends, volatility, market capitalization, and interrelations of major cryptocurrencies using data visualization.'
     },
     'Logistic-Regression': {
-      cover: 'covers/Logistic Regression',
+      cover: asset('covers/logistic-regression.jpg'),
       title: 'Logistic Regression with Regularization',
-      desc: 'Tutorial project demonstrating Logistic Regression and how L1 (Lasso) and L2 (Ridge) regularization help prevent overfitting and improve model generalization.'
+      desc: 'Tutorial showing logistic regression and how L1 (Lasso) and L2 (Ridge) regularization reduce overfitting and improve generalization.'
     },
     'Oil-Price-Forecasting': {
-      cover: 'covers/oil price',
+      cover: asset('covers/oil-price.jpg'),
       title: 'Oil Price Forecasting with ARIMA vs LSTM',
-      desc: 'Study comparing ARIMA and LSTM models for forecasting oil prices (2020–2024). Results showed ARIMA outperformed LSTM in real-world testing, predicting stable prices around $85, while LSTM overestimated trends. Highlights the value of simpler models in volatile markets.'
-    },
+      desc: 'ARIMA vs LSTM (2020–2024): ARIMA matched realized prices (~$85) better; LSTM overestimated. Simpler models can outperform in volatile markets.'
+    }
   };
 
   /* Excludes — case/spacing insensitive (spaces, dashes, dots ignored) */
@@ -432,7 +428,7 @@
     'RameshKelavath',
     'Gan case study',
     'Fundamentals of Data Science',
-    'Statistics and trends',
+    'Statistics and trends Assignments',
     'Clustering and fitting'
   ];
   const norm = s => (s||'').toLowerCase().replace(/[\s._-]+/g,'');
